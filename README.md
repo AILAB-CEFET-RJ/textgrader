@@ -10,6 +10,8 @@ with each one of the following 4 techniques: TF-IDF, WORD-2-VEC, USE, LSI.
 3) Model training, where we train a random forest model using one of the following 3 approaches: Regression, Classification and Ordinal Classification. 
 4) Model Evaluation, where we use the trained models to generate predictions and evaluate those predictions. 
 
+# Requirements 
+Our code uses python 3.9 and some libraries like scikit-learn and NLTK. To easily setup your environment run pip install requirements.txt
 
 ## Project elaborated by Ramon Grande Da Luz Bouças as 
 ## a parcial pre-requirement for obtaining a bachelor of science in computer science 
