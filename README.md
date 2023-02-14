@@ -1,5 +1,10 @@
-# Textgrader
+ 
 
+# Textgrader
+### Project elaborated by Ramon Grande Da Luz Bouças as a parcial requirement for obtaining a Bachelor of Science degree in computer science at CEFET/RJ 
+### Advisor: Eduardo Bezerra Da Silva D.Sc
+
+# Description
 This repository contains TextGrader. In essence textgrader contains the various versions of a Essay and short answer evaluation system.
 
 The system has 4 parts:
@@ -19,8 +24,26 @@ conda create -n [choose name] python=3.9
 pip install requirements.txt
 ```
 
-# rest
+# Datasets
 
-## Project elaborated by Ramon Grande Da Luz Bouças as 
-## a parcial pre-requirement for obtaining a bachelor of science in computer science 
-## at CEFET/RJ advisor Eduardo Bezerra Da Silva D.Sc
+The training datasets used for both essay evaluation task and short answer evaluation task are avaliable at 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7641696.svg)](https://doi.org/10.5281/zenodo.7641696)
+The dataset essay.xlsx belongs in the datalake/essay/raw folder 
+and the dataset short_answer.xlsx belongs in the datalake/short_answer/raw folder 
+However, to run the system there is no need to download and place the datasets at the aforementioned folders, because we already submitted the project with 
+the proper files on proper folders. 
+
+
+# Experiments
+
+falar dos experimentos
+
+# Usage
+
+falar do uso 
+
+# Contact
+
+To give your opinion about this work, send an email to ramon.boucas@cefet-rj.br
+
+ 
