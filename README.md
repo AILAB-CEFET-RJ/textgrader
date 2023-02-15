@@ -33,14 +33,20 @@ and the dataset short_answer.xlsx belongs in the datalake/short_answer/raw folde
 However, to run the system there is no need to download and place the datasets at the aforementioned folders, because we already submitted the project with 
 the proper files on proper folders. 
 
-
-# Experiments
-
-falar dos experimentos
-
+ 
 # Usage
 
-falar do uso 
+Being in the main directory, do: 
+
+Before running the tasks for evaluating essays or short answers, it is necessary to run the spell corrector for both texts
+1) python run.py task general_tasks task_correct_essays
+2) python run.py task general_tasks task_correct_short_answers
+
+To run the pipeline for essays run:
+python run.py task general_tasks task_pipeline_essays
+
+To run the pipeline for short answer run:
+python run.py task general_tasks task_pipeline_short_answer
 
 # Contact
 
