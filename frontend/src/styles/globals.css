@@ -1,0 +1,6 @@
+img {
+  display: block;
+  max-width: 90%;
+  margin: 0 auto;
+  outline: 1px solid black;
+}

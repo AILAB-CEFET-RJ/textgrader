@@ -28,12 +28,12 @@ The system is divided as explained below:
       2. Send the text in a HTTP GET request body to Text Grader API
       3. Receive the HTTP response and show it to the user
 2. Backend (Python)
-   1. [Text Grader API](/backend/src/api.py)
+   1. [Text Grader API](/backend/api)
       1. Receive a HTTP get request with a text content
       2. Run and send the data to Text Grader Core
       3. Receive the response from Text Grader Core
       4. Transform the data in JSON and send the HTTP response
-   2. [Text Grader Core](/backend/src/dags)
+   2. [Text Grader Core](/backend/core)
       1. Preprocessing where we correct spelling change columns schema and do other minor preprocessing steps
       2. Feature engineering, where we generate some basic features like word count and sentence count, and generate datasets embedding words with each one of the following 4 techniques: TF-IDF, WORD-2-VEC, USE, LSI.
       3. Model training, where we train some instances of a random forest model using one of the following 3 approaches: Regression, Classification and Ordinal Classification.
