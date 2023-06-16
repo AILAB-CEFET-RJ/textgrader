@@ -25,7 +25,7 @@ git clone https://github.com/MLRG-CEFET-RJ/textgrader
 
 cd textgrader
 
-git checkout origin release/v0.1.2
+git origin release/v0.1.2
 
 docker compose up -d
 ```
