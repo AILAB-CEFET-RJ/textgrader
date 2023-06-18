@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Button, Modal, Skeleton } from 'antd';
 
@@ -30,7 +30,7 @@ const Redacao = () => {
     };
 
     const getEssayGrade = async () => {
-        const response = await axios.post('http://0.0.0.0:8000/text_grade/', {
+        const response = await axios.post('http://localhost:8000/text_grade/', {
             essay: essay,
         });
 
