@@ -2,7 +2,7 @@
 CREATE TYPE origin AS ENUM (
     'UOL',
     'LLM',
-    'TEXT-GRADER'
+    'TEXT_GRADER'
 );
 
 -- CREATE TABLE
@@ -14,9 +14,9 @@ CREATE TABLE theme (
 -- CREATE TABLE
 CREATE TABLE text_data (
     id          SERIAL PRIMARY KEY,
-    data        VARCHAR NOT NULL,
+    content     VARCHAR NOT NULL,
     analysis    VARCHAR NOT NULL,
-    grade       SMALLINT,
+    grade       FLOAT,
     origin      origin,
     theme       theme
 

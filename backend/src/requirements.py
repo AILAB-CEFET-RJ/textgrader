@@ -2,7 +2,8 @@ import os, nltk, requests
 
 import pandas as pd
 
-from repository import postgres
+from database_manager import database_manager as db_manager
+
 
 def setup_ntlk():
     nltk.download('punkt')
@@ -23,6 +24,7 @@ def create_datalake_dirs():
 
 
 def download_and_convert_uol_corpus_essays():
+    print("=================BAIXANDO REDAÇÕES=====================")
     if os.path.isfile(ESSAY_FILE) == True: return
 
     CORPUS_ESSAYS_JSON_LINKS = [
@@ -54,6 +56,9 @@ def download_and_convert_uol_corpus_essays():
     for essay_set, corpus_essays_json in enumerate(CORPUS_ESSAYS_JSONS):
         corpus_essays = corpus_essays_json['redacoes']
 
+        theme = dbManager.create_theme(corpus_essays_json["tema"], corpus_essays_json["data"],
+                                       corpus_essays_json["contexto"])
+
         for essay in corpus_essays:
             essay_id += 1
 
@@ -66,11 +71,13 @@ def download_and_convert_uol_corpus_essays():
             corpus_essays_dict['rater2_domain1'].append(essay['nota'] / 2)
             corpus_essays_dict['domain1_score'].append(essay['nota'])
 
+            dbManager.create_essays(essay, theme, corpus_essays_json["data"])
+
     # https://stackoverflow.com/questions/61255750/convert-dictionary-of-dictionaries-using-its-key-as-index-in-pandas
     corpus_essay_dataframe = pd.DataFrame.from_dict(
         pd.DataFrame(dict([(k, pd.Series(v)) for k, v in corpus_essays_dict.items()])))
 
-    corpus_essay_dataframe.to_excel(ESSAY_FILE, index=False)
+    # corpus_essay_dataframe.to_excel(ESSAY_FILE, index=False)
 
 
 def create_corpus_datalake():
@@ -79,6 +86,9 @@ def create_corpus_datalake():
 
 
 if __name__ == '__main__':
-    postgres.init_connection()
+    print("INIT")
+    dbManager = db_manager.DatabaseManager()
+    dbManager.create_tables()
+    # dbManager.insert("text_data")
     setup_ntlk()
     create_corpus_datalake()
