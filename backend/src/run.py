@@ -23,6 +23,7 @@ def run():
 @click.argument("dag")
 @click.argument("task")
 def task(dag, task):
+    print("TASK RUN")
     try:
         mod = importlib.import_module(f"dags.{dag}")
     except ModuleNotFoundError as ex:

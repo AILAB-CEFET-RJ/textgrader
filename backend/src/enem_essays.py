@@ -77,18 +77,11 @@ def download_and_convert_uol_corpus_essays():
     corpus_essay_dataframe = pd.DataFrame.from_dict(
         pd.DataFrame(dict([(k, pd.Series(v)) for k, v in corpus_essays_dict.items()])))
 
-    # corpus_essay_dataframe.to_excel(ESSAY_FILE, index=False)
-
-
-def create_corpus_datalake():
-    create_datalake_dirs()
-    download_and_convert_uol_corpus_essays()
-
+    corpus_essay_dataframe.to_excel(ESSAY_FILE, index=False)
 
 if __name__ == '__main__':
-    print("INIT")
     dbManager = db_manager.DatabaseManager()
     dbManager.create_tables()
-    # dbManager.insert("text_data")
     setup_ntlk()
-    create_corpus_datalake()
+    create_datalake_dirs()
+    download_and_convert_uol_corpus_essays()

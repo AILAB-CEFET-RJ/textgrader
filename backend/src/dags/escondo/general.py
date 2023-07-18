@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 ## tasks específicas de essays
 
 def run_dag(task):
+    print("RUN DAG - GENERAL")
     from dags.runner import run_task
 
     run_task(task)

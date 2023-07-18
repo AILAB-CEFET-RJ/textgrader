@@ -7,7 +7,7 @@ services:
     working_dir: "/backend"
     command: sh -c "
       python -m venv venv && . venv/bin/activate && pip install -U pip &&
-      cd src && pip3 install -r requirements.txt && python requirements.py && python run.py task general_tasks task_correct_essays &&
+      cd src && pip3 install -r requirements.txt && python enem_essays.py && python run.py task general_tasks task_correct_essays &&
       python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
     ports:
       - "8000:8000"
