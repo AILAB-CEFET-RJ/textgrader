@@ -1,9 +1,9 @@
-from fileinput import filename
-import logging
+import datetime
 import os
 
 import colorlog
-import datetime
+
+import logging
 
 LOGLEVEL = os.getenv("ATENA_LOGLEVEL", "INFO")
 

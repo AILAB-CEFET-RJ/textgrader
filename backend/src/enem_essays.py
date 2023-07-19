@@ -25,7 +25,7 @@ def create_datalake_dirs():
 
 def download_and_convert_uol_corpus_essays():
     print("=================BAIXANDO REDAÇÕES=====================")
-    if os.path.isfile(ESSAY_FILE) == True: return
+    #if os.path.isfile(ESSAY_FILE) == True: return
 
     CORPUS_ESSAYS_JSON_LINKS = [
         'https://raw.githubusercontent.com/cassiofb-dev/corpus-redacoes-uol/master/corpus/uoleducacao_redacoes_01.json',

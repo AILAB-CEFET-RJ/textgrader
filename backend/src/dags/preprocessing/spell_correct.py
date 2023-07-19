@@ -1,14 +1,12 @@
+import logging
+import os
+import re
+from abc import ABC
+
+import pandas as pd
+from dags import config
 from nltk.tokenize import sent_tokenize, word_tokenize
 from spellchecker import SpellChecker
-
-import re
-from dags import config
-import pandas as pd
-import os
-
-from abc import ABC,abstractmethod
-
-import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(config.LOGLEVEL)
@@ -23,7 +21,7 @@ class spell_corrector(ABC):
         self.output_file =  'corrected_texts.parquet'
         self.new_column = "new_text"
 
-    def replace(self,match):
+    def replace(self, match):
         return config.replacements[match.group(0)]
 
     def fix_common_mistakes_in_answer(self,answer):
@@ -75,6 +73,7 @@ class spell_corrector(ABC):
         return new_essay
 
     def correct_texts(self):
+        print("CORRECT TEXTS")
         try:
             df = pd.read_parquet(os.path.join(self.output_directory,self.output_file))
         except:
@@ -103,6 +102,7 @@ class spell_corrector(ABC):
         logging.info(f'corrected all {self.text_type} texts')
 
     def bypass_correction(self):
+        print("BY PASS CORRECTION")
         essay_df = pd.read_excel(os.path.join(self.input_directory, self.input_file))
 
         essay_df['new_text'] = essay_df['essay']

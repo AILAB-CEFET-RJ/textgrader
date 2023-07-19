@@ -1,14 +1,7 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
+
 from .entities.entities import Essay, Base, Theme
-
-import enum
-
-db_name = 'text-grader'
-db_user = 'postgres'
-db_pass = 'postgres'
-db_host = 'db'
-db_port = '5432'
 
 
 def close_session(session):
@@ -35,7 +28,6 @@ class DatabaseManager:
         session.close()
 
     def create_essays(self, essay, theme, date):
-        print("=============CREATING ESSAY==============")
         session = self.create_session()
         essay = Essay().convert_object(essay, theme, date)
         session.add(essay)
@@ -44,7 +36,6 @@ class DatabaseManager:
         close_session(session)
 
     def create_theme(self, name, date, context):
-        print("=============CREATING theme==============")
         session = self.create_session()
         theme = Theme().convert_object(name, date, context)
 

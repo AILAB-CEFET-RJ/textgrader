@@ -1,7 +1,7 @@
-from enum import Enum
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Enum, String, Float, Date, Integer, ForeignKey
 from datetime import datetime
+
+from sqlalchemy import Column, Enum, String, Float, Date, Integer, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
@@ -45,7 +45,6 @@ class Essay(Base):
 
     @classmethod
     def convert_object(cls, essay, theme, date=datetime.today()):
-        print("CONVERTING")
         if isinstance(date, str):
             date = format_date(date)
 
