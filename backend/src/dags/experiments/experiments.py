@@ -17,18 +17,18 @@ logging.config.dictConfig({
 
 import pandas as pd
 from dags.predict.predict import *
-from dags import config
+from configs import configs
 
 import logging
 
 logger = logging.getLogger(__name__)
 print(__name__)
-logger.setLevel(config.LOGLEVEL)
+logger.setLevel(configs.LOGLEVEL)
 
 
 def experiments_with_lsi_topics(selected_container, text_range):
     logger.info("starting to train models with LSI features")
-    for topic_number in config.LSI_TOPIC_NUMBERS:
+    for topic_number in configs.LSI_TOPIC_NUMBERS:
         logger.info(f"training models with the {topic_number} dataset")
 
         print(topic_number)
@@ -53,7 +53,7 @@ def experiments_with_lsi_topics(selected_container, text_range):
         logger.info("finished training models with LSI features")
 
 
-def evaluate_lsi_predictions(selected_container, text_range, topic_numbers=config.LSI_TOPIC_NUMBERS):
+def evaluate_lsi_predictions(selected_container, text_range, topic_numbers=configs.LSI_TOPIC_NUMBERS):
     logger.info(f'evaluating LSI results')
 
     listao = []
@@ -87,7 +87,7 @@ def evaluate_lsi_predictions(selected_container, text_range, topic_numbers=confi
         listao.append(tupla)
 
         df_results = pd.DataFrame.from_records(listao)
-        df_results.columns = config.LSI_TOPIC_COLUMNS
+        df_results.columns = configs.LSI_TOPIC_COLUMNS
 
         EXPERIMENT_RESULT_FOLDER = os.path.join(selected_container, 'predictions', 'experiment_results')
 
@@ -231,7 +231,7 @@ def generate_topics_datasets(selected_container, text_range):
 
     lsi = LSI_feature_extractor(selected_container)
 
-    for topic_number in config.LSI_TOPIC_NUMBERS:
+    for topic_number in configs.LSI_TOPIC_NUMBERS:
         logger.info(f'generating LSI features for {topic_number} topics')
 
         for i in text_range:

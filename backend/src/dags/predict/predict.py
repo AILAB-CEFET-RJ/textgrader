@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.metrics import cohen_kappa_score
 import pandas as pd
 from dags.utils import *
+from configs import configs as config
+
 
 
 def predict_with_model(model, test_df, predicted_variable="score"):

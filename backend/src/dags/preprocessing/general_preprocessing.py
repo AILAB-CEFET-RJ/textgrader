@@ -1,6 +1,6 @@
 import pandas as pd
 import os 
-from dags import config
+from configs import configs as config
 from dags.utils import *
 
 from abc import ABC,abstractmethod

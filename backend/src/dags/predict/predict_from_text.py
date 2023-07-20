@@ -5,7 +5,7 @@ import pandas as pd
 from dags.utils import *
 from dags.feature_engineering.word_embeddings import *
 
-from ... import configs.configs
+from configs import configs
 
 
 def predict_from_text(text: str = "default string"):

@@ -5,7 +5,7 @@ from dags.preprocessing.spell_correct import *
 
 import logging
 
-from .. import configs
+from configs import configs
 
 # from dags.feature_engineering.generate_features import *
 

@@ -5,11 +5,11 @@ import numpy as np
 import pandas as pd
 import tensorflow_hub as hub
 
-from ... import configs #TODO CORRIGIR IMPORT
-
 from dags.utils import *
 from nltk.tokenize import word_tokenize
 import tensorflow_text
+
+from configs import configs
 
 # create logger
 logger = logging.getLogger(__name__)

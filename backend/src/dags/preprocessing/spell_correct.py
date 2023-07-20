@@ -4,7 +4,7 @@ import re
 from abc import ABC
 
 import pandas as pd
-from dags import config
+from configs import configs as config
 from nltk.tokenize import sent_tokenize, word_tokenize
 from spellchecker import SpellChecker
 

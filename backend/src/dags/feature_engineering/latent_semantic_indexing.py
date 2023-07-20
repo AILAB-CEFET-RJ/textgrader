@@ -2,7 +2,7 @@ import logging
 import os
 
 import pandas as pd
-from dags import config
+from configs import configs as config
 from dags.utils import *
 from gensim import corpora
 from gensim.models import LsiModel
