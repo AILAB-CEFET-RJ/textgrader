@@ -1,10 +1,11 @@
-from dags import config
 from dags.experiments.experiments import *
 from dags.model_training.doc_to_vec_trainer import *
 from dags.preprocessing.general_preprocessing import *
 from dags.preprocessing.spell_correct import *
 
 import logging
+
+from .. import configs
 
 # from dags.feature_engineering.generate_features import *
 
@@ -91,20 +92,11 @@ def task_shared_tasks(selected_container, text_range):
     task_train_models(selected_container, text_range=text_range)
     task_evaluate_models(selected_container, text_range=text_range)
 
-
-def save_settings(text_mode):
-    print("TASK SAVE SETTINGS")
-    settings = config.SETTINGS
-    especial_settings = settings[text_mode]
-
-    dict_to_json(especial_settings, config.SETTINGS_FILE)
-
-
 def task_pipeline_essays():
     print("TASK PIPELINE ESSAYS")
     task_correct_essays()
     task_generate_essay_datasets()
-    task_shared_tasks(selected_container=config.ESSAY_CONTAINER, text_range=config.ESSAY_TEXT_RANGE)
+    task_shared_tasks(selected_container=configs.ESSAY_CONTAINER, text_range=configs.ESSAY_TEXT_RANGE)
 
 
 def task_pipeline_short_answer():
@@ -115,5 +107,5 @@ def task_pipeline_short_answer():
     task_generate_short_answer_datasets()
     print("finished to generate short answers datasets")
 
-    task_shared_tasks(selected_container=config.SHORT_ANSWER_CONTAINER, text_range=config.SHORT_ANSWER_TEXT_RANGE)
+    task_shared_tasks(selected_container=configs.SHORT_ANSWER_CONTAINER, text_range=configs.SHORT_ANSWER_TEXT_RANGE)
     print("finished to generate short answers datasets")

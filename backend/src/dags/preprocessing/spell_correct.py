@@ -44,7 +44,11 @@ class spell_corrector(ABC):
         ## instancia o objeto spell checker
         spell = SpellChecker()
 
+        print('---------------- CORRECT SPELL')
+        print(essay)
         essay = self.fix_common_mistakes_in_answer(essay)
+        print(essay)
+        print('--'*50)
 
         ## começa o texto do novo essay
         new_essay = ""

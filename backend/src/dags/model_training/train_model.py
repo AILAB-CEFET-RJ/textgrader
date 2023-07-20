@@ -17,7 +17,6 @@ def pipeline_random_forest(df, predicted_variable="score"):
 
     rf = RandomForestRegressor()
 
-    long_param_grid = {'min_samples_leaf': [8, 10, 12], "max_depth": [6, 8, 10]}
     short_param_grid = {'min_samples_leaf': [8], "max_depth": [6]}
     param_grid = short_param_grid
     gs = GridSearchCV(estimator=rf, param_grid=param_grid)

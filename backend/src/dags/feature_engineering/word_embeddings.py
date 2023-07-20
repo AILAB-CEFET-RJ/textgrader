@@ -4,9 +4,12 @@ import os
 import numpy as np
 import pandas as pd
 import tensorflow_hub as hub
-from dags import config
+
+from ... import configs #TODO CORRIGIR IMPORT
+
 from dags.utils import *
 from nltk.tokenize import word_tokenize
+import tensorflow_text
 
 # create logger
 logger = logging.getLogger(__name__)
@@ -38,7 +41,7 @@ class USE_embedder(text_embedder):
 class doc_2_vec_embedder(text_embedder):
     def __init__(self, vector_size):
         super().__init__()
-        directory = os.path.join(config.SHARED_CONTAINER, 'model', 'word_embedding')
+        directory = os.path.join(configs.SHARED_CONTAINER, 'model', 'word_embedding')
         filename = f'doc_2_vec_{vector_size}.pkl'
         self.embedder = get_model_from_pickle(directory, filename)
 

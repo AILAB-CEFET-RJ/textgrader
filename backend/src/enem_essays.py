@@ -3,6 +3,7 @@ import os, nltk, requests
 import pandas as pd
 
 from database_manager import database_manager as db_manager
+import configs
 
 
 def setup_ntlk():
@@ -43,17 +44,43 @@ def download_and_convert_uol_corpus_essays():
     CORPUS_ESSAYS_JSONS = [requests.get(corpus_essay_json_link).json() for corpus_essay_json_link in
                            CORPUS_ESSAYS_JSON_LINKS]
 
-    ESSAY_XLSX_COLUMNS = 'essay_id essay_set essay rater1_domain1 rater2_domain1 rater3_domain1 domain1_score rater1_domain2 rater2_domain2 domain2_score rater1_trait1 rater1_trait2 rater1_trait3 rater1_trait4 rater1_trait5 rater1_trait6 rater2_trait1 rater2_trait2 rater2_trait3 rater2_trait4 rater2_trait5 rater2_trait6 rater3_trait1 rater3_trait2 rater3_trait3 rater3_trait4 rater3_trait5 rater3_trait6'.split(
-        ' ')
+    #'essay_id -> id
+    # essay_set -: conjunto
+    # essay -> redacao
+    # rater1_domain1 - > nota /2
+    # rater2_domain1 -> nota/2
+    # rater3_domain1 -> x
+    # domain1_score
+    # rater1_domain2
+    # rater2_domain2
+    # domain2_score
+    # rater1_trait1
+    # rater1_trait2
+    # rater1_trait3
+    # rater1_trait4
+    # rater1_trait5
+    # rater1_trait6
+    # rater2_trait1
+    # rater2_trait2
+    # rater2_trait3
+    # rater2_trait4
+    # rater2_trait5
+    # rater2_trait6
+    # rater3_trait1
+    # rater3_trait2
+    # rater3_trait3
+    # rater3_trait4
+    # rater3_trait5
+    # rater3_trait6'.split(
 
     corpus_essays_dict = {}
 
-    for column in ESSAY_XLSX_COLUMNS:
+    for column in configs.ESSAY_XLSX_COLUMNS.split(' '):
         corpus_essays_dict[column] = []
 
     essay_id = 0
 
-    for essay_set, corpus_essays_json in enumerate(CORPUS_ESSAYS_JSONS):
+    for _, corpus_essays_json in enumerate(CORPUS_ESSAYS_JSONS):
         corpus_essays = corpus_essays_json['redacoes']
 
         theme = dbManager.create_theme(corpus_essays_json["tema"], corpus_essays_json["data"],

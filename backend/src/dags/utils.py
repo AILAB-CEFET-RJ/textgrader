@@ -3,7 +3,6 @@ import json
 import os
 import pickle
 
-from dags import config
 from nltk.tokenize import sent_tokenize, word_tokenize
 
 
@@ -53,26 +52,6 @@ def get_model_from_pickle(directory, filename):
     return loaded_model
 
 
-def get_desired_range(df):
-    """
-    pega o dataframe de textos e dá a quantidade de conjuntos de textos presente, 
-    caso o parametro CURRENT_TEXT_RANGE na config esteja habilitado, ele sobrescreve 
-    o range desejado
-    """
-    desired_range = list(df["text_set"].unique())
-
-    if (config.CURRENT_TEXT_RANGE != None):
-        desired_range = config.CURRENT_TEXT_RANGE
-
-    return desired_range
-
-
-def get_files_from_folder(folder):
-    file_list = glob.glob(folder + '/*')
-    file_list = [i.split("\\")[-1] for i in file_list]
-
-    return file_list
-
 
 def dict_to_json(dictionary, name):
     json_object = json.dumps(dictionary, indent=4)
@@ -81,8 +60,3 @@ def dict_to_json(dictionary, name):
     with open(f'{name}', "w") as outfile:
         outfile.write(json_object)
 
-
-def read_json(filename):
-    f = open(filename)
-
-    return f
