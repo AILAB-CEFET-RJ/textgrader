@@ -5,7 +5,7 @@ from dags.preprocessing.spell_correct import *
 
 import logging
 
-from configs import configs
+from configs import configs as config
 
 # from dags.feature_engineering.generate_features import *
 
@@ -24,7 +24,7 @@ def run_dag(task):
 
 
 def task_correct_essays():
-    print("TASK CORRECT ESSAY")
+    print(f"TASK CORRECT ESSAY > BYPASS = {config.BYPASS_CORRECTOR}")
     ec = essay_corrector()
 
     if config.BYPASS_CORRECTOR:
@@ -45,7 +45,7 @@ def task_generate_essay_datasets():
 ## tasks especificas de short answer
 
 def task_correct_short_answers():
-    print("TASK CORRECT SHORT ANSWER")
+    print("----> TASK CORRECT SHORT ANSWER")
     sac = short_answer_corrector()
     sac.correct_texts()
 

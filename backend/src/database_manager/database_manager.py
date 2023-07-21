@@ -48,7 +48,6 @@ class DatabaseManager:
 
     def get(self):
         session = self.create_session()
-        print("=========== selecting =================")
         result = session.execute(text("SELECT * FROM text_data"))
         rows = result.fetchall()
 

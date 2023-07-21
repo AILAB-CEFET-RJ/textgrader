@@ -20,8 +20,8 @@ SHORT_ANSWER_FILE = f"{SHORT_ANSWER_PATH}/short_answers.xlsx"
 
 
 def create_datalake_dirs():
-    os.makedirs(ESSAY_PATH, exist_ok=True)
-    os.makedirs(SHORT_ANSWER_PATH, exist_ok=True)
+    os.makedirs(ESSAY_PATH, exist_ok=True, mode=0o777)
+    os.makedirs(SHORT_ANSWER_PATH, exist_ok=True, mode=0o777)
 
 
 def download_and_convert_uol_corpus_essays():
@@ -41,35 +41,6 @@ def download_and_convert_uol_corpus_essays():
 
     CORPUS_ESSAYS_JSONS = [requests.get(corpus_essay_json_link).json() for corpus_essay_json_link in
                            CORPUS_ESSAYS_JSON_LINKS]
-
-    #'essay_id -> id
-    # essay_set -: conjunto
-    # essay -> redacao
-    # rater1_domain1 - > nota /2
-    # rater2_domain1 -> nota/2
-    # rater3_domain1 -> x
-    # domain1_score
-    # rater1_domain2
-    # rater2_domain2
-    # domain2_score
-    # rater1_trait1
-    # rater1_trait2
-    # rater1_trait3
-    # rater1_trait4
-    # rater1_trait5
-    # rater1_trait6
-    # rater2_trait1
-    # rater2_trait2
-    # rater2_trait3
-    # rater2_trait4
-    # rater2_trait5
-    # rater2_trait6
-    # rater3_trait1
-    # rater3_trait2
-    # rater3_trait3
-    # rater3_trait4
-    # rater3_trait5
-    # rater3_trait6'.split(
 
     corpus_essays_dict = {}
 
@@ -107,6 +78,7 @@ def download_and_convert_uol_corpus_essays():
 if __name__ == '__main__':
     dbManager = db_manager.DatabaseManager()
     dbManager.create_tables()
+    #dbManager.get()
     setup_ntlk()
     create_datalake_dirs()
     download_and_convert_uol_corpus_essays()

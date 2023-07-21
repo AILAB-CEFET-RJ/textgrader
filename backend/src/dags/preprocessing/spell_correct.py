@@ -40,7 +40,7 @@ class spell_corrector(ABC):
 
         return answer
 
-    def correct_spell(self,essay):
+    def correct_spell(self, essay):
         ## instancia o objeto spell checker
         spell = SpellChecker()
 
