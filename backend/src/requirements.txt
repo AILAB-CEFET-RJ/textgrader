@@ -16,3 +16,4 @@ pyspellchecker
 coloredlogs
 psycopg2
 sqlalchemy
+gh-folder-download
