@@ -1,0 +1,16 @@
+{
+  "title": "Backend",
+  "description": "Let's learn how Textgrader backend works.",
+  "slug": "/category/backend",
+  "permalink": "/docs/category/backend",
+  "navigation": {
+    "previous": {
+      "title": "Congratulations!",
+      "permalink": "/docs/frontend/congratulations"
+    },
+    "next": {
+      "title": "Overview",
+      "permalink": "/docs/backend/overview"
+    }
+  }
+}

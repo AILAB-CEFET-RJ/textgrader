@@ -1,0 +1,23 @@
+{
+  "unversionedId": "intro",
+  "id": "intro",
+  "title": "Tutorial Intro",
+  "description": "Let's discover Textgrader in less than 3 minutes.",
+  "source": "@site/docs/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/docs/next/intro",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/intro.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Frontend",
+    "permalink": "/docs/next/category/frontend"
+  }
+}

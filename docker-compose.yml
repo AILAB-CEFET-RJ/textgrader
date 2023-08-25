@@ -5,10 +5,10 @@ services:
     container_name: backend
     image: python:3.10
     working_dir: "/backend"
-    command: sh -c "
-      python -m venv venv && . venv/bin/activate && pip install -U pip &&
-      cd src && pip3 install -r requirements.txt && python enem_essays.py && python run.py task general_tasks task_correct_essays &&
-      python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
+    #command: sh -c "
+    #  python -m venv venv && . venv/bin/activate && pip install -U pip &&
+    #  cd src && pip3 install -r requirements.txt && python enem_essays.py && python run.py task general_tasks task_correct_essays &&
+    #  python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
     ports:
       - "8000:8000"
     volumes:
@@ -19,14 +19,14 @@ services:
       - some_net
 
   frontend:
+    image: python:3.8
     container_name: frontend
-    image: node:lts-alpine
-    working_dir: "/frontend"
-    #command: sh -c "yarn && yarn dev"
-    ports:
-      - "3000:3000"
+    command: bash -c "pip install django && ls -a && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./frontend:/frontend
+      - ./frontend:/frontend/textgrader
+    ports:
+      - "3000:8000"
+    working_dir: /frontend/textgrader
 
   db:
     image: postgres

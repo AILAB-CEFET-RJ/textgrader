@@ -1,0 +1,27 @@
+{
+  "unversionedId": "backend/api",
+  "id": "backend/api",
+  "title": "API",
+  "description": "Let's check Textgrader API in 5 minutes.",
+  "source": "@site/docs/backend/api.md",
+  "sourceDirName": "backend",
+  "slug": "/backend/api",
+  "permalink": "/docs/next/backend/api",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/api.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/docs/next/backend/overview"
+  },
+  "next": {
+    "title": "Essay Grading",
+    "permalink": "/docs/next/backend/essay-grading"
+  }
+}

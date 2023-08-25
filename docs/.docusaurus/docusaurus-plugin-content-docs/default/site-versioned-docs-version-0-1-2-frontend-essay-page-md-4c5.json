@@ -1,0 +1,27 @@
+{
+  "unversionedId": "frontend/essay-page",
+  "id": "version-0.1.2/frontend/essay-page",
+  "title": "Essay Page",
+  "description": "Let's check Textgrader most important page in 5 minutes.",
+  "source": "@site/versioned_docs/version-0.1.2/frontend/essay-page.md",
+  "sourceDirName": "frontend",
+  "slug": "/frontend/essay-page",
+  "permalink": "/docs/frontend/essay-page",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/essay-page.md",
+  "tags": [],
+  "version": "0.1.2",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Layout",
+    "permalink": "/docs/frontend/layout"
+  },
+  "next": {
+    "title": "Congratulations!",
+    "permalink": "/docs/frontend/congratulations"
+  }
+}

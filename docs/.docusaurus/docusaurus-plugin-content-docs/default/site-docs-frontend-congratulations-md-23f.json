@@ -1,0 +1,27 @@
+{
+  "unversionedId": "frontend/congratulations",
+  "id": "frontend/congratulations",
+  "title": "Congratulations!",
+  "description": "You have just learned the Textgrader Frontend and made the project running locally.",
+  "source": "@site/docs/frontend/congratulations.md",
+  "sourceDirName": "frontend",
+  "slug": "/frontend/congratulations",
+  "permalink": "/docs/next/frontend/congratulations",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/congratulations.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Essay Page",
+    "permalink": "/docs/next/frontend/essay-page"
+  },
+  "next": {
+    "title": "Backend",
+    "permalink": "/docs/next/category/backend"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "unversionedId": "frontend/layout",
+  "id": "version-0.1.2/frontend/layout",
+  "title": "Layout",
+  "description": "Let's check Textgrader layout in 5 minutes.",
+  "source": "@site/versioned_docs/version-0.1.2/frontend/layout.md",
+  "sourceDirName": "frontend",
+  "slug": "/frontend/layout",
+  "permalink": "/docs/frontend/layout",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/layout.md",
+  "tags": [],
+  "version": "0.1.2",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/docs/frontend/overview"
+  },
+  "next": {
+    "title": "Essay Page",
+    "permalink": "/docs/frontend/essay-page"
+  }
+}

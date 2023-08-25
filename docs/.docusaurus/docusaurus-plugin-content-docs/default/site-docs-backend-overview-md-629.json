@@ -1,0 +1,27 @@
+{
+  "unversionedId": "backend/overview",
+  "id": "backend/overview",
+  "title": "Overview",
+  "description": "Let's check Textgrader Backend Project Overview in 5 minutes.",
+  "source": "@site/docs/backend/overview.md",
+  "sourceDirName": "backend",
+  "slug": "/backend/overview",
+  "permalink": "/docs/next/backend/overview",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/overview.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Backend",
+    "permalink": "/docs/next/category/backend"
+  },
+  "next": {
+    "title": "API",
+    "permalink": "/docs/next/backend/api"
+  }
+}
