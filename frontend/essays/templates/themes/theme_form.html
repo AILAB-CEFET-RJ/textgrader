@@ -1,0 +1,22 @@
+{% extends "essays/base.html" %}
+{% block content %}
+    <div style="text-align:center">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="row mb-3" style="margin-top:30px">
+                    </br>
+                    <label class="col-sm-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div class="col-sm-7">
+                    {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <div style="text-align:center;margin-top:10px">
+                <a type="button" class="btn btn-danger" href="{%url 'list' %}">Voltar</a>
+                <button type="submit" class="btn btn-success">Criar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

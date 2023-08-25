@@ -1,0 +1,71 @@
+
+# TODO
+
+# [X]- Adicionar menu
+# []- Adicionar login
+# []- Criar uma home
+# []- Modificar banco de dados para utilizar outro sem ser o sqlite (Postgres talvez)
+# []- Conectar frontend a API do text-grader
+
+# []- Temas
+    # [X]- Listar temas existentes
+    # [X]- Permitir criação de temas
+    # []- Permitir pesquisa por tema
+    # [X]- Visualizar tema
+    # []- Adicionar botao para criar nova redação a partir do tema
+    # []- Adicionar validações para cada campo
+    # []- Mostrar notificação quando der erro ao salvar o tema
+
+# []- Redações
+    # [X]- Listar redações criadas
+    # [X]- Permitir criação de redação associada a um tema
+    # [X]- Permitir correção de redações
+    # [X]- Visualizar redação
+    # [X]- Mostrar se redação foi corrigida na listagem de redações
+    # [X]- Adicionar página para correção
+    # []- Ao enviar uma redação, exibir um pop-up com a nota retornada pela API do text grader
+    # []- Adicionar autor para redacao no modelo (referente ao usuário logado)
+    # []- Adicionar validações para cada campo
+    # []- Mostrar notificação quando der erro ao salvar a redação
+
+# []- Usuários
+    # []- Criar papéis de aluno e professor
+    # []- Adicionar permissoes de visualizacao de pagina
+
+-> Ideias
+    # []- Permitir exibição de redações agrupadas por temas
+    # []- Permitir exibição de redações agrupadas por alunos
+    # []- Adicionar uma página de verificação de redação antes do envio
+    # []- Colocar botao de adicionar redação no topo da lista de exibições de redação
+    # []- Permitir edição/delete de temas
+    # []- Permitir que os professores criem critérios de avaliação de redações ou utilizar os mesmos definidos em https://vestibular.brasilescola.uol.com.br/banco-de-redacoes 
+    # []- Permitir que professores façam comentários em partes específicas do texto, assim como é feito no https://vestibular.brasilescola.uol.com.br/banco-de-redacoes 
+
+
+-> Responsabilidades
+    - Professor
+        - Cria temas
+        - Edita temas
+        - Remove temas
+        - Visualiza redações criadas
+        - Corrige redações
+            - Adiciona notas
+            - Adiciona comentários
+
+    - Aluno
+        - Visualiza temas
+        - Cria redações
+        - Visualiza suas próprias redações criadas
+        - Visualiza a correção de suas redações enviadas
+        - Pesquisa dentre suas redações criadas
+
+
+
+
+
+
+
+
+
+
+

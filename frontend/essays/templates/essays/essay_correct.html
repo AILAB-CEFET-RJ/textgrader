@@ -1,0 +1,41 @@
+{% extends "essays/base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Correção de redação</h4>
+    <div class="container">
+
+        <h5>Título</h5>
+        <p class="text-monospace">{{essay.title}}</p>
+        
+        <h5>Tema</h5>
+        <p class="text-monospace">{{essay.theme.title}}</p>
+    
+        <h5>Conteúdo</h5>
+        <p class="text-monospace">{{essay.content}}</p>
+    
+        <h5>Data de criacao</h5>
+        <p class="text-monospace">{{essay.creation_date}}</p>
+    </div>
+    <hr class="my-4">
+</div>
+<div style="text-align:center">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="row mb-3" style="margin-top:30px">
+                </br>
+                <label class="col-sm-2 col-form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="col-sm-7">
+                {{ field }}
+                </div>
+            </div>
+        {% endfor %}
+        
+        <div style="text-align:center;margin-top:10px">
+            <a type="button" class="btn btn-danger" href="{%url 'list' %}">Voltar</a>
+            <button type="submit" class="btn btn-success">Criar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

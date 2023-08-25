@@ -1,0 +1,21 @@
+{% extends "essays/base.html" %}
+{% block content %}
+
+<div class="container">
+    </br>
+    <h4 align="center">Detalhes do tema</h4>
+
+    <h5>Título</h5>
+    <p class="text-monospace">{{object.title}}</p>
+
+    <h5>Conteúdo</h5>
+    <p class="text-monospace">{{object.context}}</p>
+
+    <h5>Data de criacao</h5>
+    <p class="text-monospace">{{object.creation_date}}</p>
+
+    <a type="button" class="btn btn-secondary" href="{%url 'theme_list' %}">Voltar</a>
+    <a type="button" class="btn btn-success" href="{%url 'create' %}">Criar nova redação</a>
+</div>
+
+{% endblock content %}

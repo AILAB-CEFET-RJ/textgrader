@@ -1,0 +1,24 @@
+{% extends "essays/base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Lista de temas</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Título</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for theme in object_list %}
+            <tr>
+                <td>{{ theme.title }}</td>
+                <td><a type="button" class="btn btn-primary" href="/essays/themes/{{ theme.id }}">Detalhe</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "essays/base.html" %}
+{% block content %}
+
+<div class="container">
+    </br>
+    <h4 align="center">Detalhes da redação</h4>
+    
+    <h5>Tema</h5>
+    <p class="text-monospace">{{essay.theme.title}}</p>
+
+
+    <h5>Título</h5>
+    <p class="text-monospace">{{essay.title}}</p>
+
+    <h5>Conteúdo</h5>
+    <p class="text-monospace">{{essay.content}}</p>
+
+    <h5>Data de criacao</h5>
+    <p class="text-monospace">{{essay.creation_date}}</p>
+
+    <div class="card">
+        <div class="card-header">
+        Correção
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Nota</h5>
+            <p class="card-text">{{essay.grade}}</p>
+
+            <h5 class="card-title">Comentários</h5>
+            <p class="card-text">{{essay.comments}}</p>
+        </div>
+    </div>
+
+    <div style="margin-top:20px">
+        <a type="button" class="btn btn-secondary" href="{%url 'list' %}">Voltar</a>
+    </div>
+
+</div>
+
+{% endblock content %}
