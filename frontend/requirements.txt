@@ -1,0 +1,2 @@
+django-bootstrap4==23.2
+django-crispy-forms==2.0
