@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, Enum, String, Float, Date, Integer, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+import re
 
 Base = declarative_base()
 
@@ -58,7 +59,33 @@ class Essay(Base):
             date=date
         )
 
+    @classmethod
+    def  convert_object_uol(cls, essay, theme, date=datetime.today()):
+        if isinstance(date, str):
+            date = format_date(date)
+        print(21)
+        return cls(
+            title=essay["titulo"],
+            #grade=essay["nota"],
+            content=preprocess_content(essay["texto"]),
+            #analysis=essay["analise"],
+            #origin=UOL,
+            #theme=theme,
+            #date=date
+        )
+
 
 def format_date(date):
     date_format = '%Y-%m-%dT%H:%M'
-    return datetime.strptime(date, date_format)
+    try:
+        data_datetime = datetime.strptime(date, date_format)
+    except:
+        mes, ano = date.split('/')
+        mes_number = meses[mes]
+        data_com_dia = f"{ano}-{mes_number}-01"  # Adicionando o dia 01 à data
+        data_datetime = datetime.strptime(data_com_dia, '%Y-%m-%d')
+
+    return data_datetime
+
+def preprocess_content(content):
+    return re.sub(CLEANR, '', content)

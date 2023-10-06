@@ -1,0 +1,16 @@
+{
+  "title": "Frontend",
+  "description": "Let's learn how Textgrader website works.",
+  "slug": "/category/frontend",
+  "permalink": "/docs/next/category/frontend",
+  "navigation": {
+    "previous": {
+      "title": "Tutorial Intro",
+      "permalink": "/docs/next/intro"
+    },
+    "next": {
+      "title": "Overview",
+      "permalink": "/docs/next/frontend/overview"
+    }
+  }
+}

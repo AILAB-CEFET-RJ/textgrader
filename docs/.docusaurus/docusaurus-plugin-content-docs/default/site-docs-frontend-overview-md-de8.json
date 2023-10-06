@@ -1,0 +1,27 @@
+{
+  "unversionedId": "frontend/overview",
+  "id": "frontend/overview",
+  "title": "Overview",
+  "description": "Let's check Textgrader Frontend Project Overview in 5 minutes.",
+  "source": "@site/docs/frontend/overview.md",
+  "sourceDirName": "frontend",
+  "slug": "/frontend/overview",
+  "permalink": "/docs/next/frontend/overview",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/overview.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Frontend",
+    "permalink": "/docs/next/category/frontend"
+  },
+  "next": {
+    "title": "Layout",
+    "permalink": "/docs/next/frontend/layout"
+  }
+}

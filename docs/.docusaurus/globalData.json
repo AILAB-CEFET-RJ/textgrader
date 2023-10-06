@@ -1,0 +1,156 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": false,
+          "path": "/docs/next",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "backend/api",
+              "path": "/docs/next/backend/api",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/congratulations",
+              "path": "/docs/next/backend/congratulations",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/essay-grading",
+              "path": "/docs/next/backend/essay-grading",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/overview",
+              "path": "/docs/next/backend/overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/congratulations",
+              "path": "/docs/next/frontend/congratulations",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/essay-page",
+              "path": "/docs/next/frontend/essay-page",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/layout",
+              "path": "/docs/next/frontend/layout",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/overview",
+              "path": "/docs/next/frontend/overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/docs/next/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/frontend",
+              "path": "/docs/next/category/frontend",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/backend",
+              "path": "/docs/next/category/backend",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/docs/next/intro",
+                "label": "intro"
+              }
+            }
+          }
+        },
+        {
+          "name": "0.1.2",
+          "label": "0.1.2",
+          "isLast": true,
+          "path": "/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "backend/api",
+              "path": "/docs/backend/api",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/congratulations",
+              "path": "/docs/backend/congratulations",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/essay-grading",
+              "path": "/docs/backend/essay-grading",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "backend/overview",
+              "path": "/docs/backend/overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/congratulations",
+              "path": "/docs/frontend/congratulations",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/essay-page",
+              "path": "/docs/frontend/essay-page",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/layout",
+              "path": "/docs/frontend/layout",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "frontend/overview",
+              "path": "/docs/frontend/overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/docs/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/frontend",
+              "path": "/docs/category/frontend",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "/category/backend",
+              "path": "/docs/category/backend",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/docs/intro",
+                "label": "version-0.1.2/intro"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

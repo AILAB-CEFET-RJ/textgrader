@@ -1,0 +1,783 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "label": "Next",
+          "banner": "unreleased",
+          "badge": true,
+          "noIndex": false,
+          "className": "docs-version-current",
+          "path": "/docs/next",
+          "tagsPath": "/docs/next/tags",
+          "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs",
+          "editUrlLocalized": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "isLast": false,
+          "sidebarFilePath": "/docs/sidebars.js",
+          "contentPath": "/docs/docs",
+          "contentPathLocalized": "/docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "docs": [
+            {
+              "unversionedId": "backend/api",
+              "id": "backend/api",
+              "title": "API",
+              "description": "Let's check Textgrader API in 5 minutes.",
+              "source": "@site/docs/backend/api.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/api",
+              "permalink": "/docs/next/backend/api",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/api.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Overview",
+                "permalink": "/docs/next/backend/overview"
+              },
+              "next": {
+                "title": "Essay Grading",
+                "permalink": "/docs/next/backend/essay-grading"
+              }
+            },
+            {
+              "unversionedId": "backend/congratulations",
+              "id": "backend/congratulations",
+              "title": "Congratulations!",
+              "description": "You have just learned the Textgrader backend and made the project running locally.",
+              "source": "@site/docs/backend/congratulations.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/congratulations",
+              "permalink": "/docs/next/backend/congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/congratulations.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Essay Grading",
+                "permalink": "/docs/next/backend/essay-grading"
+              }
+            },
+            {
+              "unversionedId": "backend/essay-grading",
+              "id": "backend/essay-grading",
+              "title": "Essay Grading",
+              "description": "Let's check Textgrader most important feature in 5 minutes.",
+              "source": "@site/docs/backend/essay-grading.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/essay-grading",
+              "permalink": "/docs/next/backend/essay-grading",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/essay-grading.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "API",
+                "permalink": "/docs/next/backend/api"
+              },
+              "next": {
+                "title": "Congratulations!",
+                "permalink": "/docs/next/backend/congratulations"
+              }
+            },
+            {
+              "unversionedId": "backend/overview",
+              "id": "backend/overview",
+              "title": "Overview",
+              "description": "Let's check Textgrader Backend Project Overview in 5 minutes.",
+              "source": "@site/docs/backend/overview.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/overview",
+              "permalink": "/docs/next/backend/overview",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/overview.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Backend",
+                "permalink": "/docs/next/category/backend"
+              },
+              "next": {
+                "title": "API",
+                "permalink": "/docs/next/backend/api"
+              }
+            },
+            {
+              "unversionedId": "frontend/congratulations",
+              "id": "frontend/congratulations",
+              "title": "Congratulations!",
+              "description": "You have just learned the Textgrader Frontend and made the project running locally.",
+              "source": "@site/docs/frontend/congratulations.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/congratulations",
+              "permalink": "/docs/next/frontend/congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/congratulations.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Essay Page",
+                "permalink": "/docs/next/frontend/essay-page"
+              },
+              "next": {
+                "title": "Backend",
+                "permalink": "/docs/next/category/backend"
+              }
+            },
+            {
+              "unversionedId": "frontend/essay-page",
+              "id": "frontend/essay-page",
+              "title": "Essay Page",
+              "description": "Let's check Textgrader most important page in 5 minutes.",
+              "source": "@site/docs/frontend/essay-page.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/essay-page",
+              "permalink": "/docs/next/frontend/essay-page",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/essay-page.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Layout",
+                "permalink": "/docs/next/frontend/layout"
+              },
+              "next": {
+                "title": "Congratulations!",
+                "permalink": "/docs/next/frontend/congratulations"
+              }
+            },
+            {
+              "unversionedId": "frontend/layout",
+              "id": "frontend/layout",
+              "title": "Layout",
+              "description": "Let's check Textgrader layout in 5 minutes.",
+              "source": "@site/docs/frontend/layout.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/layout",
+              "permalink": "/docs/next/frontend/layout",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/layout.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Overview",
+                "permalink": "/docs/next/frontend/overview"
+              },
+              "next": {
+                "title": "Essay Page",
+                "permalink": "/docs/next/frontend/essay-page"
+              }
+            },
+            {
+              "unversionedId": "frontend/overview",
+              "id": "frontend/overview",
+              "title": "Overview",
+              "description": "Let's check Textgrader Frontend Project Overview in 5 minutes.",
+              "source": "@site/docs/frontend/overview.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/overview",
+              "permalink": "/docs/next/frontend/overview",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/frontend/overview.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Frontend",
+                "permalink": "/docs/next/category/frontend"
+              },
+              "next": {
+                "title": "Layout",
+                "permalink": "/docs/next/frontend/layout"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "Tutorial Intro",
+              "description": "Let's discover Textgrader in less than 3 minutes.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/docs/next/intro",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Frontend",
+                "permalink": "/docs/next/category/frontend"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "category",
+                "label": "Frontend",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "frontend/overview"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "frontend/layout"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "frontend/essay-page"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "frontend/congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "Let's learn how Textgrader website works.",
+                  "slug": "/category/frontend",
+                  "permalink": "/docs/next/category/frontend"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Backend",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "backend/overview"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "backend/api"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "backend/essay-grading"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "backend/congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "Let's learn how Textgrader backend works.",
+                  "slug": "/category/backend",
+                  "permalink": "/docs/next/category/backend"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "versionName": "0.1.2",
+          "label": "0.1.2",
+          "banner": null,
+          "badge": true,
+          "noIndex": false,
+          "className": "docs-version-0.1.2",
+          "path": "/docs",
+          "tagsPath": "/docs/tags",
+          "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2",
+          "editUrlLocalized": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/i18n/en/docusaurus-plugin-content-docs/version-0.1.2",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/docs/versioned_sidebars/version-0.1.2-sidebars.json",
+          "contentPath": "/docs/versioned_docs/version-0.1.2",
+          "contentPathLocalized": "/docs/i18n/en/docusaurus-plugin-content-docs/version-0.1.2",
+          "docs": [
+            {
+              "unversionedId": "backend/api",
+              "id": "version-0.1.2/backend/api",
+              "title": "API",
+              "description": "Let's check Textgrader API in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/backend/api.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/api",
+              "permalink": "/docs/backend/api",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/backend/api.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Overview",
+                "permalink": "/docs/backend/overview"
+              },
+              "next": {
+                "title": "Essay Grading",
+                "permalink": "/docs/backend/essay-grading"
+              }
+            },
+            {
+              "unversionedId": "backend/congratulations",
+              "id": "version-0.1.2/backend/congratulations",
+              "title": "Congratulations!",
+              "description": "You have just learned the Textgrader backend and made the project running locally.",
+              "source": "@site/versioned_docs/version-0.1.2/backend/congratulations.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/congratulations",
+              "permalink": "/docs/backend/congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/backend/congratulations.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Essay Grading",
+                "permalink": "/docs/backend/essay-grading"
+              }
+            },
+            {
+              "unversionedId": "backend/essay-grading",
+              "id": "version-0.1.2/backend/essay-grading",
+              "title": "Essay Grading",
+              "description": "Let's check Textgrader most important feature in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/backend/essay-grading.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/essay-grading",
+              "permalink": "/docs/backend/essay-grading",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/backend/essay-grading.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "API",
+                "permalink": "/docs/backend/api"
+              },
+              "next": {
+                "title": "Congratulations!",
+                "permalink": "/docs/backend/congratulations"
+              }
+            },
+            {
+              "unversionedId": "backend/overview",
+              "id": "version-0.1.2/backend/overview",
+              "title": "Overview",
+              "description": "Let's check Textgrader Backend Project Overview in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/backend/overview.md",
+              "sourceDirName": "backend",
+              "slug": "/backend/overview",
+              "permalink": "/docs/backend/overview",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/backend/overview.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Backend",
+                "permalink": "/docs/category/backend"
+              },
+              "next": {
+                "title": "API",
+                "permalink": "/docs/backend/api"
+              }
+            },
+            {
+              "unversionedId": "frontend/congratulations",
+              "id": "version-0.1.2/frontend/congratulations",
+              "title": "Congratulations!",
+              "description": "You have just learned the Textgrader Frontend and made the project running locally.",
+              "source": "@site/versioned_docs/version-0.1.2/frontend/congratulations.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/congratulations",
+              "permalink": "/docs/frontend/congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/congratulations.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Essay Page",
+                "permalink": "/docs/frontend/essay-page"
+              },
+              "next": {
+                "title": "Backend",
+                "permalink": "/docs/category/backend"
+              }
+            },
+            {
+              "unversionedId": "frontend/essay-page",
+              "id": "version-0.1.2/frontend/essay-page",
+              "title": "Essay Page",
+              "description": "Let's check Textgrader most important page in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/frontend/essay-page.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/essay-page",
+              "permalink": "/docs/frontend/essay-page",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/essay-page.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Layout",
+                "permalink": "/docs/frontend/layout"
+              },
+              "next": {
+                "title": "Congratulations!",
+                "permalink": "/docs/frontend/congratulations"
+              }
+            },
+            {
+              "unversionedId": "frontend/layout",
+              "id": "version-0.1.2/frontend/layout",
+              "title": "Layout",
+              "description": "Let's check Textgrader layout in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/frontend/layout.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/layout",
+              "permalink": "/docs/frontend/layout",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/layout.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Overview",
+                "permalink": "/docs/frontend/overview"
+              },
+              "next": {
+                "title": "Essay Page",
+                "permalink": "/docs/frontend/essay-page"
+              }
+            },
+            {
+              "unversionedId": "frontend/overview",
+              "id": "version-0.1.2/frontend/overview",
+              "title": "Overview",
+              "description": "Let's check Textgrader Frontend Project Overview in 5 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/frontend/overview.md",
+              "sourceDirName": "frontend",
+              "slug": "/frontend/overview",
+              "permalink": "/docs/frontend/overview",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/frontend/overview.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Frontend",
+                "permalink": "/docs/category/frontend"
+              },
+              "next": {
+                "title": "Layout",
+                "permalink": "/docs/frontend/layout"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "version-0.1.2/intro",
+              "title": "Tutorial Intro",
+              "description": "Let's discover Textgrader in less than 3 minutes.",
+              "source": "@site/versioned_docs/version-0.1.2/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/docs/intro",
+              "draft": false,
+              "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/versioned_docs/version-0.1.2/intro.md",
+              "tags": [],
+              "version": "0.1.2",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Frontend",
+                "permalink": "/docs/category/frontend"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "version-0.1.2/intro"
+              },
+              {
+                "type": "category",
+                "label": "Frontend",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/frontend/overview"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/frontend/layout"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/frontend/essay-page"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/frontend/congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "Let's learn how Textgrader website works.",
+                  "slug": "/category/frontend",
+                  "permalink": "/docs/category/frontend"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Backend",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/backend/overview"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/backend/api"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/backend/essay-grading"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "version-0.1.2/backend/congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "Let's learn how Textgrader backend works.",
+                  "slug": "/category/backend",
+                  "permalink": "/docs/category/backend"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogSidebarTitle": "Recent posts",
+      "blogPosts": [
+        {
+          "id": "welcome",
+          "metadata": {
+            "permalink": "/blog/welcome",
+            "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/blog/2023-06-15-welcome/index.md",
+            "source": "@site/blog/2023-06-15-welcome/index.md",
+            "title": "Welcome",
+            "description": "Welcome to Textgrader first blog post! On this blog we will write about:",
+            "date": "2023-06-15T00:00:00.000Z",
+            "formattedDate": "June 15, 2023",
+            "tags": [
+              {
+                "label": "textgrader",
+                "permalink": "/blog/tags/textgrader"
+              },
+              {
+                "label": "hello",
+                "permalink": "/blog/tags/hello"
+              }
+            ],
+            "readingTime": 0.16,
+            "hasTruncateMarker": false,
+            "authors": [
+              {
+                "name": "Cássio Fernando Brito de Souza",
+                "title": "Textgrader Developer",
+                "url": "https://github.com/cassiofb-dev",
+                "imageURL": "https://github.com/cassiofb-dev.png",
+                "key": "cassio"
+              }
+            ],
+            "frontMatter": {
+              "slug": "welcome",
+              "title": "Welcome",
+              "authors": [
+                "cassio"
+              ],
+              "tags": [
+                "textgrader",
+                "hello"
+              ]
+            }
+          },
+          "content": "Welcome to Textgrader first blog post! On this blog we will write about:\n\n1. Textgrader Releases Notes\n2. Textgrader Usecases\n3. Textgrader Related News\n\nStay tunned here for receiving the quickest infos!"
+        }
+      ],
+      "blogListPaginated": [
+        {
+          "items": [
+            "welcome"
+          ],
+          "metadata": {
+            "permalink": "/blog",
+            "page": 1,
+            "postsPerPage": 10,
+            "totalPages": 1,
+            "totalCount": 1,
+            "blogDescription": "Blog",
+            "blogTitle": "Blog"
+          }
+        }
+      ],
+      "blogTags": {
+        "/blog/tags/textgrader": {
+          "label": "textgrader",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/blog/tags/textgrader",
+          "pages": [
+            {
+              "items": [
+                "welcome"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/textgrader",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/blog/tags/hello": {
+          "label": "hello",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/blog/tags/hello",
+          "pages": [
+            {
+              "items": [
+                "welcome"
+              ],
+              "metadata": {
+                "permalink": "/blog/tags/hello",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        }
+      },
+      "blogTagsListPath": "/blog/tags"
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/",
+        "source": "@site/src/pages/index.tsx"
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {},
+  "docusaurus-theme-classic": {},
+  "docusaurus-bootstrap-plugin": {},
+  "docusaurus-mdx-fallback-plugin": {}
+}

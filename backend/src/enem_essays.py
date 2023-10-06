@@ -22,6 +22,57 @@ SHORT_ANSWER_FILE = f"{SHORT_ANSWER_PATH}/short_answers.xlsx"
 def create_datalake_dirs():
     os.makedirs(ESSAY_PATH, exist_ok=True, mode=0o777)
     os.makedirs(SHORT_ANSWER_PATH, exist_ok=True, mode=0o777)
+    os.makedirs(ESSAY_PATH, exist_ok=True)
+    os.makedirs(SHORT_ANSWER_PATH, exist_ok=True)
+
+def get_themes():
+    ## getting themes
+    theme_url ='https://raw.githubusercontent.com/vansoares/redacoes-crawler/main/redacoes_enem/redacoes_enem/results/temas-contexto.json'
+    themes_json = requests.get(theme_url).json()
+    for t in themes_json:
+        try:
+            if "context" in themes_json[t] and themes_json[t]["context"]  != "":
+                title = themes_json[t]["title"]
+                date = themes_json[t]["data"]
+                context = themes_json[t]["context"]
+                theme = dbManager.create_theme(title, date, context)
+
+        except IntegrityError as e:
+            assert isinstance(e.orig, UniqueViolation)  # proves the original exception
+            print('Ja existe: {}'.format(themes_json[t]["title"]))
+            continue
+
+    print('-'*50)
+    print('TEMAS SALVOS')
+    print('-'*50)
+
+def get_essays():
+    CORPUS_ESSAYS = []
+    url = 'https://raw.githubusercontent.com/vansoares/redacoes-crawler/main/redacoes_enem/redacoes_enem/results/tema-{}.json'
+    for i in range(1, 170):
+        theme_url = url.format(i)
+        try:
+            json = requests.get(theme_url).json()
+            CORPUS_ESSAYS.append(json)
+
+            for essay in json:
+                theme = dbManager.get_theme_by_name(essay["tema"])
+                essay = dbManager.create_essays(essay, theme)
+
+        except Exception as e:
+            error_message = traceback.format_exc()
+            print ('ERROR:', error_message)   
+
+    print('-'*50)
+    print('REDACOES SALVAS')
+    print('-'*50)
+
+def download_and_convert_brasil_escola_corpus_essay():
+
+    get_themes()
+    get_essays()
+    
+    #print(len(CORPUS_ESSAYS))
 
 
 def download_and_convert_uol_corpus_essays():
@@ -81,4 +132,5 @@ if __name__ == '__main__':
     #dbManager.get()
     setup_ntlk()
     create_datalake_dirs()
-    download_and_convert_uol_corpus_essays()
+    #download_and_convert_uol_corpus_essays()
+    download_and_convert_brasil_escola_corpus_essay()

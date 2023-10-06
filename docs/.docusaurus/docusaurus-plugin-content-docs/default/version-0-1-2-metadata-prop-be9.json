@@ -1,0 +1,142 @@
+{
+  "pluginId": "default",
+  "version": "0.1.2",
+  "label": "0.1.2",
+  "banner": null,
+  "badge": true,
+  "noIndex": false,
+  "className": "docs-version-0.1.2",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "link",
+        "label": "Tutorial Intro",
+        "href": "/docs/intro",
+        "docId": "intro"
+      },
+      {
+        "type": "category",
+        "label": "Frontend",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Overview",
+            "href": "/docs/frontend/overview",
+            "docId": "frontend/overview"
+          },
+          {
+            "type": "link",
+            "label": "Layout",
+            "href": "/docs/frontend/layout",
+            "docId": "frontend/layout"
+          },
+          {
+            "type": "link",
+            "label": "Essay Page",
+            "href": "/docs/frontend/essay-page",
+            "docId": "frontend/essay-page"
+          },
+          {
+            "type": "link",
+            "label": "Congratulations!",
+            "href": "/docs/frontend/congratulations",
+            "docId": "frontend/congratulations"
+          }
+        ],
+        "href": "/docs/category/frontend"
+      },
+      {
+        "type": "category",
+        "label": "Backend",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Overview",
+            "href": "/docs/backend/overview",
+            "docId": "backend/overview"
+          },
+          {
+            "type": "link",
+            "label": "API",
+            "href": "/docs/backend/api",
+            "docId": "backend/api"
+          },
+          {
+            "type": "link",
+            "label": "Essay Grading",
+            "href": "/docs/backend/essay-grading",
+            "docId": "backend/essay-grading"
+          },
+          {
+            "type": "link",
+            "label": "Congratulations!",
+            "href": "/docs/backend/congratulations",
+            "docId": "backend/congratulations"
+          }
+        ],
+        "href": "/docs/category/backend"
+      }
+    ]
+  },
+  "docs": {
+    "backend/api": {
+      "id": "backend/api",
+      "title": "API",
+      "description": "Let's check Textgrader API in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "backend/congratulations": {
+      "id": "backend/congratulations",
+      "title": "Congratulations!",
+      "description": "You have just learned the Textgrader backend and made the project running locally.",
+      "sidebar": "tutorialSidebar"
+    },
+    "backend/essay-grading": {
+      "id": "backend/essay-grading",
+      "title": "Essay Grading",
+      "description": "Let's check Textgrader most important feature in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "backend/overview": {
+      "id": "backend/overview",
+      "title": "Overview",
+      "description": "Let's check Textgrader Backend Project Overview in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "frontend/congratulations": {
+      "id": "frontend/congratulations",
+      "title": "Congratulations!",
+      "description": "You have just learned the Textgrader Frontend and made the project running locally.",
+      "sidebar": "tutorialSidebar"
+    },
+    "frontend/essay-page": {
+      "id": "frontend/essay-page",
+      "title": "Essay Page",
+      "description": "Let's check Textgrader most important page in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "frontend/layout": {
+      "id": "frontend/layout",
+      "title": "Layout",
+      "description": "Let's check Textgrader layout in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "frontend/overview": {
+      "id": "frontend/overview",
+      "title": "Overview",
+      "description": "Let's check Textgrader Frontend Project Overview in 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "intro": {
+      "id": "intro",
+      "title": "Tutorial Intro",
+      "description": "Let's discover Textgrader in less than 3 minutes.",
+      "sidebar": "tutorialSidebar"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "permalink": "/blog/welcome",
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/blog/2023-06-15-welcome/index.md",
+  "source": "@site/blog/2023-06-15-welcome/index.md",
+  "title": "Welcome",
+  "description": "Welcome to Textgrader first blog post! On this blog we will write about:",
+  "date": "2023-06-15T00:00:00.000Z",
+  "formattedDate": "June 15, 2023",
+  "tags": [
+    {
+      "label": "textgrader",
+      "permalink": "/blog/tags/textgrader"
+    },
+    {
+      "label": "hello",
+      "permalink": "/blog/tags/hello"
+    }
+  ],
+  "readingTime": 0.16,
+  "hasTruncateMarker": false,
+  "authors": [
+    {
+      "name": "Cássio Fernando Brito de Souza",
+      "title": "Textgrader Developer",
+      "url": "https://github.com/cassiofb-dev",
+      "imageURL": "https://github.com/cassiofb-dev.png",
+      "key": "cassio"
+    }
+  ],
+  "frontMatter": {
+    "slug": "welcome",
+    "title": "Welcome",
+    "authors": [
+      "cassio"
+    ],
+    "tags": [
+      "textgrader",
+      "hello"
+    ]
+  }
+}

@@ -11,7 +11,7 @@ def save_essay_corpus():
     essay_corpora = [word_tokenize(i) for i in lista_ensaios]
     save_as_pickle(essay_corpora, os.path.join(config.SHARED_CONTAINER, 'model', 'word_embedding', 'corpora'),
                    'essay_corpora.pkl')
-
+    print("SAVED!")
     return essay_corpora
 
 

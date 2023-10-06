@@ -1,0 +1,27 @@
+{
+  "unversionedId": "backend/essay-grading",
+  "id": "backend/essay-grading",
+  "title": "Essay Grading",
+  "description": "Let's check Textgrader most important feature in 5 minutes.",
+  "source": "@site/docs/backend/essay-grading.md",
+  "sourceDirName": "backend",
+  "slug": "/backend/essay-grading",
+  "permalink": "/docs/next/backend/essay-grading",
+  "draft": false,
+  "editUrl": "https://github.com/MLRG-CEFET-RJ/textgrader/docs/docs/backend/essay-grading.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "API",
+    "permalink": "/docs/next/backend/api"
+  },
+  "next": {
+    "title": "Congratulations!",
+    "permalink": "/docs/next/backend/congratulations"
+  }
+}
