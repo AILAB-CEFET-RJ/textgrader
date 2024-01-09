@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  backend:
+backend:
     container_name: backend
     image: python:3.10
     working_dir: "/backend"
@@ -12,7 +12,7 @@ services:
       cd src && python requirements.py && python run.py task general_tasks task_correct_essays &&
       python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
     ports:
-      - 8000:8000
+      - 3006:8000
     volumes:
       - ./backend:/backend
 
@@ -20,8 +20,8 @@ services:
     container_name: frontend
     image: node:lts-alpine
     working_dir: "/frontend"
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "yarn && yarn prod"
     ports:
-      - 3001:3000
+      - 3005:3000
     volumes:
       - ./frontend:/frontend

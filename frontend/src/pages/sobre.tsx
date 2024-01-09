@@ -16,7 +16,9 @@ const Sobre = () => {
     return (
         <div style={{display: "flex", justifyContent: "center"}}>
             <div style={{maxWidth: "90vw", padding: "16px"}}>
-                <ReactMarkdown rehypePlugins={[rehypeRaw]} children={content} skipHtml={false}/>
+                <ReactMarkdown rehypePlugins={[rehypeRaw]} skipHtml={false}>
+                    {content}
+                </ReactMarkdown>
             </div>
         </div>
     )
