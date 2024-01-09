@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    container_name: backend
+    container_name: textgrader_backend
     image: python:3.10
     working_dir: "/backend"
     command: sh -c "
@@ -17,7 +17,7 @@ services:
       - ./backend:/backend
 
   frontend:
-    container_name: frontend
+    container_name: textgrader_frontend
     image: node:lts-alpine
     working_dir: "/frontend"
     command: sh -c "yarn && yarn prod"
