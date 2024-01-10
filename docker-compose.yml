@@ -15,6 +15,7 @@ services:
       - 3006:8000
     volumes:
       - ./backend:/backend
+    restart: always
 
   frontend:
     container_name: textgrader_frontend
@@ -25,3 +26,4 @@ services:
       - 3005:3000
     volumes:
       - ./frontend:/frontend
+    restart: always
