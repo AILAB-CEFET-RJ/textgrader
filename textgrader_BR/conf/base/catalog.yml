@@ -1,0 +1,129 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# An example data set definition can look as follows:
+#
+#bikes:
+#  type: pandas.CSVDataset
+#  filepath: "data/01_raw/bikes.csv"
+#
+#weather:
+#  type: spark.SparkDataset
+#  filepath: s3a://your_bucket/data/01_raw/weather*
+#  file_format: csv
+#  credentials: dev_s3
+#  load_args:
+#    header: True
+#    inferSchema: True
+#  save_args:
+#    sep: '|'
+#    header: True
+#
+#scooters:
+#  type: pandas.SQLTableDataset
+#  credentials: scooters_credentials
+#  table_name: scooters
+#  load_args:
+#    index_col: ['name']
+#    columns: ['name', 'gear']
+#  save_args:
+#    if_exists: 'replace'
+#    # if_exists: 'fail'
+#    # if_exists: 'append'
+#
+# The Data Catalog supports being able to reference the same file using two different Dataset implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://docs.kedro.org/en/stable/data/data_catalog.html
+
+ 
+ texts_json:
+    type:  PartitionedDataSet
+    dataset:
+      type: kedro.extras.datasets.pandas.JSONDataSet
+    path:  "data/01_raw/jsons"
+    filename_suffix: ".json"
+
+ all_texts_parquet:
+    type: pandas.ParquetDataSet
+    filepath: data/02_intermediate/primeiro_conjunto.parquet
+
+
+ all_texts_with_targets:
+    type: pandas.ParquetDataSet
+    filepath: data/03_primary/all_texts_with_targets.parquet
+
+ basic_train:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/train/basic_features.parquet
+
+ basic_test:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/test/basic_features.parquet
+
+
+ vectorizer:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/tf-idf_vectorizer.pkl
+
+
+ vectorized_train:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/train/basic_features.parquet
+
+ vectorized_test:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/test/basic_features.parquet
+
+
+ primeiro_treino:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/train/primeiro_conjunto.parquet
+
+ segundo_treino:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/train/segundo_conjunto.parquet
+
+ terceiro_treino:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/train/terceiro_conjunto.parquet
+
+
+
+ primeiro_teste:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/test/primeiro_conjunto.parquet
+
+ segundo_teste:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/test/segundo_conjunto.parquet
+
+ terceiro_teste:
+    type: pandas.ParquetDataSet
+    filepath: data/05_model_input/test/terceiro_conjunto.parquet
+
+
+ primeira_pred_geral:
+    type: pandas.ParquetDataSet
+    filepath: data/07_model_output/previsao_geral/primeiro_conjunto/results.parquet
+
+
+ primeira_pred_especifica:
+    type: pandas.ParquetDataSet
+    filepath: data/07_model_output/pred_especifica/primeiro_conjunto/results.parquet
+
+ report_especifica:
+    type: pandas.ParquetDataSet
+    filepath: data/08_reporting/pred_especifica/primeiro_conjunto/report_table.parquet
+
+ report_geral:
+    type: pandas.ParquetDataSet
+    filepath: data/08_reporting/pred_geral/primeiro_conjunto/report_table.parquet
+
+ final_scores_experiment:
+    type: pandas.ParquetDataSet
+    filepath: data/08_reporting/pred_geral/primeiro_conjunto/final_scores_experiment.parquet
+
