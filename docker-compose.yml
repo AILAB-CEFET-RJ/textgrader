@@ -19,9 +19,11 @@ services:
 
   frontend:
     container_name: textgrader_frontend
-    build: .
+    image: node:lts-alpine
+    working_dir: "/frontend"
+    command: sh -c "yarn && yarn prod"
     ports:
       - 3005:3000
-    environment:
-      - NODE_ENV=development
+    volumes:
+      - ./frontend:/frontend
     restart: always
