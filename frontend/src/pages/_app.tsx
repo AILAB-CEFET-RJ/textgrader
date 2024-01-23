@@ -20,17 +20,17 @@ export default function App({ Component, pageProps }: AppProps) {
           defaultSelectedKeys={['2']}
         >
           <Menu.Item>
-            <Link href="/">
+            <Link href="/textgrader">
               Início
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href="/redacao">
+            <Link href="/textgrader/redacao">
               Redação
             </Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href="/sobre">
+            <Link href="/textgrader/sobre">
               Sobre
             </Link>
           </Menu.Item>
