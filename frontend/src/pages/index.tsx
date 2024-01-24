@@ -30,7 +30,7 @@ const Redacao = () => {
     };
 
     const getEssayGrade = async () => {
-        const response = await axios.post('http://0.0.0.0:3006/textgrader/grade/', {
+        const response = await axios.post('https://dal.eic.cefet-rj.br/textgrader_api/grade', {
             essay: essay,
         });
 
