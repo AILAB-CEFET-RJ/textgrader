@@ -33,8 +33,8 @@ def home():
 
   return response
 
-@app.post("/text_grade/")
-async def text_grade(request: Request) -> dict[str, int]:
+@app.post("/grade")
+async def text_grade(request: Request) -> dict[str, float]:
   response = {
     "grade": predict_from_text(request.essay)
   }
