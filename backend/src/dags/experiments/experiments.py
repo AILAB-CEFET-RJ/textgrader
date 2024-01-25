@@ -31,16 +31,9 @@ def experiments_with_lsi_topics(selected_container,text_range):
     for topic_number in config.LSI_TOPIC_NUMBERS:
         logger.info(f"training models with the {topic_number} dataset")
 
-        print(topic_number)
-
-
         for i in text_range:
             input_directory = os.path.join(selected_container,'processed','train',f'set_{i}','domain_1')
             input_filename = f'lsi_{topic_number}_topics.parquet'
-
-            print(i)
-
-            logger.info(f"text {i}")
 
             df = pd.read_parquet(os.path.join(input_directory,input_filename))
             df = df.dropna()
@@ -154,8 +147,6 @@ def evaluate_universal_sentence_encoder_predictions(selected_container,text_rang
 
     df_results = pd.DataFrame.from_records(listao)
     df_results.columns = ['text_set','USE']
-
-    print(df_results)
 
     EXPERIMENT_RESULT_FOLDER = os.path.join(selected_container,'predictions','experiment_results')
 

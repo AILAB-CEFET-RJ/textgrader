@@ -7,7 +7,7 @@ services:
     working_dir: "/backend"
     command: sh -c "
       python -m venv venv && . venv/bin/activate && pip install -U pip &&
-      pip install -U "jax[cpu]" tensorflow-cpu tensorflow_text tensorflow_hub scikit-learn nltk gensim pyarrow &&
+      pip install -U "jax[cpu]" tensorflow-cpu tensorflow_text tensorflow_hub scikit-learn nltk gensim pyarrow psycopg2-binary &&
       pip install -U pandas fastapi "uvicorn[standard]" orjson openpyxl colorlog pyspellchecker coloredlogs &&
       cd src && python requirements.py && python run.py task general_tasks task_correct_essays &&
       python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
@@ -15,6 +15,10 @@ services:
       - 3006:8000
     volumes:
       - ./backend:/backend
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=myuser
+      - DATABASE_PASSWORD=mypassword
     restart: always
 
   frontend:
@@ -27,3 +31,19 @@ services:
     volumes:
       - ./frontend:/frontend
     restart: always
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./sql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+    restart: always
+
+volumes:
+  postgres-data:
