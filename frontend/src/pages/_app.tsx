@@ -14,17 +14,17 @@ import cefetBranco from '../../public/cefetBranco.png'
 
 const items: MenuProps['items'] = [
   {
-    label: <Link href='/'>Início</Link>,
+    label: <Link href='/textgrader'>Início</Link>,
     key: 'inicio',
     icon: <HomeOutlined />,
   },
   {
-    label: <Link href='/redacao'>Redação</Link>,
+    label: <Link href='/textgrader/redacao'>Redação</Link>,
     key: 'redacao',
     icon: <FileTextOutlined />,
   },
   {
-    label: <Link href='/sobre'>Sobre</Link>,
+    label: <Link href='/textgrader/sobre'>Sobre</Link>,
     key: 'sobre',
     icon: <InfoCircleOutlined />,
   },
