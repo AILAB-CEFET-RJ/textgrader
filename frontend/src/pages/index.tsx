@@ -1,76 +1,30 @@
-import axios from 'axios';
+import { S } from '@/styles/Home.styles'
+import Image from 'next/image'
+import BookPagesImg from '../../public/bookPages.jpg'
 
-import { useEffect, useState } from 'react';
+const Home = () => {
+  return (
+    <S.ContentWrapper>
+      <S.ImageContainer className='ImageContainer'>
+        <Image src={BookPagesImg} alt='Páginas de livros' fill style={{ objectFit: 'cover' }} />
+      </S.ImageContainer>
+      <S.TextWrapper>
+          <S.Title>Text Grader</S.Title>
+          <S.Divider />
+          <S.Description>
+            Na educação, há várias técnicas para avaliar os estudantes, como itens de múltipla escolha e itens
+            discursivos. Os itens discursivos incluem Essays, semelhantes a redações, e Short Answer, que são respostas
+            curtas. Essays podem ser sobre qualquer tema, mas avaliadores levam em conta aspectos de comunicação e
+            raciocínio. Composition Essays são semelhantes a redações brasileiras, enquanto Examination Essays exigem
+            que os alunos mostrem conhecimento acadêmico e o sintetizem em um curto espaço de tempo. Short Answers
+            avaliam o conhecimento do aluno em tópicos específicos. Exames de larga escala, como o ENEM no Brasil e o
+            NAEP nos EUA, usam itens discursivos, incluindo redações e respostas discursivas. A avaliação automática de
+            itens discursivos é feita por programas de computador que atribuem conceitos a textos escritos em um
+            contexto educacional.
+          </S.Description>
+      </S.TextWrapper>
+    </S.ContentWrapper>
+  )
+}
 
-import { Button, Modal, Skeleton } from 'antd';
-
-import TextArea from 'antd/lib/input/TextArea';
-
-const Redacao = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const showModal = async () => {
-        await getEssayGrade();
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
-    const [essay, setEssay] = useState('');
-    const [essayGrade, setEssayGrade] = useState<number | null>(null);
-
-    const handleChange = (event: any) => {
-        setEssay(event.target.value);
-    };
-
-    const getEssayGrade = async () => {
-        const response = await axios.post('https://dal.eic.cefet-rj.br/textgrader_api/grade', {
-            essay: essay,
-        });
-
-        const data = response.data;
-
-        setEssayGrade(data.grade);
-    }
-
-    const clearEssay = () => {
-        setEssay('');
-    }
-
-    return (
-        <div style={{ padding: '0 50px' }}>
-            <h1 style={{ textAlign: 'center' }}>Redação</h1>
-
-            <TextArea value={essay} onChange={handleChange} style={{ padding: 24, minHeight: 380, background: 'white' }} placeholder="Escreva sua redação aqui" />
-
-            <Button
-                onClick={clearEssay}
-                style={{ marginTop: '16px' }}
-                type="primary"
-                danger
-            >
-                Apagar redação
-            </Button>
-
-            <Button
-                onClick={showModal}
-                style={{ marginTop: '16px', marginLeft: '16px' }}
-                type="primary"
-            >
-                Enviar redação
-            </Button>
-
-            <Modal title="Nota da redação" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
-                {essayGrade ? `A nota da redação é ${essayGrade}` : <Skeleton paragraph={{ rows: 0 }} />}
-            </Modal>
-        </div>
-    );
-};
-
-export default Redacao;
+export default Home
