@@ -66,30 +66,21 @@ def task_shared_tasks(selected_container):
         task_train_doc_2_vec()
 
     task_generate_features(selected_container)
-    print("gerou as features de todos os métodos")
     task_train_models(selected_container)
-    print("os modelos foram treinados")
     task_evaluate_models(selected_container)
-    print("a avaliação dos modelos foi feita")
     
 
 
 def task_pipeline_essays():
     task_correct_essays()
-    logger.info("corrigiu os essays")
     task_generate_essay_datasets()
     task_shared_tasks(selected_container = config.ESSAY_CONTAINER)
 
 
 def task_pipeline_short_answer():
     task_correct_short_answers()
-    logger.info("finished to correct short answers")
-
     task_generate_short_answer_datasets()
-    logger.info("finished to generate short answers datasets")
-
     task_shared_tasks(selected_container = config.ESSAY_CONTAINER)
-    logger.info("finished to generate short answers datasets")
 
 
 

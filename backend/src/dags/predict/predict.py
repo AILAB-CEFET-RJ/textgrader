@@ -34,9 +34,6 @@ def evaluate_lsi_predictions(topic_numbers = config.LSI_TOPIC_NUMBERS):
             model_directory = os.path.join('essay','model',f'set_{i}','domain_1')
             model_filename = f'lsi_{topic}_topics_rf_model.pkl'
 
-            print(i)
-            print(model_filename)
-
             output_directory = os.path.join('essay','predictions','test',f'set_{i}','domain_1')
             output_filename = f'lsi_{topic}_topics_predictions.parquet'
 
