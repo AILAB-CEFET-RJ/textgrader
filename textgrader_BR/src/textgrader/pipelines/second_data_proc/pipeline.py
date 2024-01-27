@@ -34,32 +34,33 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=fit_vectorizer,
                 inputs="basic_train",
-                outputs= 'vectorizer',
+                outputs= 'vectorizer_list',
                 name="fit_vectorizer",
             ),
 
 
             node(
                 func = vectorize_all,
-                inputs=["basic_train","basic_test",'vectorizer'],
-                outputs= ['primeiro_treino','primeiro_teste'],
+                inputs=["basic_train","basic_test",'vectorizer_list'],
+                outputs= ['vectorized_train_list','vectorized_test_list'],
                 name="vectorize_train",
             ),
 
                             
             node(
                 func= fit_predict_both_ways,
-                inputs= ['primeiro_treino','primeiro_teste'],
-                outputs= ['primeira_pred_geral','primeira_pred_especifica'],
+                inputs= ['vectorized_train_list','vectorized_test_list'],
+                outputs= ['pred_geral_lista','pred_especifica_lista'],
                 name="fir_predict_both_ways",
             ),
 
             node(
                 func= prepare_reports,
-                inputs= ['primeiro_teste','primeira_pred_geral','primeira_pred_especifica'],
-                outputs= 'final_scores_experiment',
+                inputs= ['vectorized_test_list','pred_geral_lista','pred_especifica_lista'],
+                outputs= 'final_scores_lista',
                 name="report_geral",
             ),
-
+ 
+ 
         ]
     )

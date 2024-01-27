@@ -47,6 +47,15 @@
     path:  "data/01_raw/jsons"
     filename_suffix: ".json"
 
+ vectorizer_list:
+    type:  PartitionedDataSet
+    dataset:
+      type: pickle.PickleDataSet
+    path:  data/06_models/vectorizers
+    filename_suffix: ".pkl"
+   
+
+
  all_texts_parquet:
     type: pandas.ParquetDataSet
     filepath: data/02_intermediate/primeiro_conjunto.parquet
@@ -73,6 +82,22 @@
  vectorized_train:
     type: pandas.ParquetDataSet
     filepath: data/04_feature/train/basic_features.parquet
+
+ vectorized_train_list:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/04_feature/train/train_datasets
+    filename_suffix: ".parquet"
+
+
+ vectorized_test_list:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/04_feature/test/test_datasets
+    filename_suffix: ".parquet"
+
 
  vectorized_test:
     type: pandas.ParquetDataSet
@@ -111,6 +136,25 @@
     filepath: data/07_model_output/previsao_geral/primeiro_conjunto/results.parquet
 
 
+
+
+
+ pred_geral_lista:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/07_model_output/pred_geral/
+    filename_suffix: ".parquet"
+
+ pred_especifica_lista:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/07_model_output/pred_especifica/
+    filename_suffix: ".parquet"
+
+
+
  primeira_pred_especifica:
     type: pandas.ParquetDataSet
     filepath: data/07_model_output/pred_especifica/primeiro_conjunto/results.parquet
@@ -126,4 +170,13 @@
  final_scores_experiment:
     type: pandas.ParquetDataSet
     filepath: data/08_reporting/pred_geral/primeiro_conjunto/final_scores_experiment.parquet
+
+ final_scores_lista:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/08_reporting/final_scores/
+    filename_suffix: ".parquet"
+
+
 

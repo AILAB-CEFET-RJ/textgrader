@@ -208,7 +208,7 @@ def prepare_report_table(df_real: pd.DataFrame,df_pred : pd.DataFrame) -> pd.Dat
 
 
 
-def vectorize_data(df: pd.DataFrame,model: pickle) -> pd.DataFrame:
+def vectorize_data(df: pd.DataFrame,model_dict: pickle) -> pd.DataFrame:
     """
     Usa um vetorizador TF-IDF pré-treinado para obter a representação vetorial para o conjunto de dados
 
@@ -218,20 +218,31 @@ def vectorize_data(df: pd.DataFrame,model: pickle) -> pd.DataFrame:
     """
     lista = list(df['texto'])
 
-    ## realiza efetivamente a vetorização, transformando em uma matriz esparsa
-    X = model.transform(lista)
+    dicio = {}
 
-    # transforma a matriz esparsa em um dataframe organizado com as frequencias TF-IDF das palavras 
-    df_vetorizado = pd.DataFrame(X.A, columns=model.get_feature_names_out())
+    for key,value in model_dict.items():
+
+        model = value()
+
+        ## realiza efetivamente a vetorização, transformando em uma matriz esparsa
+        X = model.transform(lista)
+
+        # transforma a matriz esparsa em um dataframe organizado com as frequencias TF-IDF das palavras 
+        df_vetorizado = pd.DataFrame(X.A, columns=model.get_feature_names_out())
+        
+        ## caso as redações contenham palavras que dão nome as features do datased
+        ## (ex: texto, link, palavra) devemos removê-las
+
+        colunas_a_remover = df.columns 
+
+        df_vetorizado = df_vetorizado.drop(columns = colunas_a_remover, errors = 'ignore')
+
+        df = pd.concat([df,df_vetorizado],axis = 1)
+        df = df.drop(columns = ['texto'],errors = 'ignore')
+
+        dicio[key] = df
+
+ 
+    retorno = dicio
     
-    ## caso as redações contenham palavras que dão nome as features do datased
-    ## (ex: texto, link, palavra) devemos removê-las
-
-    colunas_a_remover = df.columns 
-
-    df_vetorizado = df_vetorizado.drop(columns = colunas_a_remover, errors = 'ignore')
-
-    df = pd.concat([df,df_vetorizado],axis = 1)
-    df = df.drop(columns = ['texto'],errors = 'ignore')
-
-    return df
+    return retorno, dicio

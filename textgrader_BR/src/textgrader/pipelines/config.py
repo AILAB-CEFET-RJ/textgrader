@@ -27,8 +27,9 @@ TARGETS_2 =  ['Adequação ao Tema_nota',
 
 ID_VARS = ['index','tema','conjunto']
 
-ALL_TARGETS = TARGETS_1 + TARGETS_2 + TARGETS_3 
+ALL_TARGETS = TARGETS_1  
 
 EXCLUDE_COLS = ALL_TARGETS + ID_VARS
  
                                  
+TF_IDF_MAX_FEATURES = [32,64]

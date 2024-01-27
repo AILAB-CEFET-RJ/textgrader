@@ -5,6 +5,7 @@ from .config import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import cohen_kappa_score
 import pickle
+from typing import Dict
 
 def get_text_jsons(dicio_jsons: dict) -> pd.DataFrame:
     """
@@ -57,16 +58,7 @@ def preprocess_targets(df_total:pd.DataFrame) -> pd.DataFrame:
 
     ## separa e refina cada conjunto separadamente
     df_primeiro = df_total[df_total['conjunto'] == 1]
-    df_primeiro_refined = process_all(df_primeiro)
-
-    df_segundo = df_total[df_total['conjunto'] == 2]
-    df_segundo_refined = process_all(df_segundo,coluna = 'motivo')
-
-    df_terceiro = df_total[df_total['conjunto'] == 3]
-    df_terceiro_refined = process_all(df_terceiro, coluna = 'motivo')
-
-    ## junta os conjuntos e exclui algumas colunas inconvenientes
-    df_geral = pd.concat([df_primeiro_refined,df_segundo_refined,df_terceiro_refined])
+    df_geral = process_all(df_primeiro)
     df_geral = df_geral.drop(columns = ['nota','competencias','- Ruim_nota'],errors = 'ignore')
 
 
@@ -75,9 +67,7 @@ def preprocess_targets(df_total:pd.DataFrame) -> pd.DataFrame:
     ## pois isso facilita o trabalho com kappa de cohen, mais a frente 
 
     df_geral[ALL_TARGETS] = df_geral[ALL_TARGETS].astype(float)
-    df_geral[TARGETS_2] = df_geral[TARGETS_2] * 100
-    df_geral[TARGETS_3] = df_geral[TARGETS_3] * 100
-
+    
     return df_geral
 
 
@@ -86,7 +76,7 @@ def generate_basic_features(df: pd.DataFrame) -> tuple:
     """
         Extrai features básicas e separa os datasets em treino e teste
 
-        Extrai features básicas do conjunto de dados, como a quantidade de palavras, 
+        Extrai features básicas do conjuntoke de dados, como a quantidade de palavras, 
         quantidade de palavras únicas e a quantidade de sentenças, além disso separa o dataset 
         em treino e teste de forma estratificada, buscando manter proporções iguais no treino e no teste
         para textos de cada um dos cerca de 170 temas que possuimos
@@ -99,6 +89,29 @@ def generate_basic_features(df: pd.DataFrame) -> tuple:
     df_train,df_test = separate_train_test(df)
 
     return df_train, df_test
+
+def create_versioned_dict(dfs_dict: Dict, create_folder=False) -> Dict:
+    """Creates a dictionary in order to save files versioned in the correct pattern.
+
+    Args:
+        dfs_dict: Dictionary with datasets.
+        run_date: reference date of the execution.
+
+    Returns:
+        dict: datasets and paths to be written
+
+    """
+  
+    partitioned_dict = {}
+
+    if create_folder:
+        print('nao sei, taokey')
+    else:
+        for key, dataframe in dfs_dict.items():
+            partitioned_dict[key] = dataframe
+
+    return partitioned_dict
+
 
 
 def fit_vectorizer(df_train: pd.DataFrame) -> pickle:
@@ -115,13 +128,21 @@ def fit_vectorizer(df_train: pd.DataFrame) -> pickle:
     ## obtém a lista de textos do conjunto usado para treinar o vetorizador
     lista = list(df_train['texto'])
 
-    ## cria o vetorizador que utiliza TF-IDF
-    tv = TfidfVectorizer(min_df = 10,max_features=1000)
+    dicio_tf_idf = {}
 
-    ## treina o vetorizador com o conjunto fornecido para treino
-    vectorizer = tv.fit(lista)
+    for count in TF_IDF_MAX_FEATURES:
+        ## cria o vetorizador que utiliza TF-IDF
+        tv = TfidfVectorizer(min_df = 10,max_features=count)
+
+        ## treina o vetorizador com o conjunto fornecido para treino
+        vectorizer_vez = tv.fit(lista)
+
+        key = "TF_IDF_" + str(count)
+
+        # prepara o dicionário para versionamento
+        dicio_tf_idf[key] = vectorizer_vez
     
-    return vectorizer
+    return dicio_tf_idf
 
 
 def vectorize_all(df_train: pd.DataFrame,df_test: pd.DataFrame,model : pickle) -> tuple:
@@ -141,14 +162,12 @@ def vectorize_all(df_train: pd.DataFrame,df_test: pd.DataFrame,model : pickle) -
     
     """
 
-    df_train = vectorize_data(df_train,model)
-    df_test = vectorize_data(df_test,model)
+    df_train,df_train_list = vectorize_data(df_train,model)
+    df_test,df_test_list = vectorize_data(df_test,model)
 
-    primeiro_treino, segundo_treino, terceiro_treino = separate_sets(df_train)
-    primeiro_teste, segundo_teste, terceiro_teste = separate_sets(df_test)
-    
+   
 
-    return primeiro_treino,primeiro_teste
+    return df_train_list,df_test_list
 
 
 def separate_all(df_treino,df_teste):
@@ -160,7 +179,7 @@ def separate_all(df_treino,df_teste):
     return primeiro_treino,primeiro_teste
 
 
-def fit_predict_both_ways(df_train: pd.DataFrame,df_test: pd.DataFrame) -> tuple:
+def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame) -> tuple:
     """
         Realiza o pipeline de treino e previsão tanto de forma geral, quanto de forma separada por tema
 
@@ -177,20 +196,30 @@ def fit_predict_both_ways(df_train: pd.DataFrame,df_test: pd.DataFrame) -> tuple
     
     """
 
-    df_train['group'] = 'train'
-    df_test['group'] = 'test'
-    df = pd.concat([df_train,df_test])
-    df = df.drop(columns = 'texto',errors = 'ignore')
-    pred1 = fit_predict(df)
-    pred2 = df.groupby(['tema']).apply(lambda x: fit_predict(x)).reset_index(drop = True)
-  
-    
-    return pred1,pred2
+    dict_pred_1 = {}
+    dict_pred_2 = {}
+
+    for key, value in df_train_list.items():
+        df_train = df_train_list[key]()
+        df_test = df_test_list[key]()
+
+        print(key)
+
+        df_train['group'] = 'train'
+        df_test['group'] = 'test'
+        df = pd.concat([df_train,df_test])
+        df = df.drop(columns = 'texto',errors = 'ignore')
+        pred1 = fit_predict(df)
+        pred2 = df.groupby(['tema']).apply(lambda x: fit_predict(x)).reset_index(drop = True)
+        dict_pred_1[key] = pred1
+        dict_pred_2[key] = pred2   
+
+    return dict_pred_1,dict_pred_2
 
 
-def prepare_reports(df_real :pd.DataFrame,
-                    df_pred_geral :pd.DataFrame,
-                    df_pred_especifica:pd.DataFrame) -> pd.DataFrame:
+def prepare_reports(df_real_lista :pd.DataFrame,
+                    df_pred_geral_lista :pd.DataFrame,
+                    df_pred_especifica_lista:pd.DataFrame) -> pd.DataFrame:
     """
     A partir das previsões com as duas metodologias usadas, prepara o report de resultados
 
@@ -206,21 +235,28 @@ def prepare_reports(df_real :pd.DataFrame,
         os temas
         df_pred_especifica: dataframe com as previsões feitas usando um modelo por tema
     """
+    dicio = {}
 
-    report_geral = prepare_report_table(df_real,df_pred_geral)
-    report_especifica = prepare_report_table(df_real,df_pred_especifica)
+    for key,value in df_real_lista.items():
+
+        df_pred_geral = df_pred_geral_lista[key]()
+        df_pred_especifica = df_pred_especifica_lista[key]()
+        df_real = df_real_lista[key]()
+        
+        report_geral = prepare_report_table(df_real,df_pred_geral)
+        report_especifica = prepare_report_table(df_real,df_pred_especifica)
 
 
-    res = report_geral.groupby(['conceito']).apply(lambda x: cohen_kappa_score(x['nota'],x['previsao']))
-    score_geral = pd.DataFrame(data = res).reset_index()
-    score_geral.columns = ['conceito','score_geral']
- 
-    res = report_especifica.groupby(['conceito']).apply(lambda x: cohen_kappa_score(x['nota'],x['previsao']))
-    score_especifica = pd.DataFrame(data = res).reset_index()
-    score_especifica.columns = ['conceito','score_especifica']
+        res = report_geral.groupby(['conceito']).apply(lambda x: cohen_kappa_score(x['nota'],x['previsao']))
+        score_geral = pd.DataFrame(data = res).reset_index()
+        score_geral.columns = ['conceito','score_geral']
+    
+        res = report_especifica.groupby(['conceito']).apply(lambda x: cohen_kappa_score(x['nota'],x['previsao']))
+        score_especifica = pd.DataFrame(data = res).reset_index()
+        score_especifica.columns = ['conceito','score_especifica']
 
-    df_score = pd.merge(score_geral,score_especifica, on = ['conceito'])
+        df_score = pd.merge(score_geral,score_especifica, on = ['conceito'])
 
-    return df_score
- 
- 
+        dicio[key] = df_score
+
+    return dicio
