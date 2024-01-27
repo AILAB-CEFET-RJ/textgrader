@@ -24,6 +24,8 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
+db = Database()
+
 class Request(BaseModel):
   essay: str
 
@@ -38,7 +40,6 @@ def home():
 @app.post("/grade")
 async def text_grade(request: Request) -> dict[str, float]:
   grade = predict_from_text(request.essay)
-  db = Database()
   db.save_data(request.essay, grade)
 
   return {"grade": grade}

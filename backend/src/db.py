@@ -24,6 +24,7 @@ class Database:
         }
         print(f"configs -> {db_config}")
         try:
+            print("trying to connect to database")
             self.conn = psycopg2.connect(**db_config)
             self.logger.info('Conectado ao banco de dados com sucesso!')
 
