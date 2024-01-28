@@ -196,8 +196,8 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
     
     """
 
-    dict_pred_1 = {}
-    dict_pred_2 = {}
+    dict_pred = {}
+ 
 
     for key, value in df_train_list.items():
         df_train = df_train_list[key]()
@@ -209,12 +209,22 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
         df_test['group'] = 'test'
         df = pd.concat([df_train,df_test])
         df = df.drop(columns = 'texto',errors = 'ignore')
-        pred1 = fit_predict(df)
-        pred2 = df.groupby(['tema']).apply(lambda x: fit_predict(x)).reset_index(drop = True)
-        dict_pred_1[key] = pred1
-        dict_pred_2[key] = pred2   
+        pred1 = fit_predict_by_concept(df)
+        pred2 = fit_predict_general(df)
+      
 
-    return dict_pred_1,dict_pred_2
+        pred1 = pred1.reset_index()
+        pred1.columns = ['index','sindex','tema','conjunto','SOMA_PREDS']
+
+        pred2 = pred2.reset_index()
+        pred2.columns = ['index','sindex','tema','conjunto','PRED_GERAL','TARGET']
+
+        general_preds = pred1.merge(pred2, on = ['index','sindex','tema','conjunto'])
+
+        dict_pred[key] =  general_preds
+
+
+    return dict_pred
 
 
 def prepare_reports(df_real_lista :pd.DataFrame,

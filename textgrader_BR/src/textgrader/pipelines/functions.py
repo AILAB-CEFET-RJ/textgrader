@@ -120,7 +120,7 @@ def separate_train_test(df: pd.DataFrame) -> tuple:
     return X_train, x_test
 
 
-def fit_predict(df: pd.DataFrame) -> pd.DataFrame:
+def fit_predict_by_concept(df: pd.DataFrame) -> pd.DataFrame:
     """
     Realiza um pipeline de treino e teste dentro de um conjunto de textos
 
@@ -153,6 +153,49 @@ def fit_predict(df: pd.DataFrame) -> pd.DataFrame:
     preds[ID_VARS] = id_test
     preds[PRED_COLS] =  xgb.predict(X_test)
     preds[PRED_COLS] = preds[PRED_COLS].astype(int)
+
+
+    preds['SOMA_PREDS'] = preds[PRED_COLS].sum(axis = 1)
+
+    preds = preds.drop(columns = PRED_COLS)
+
+    return preds
+
+
+def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Realiza um pipeline de treino e teste dentro de um conjunto de textos
+
+    Recebe um único conjunto com textos de treino e de teste concatenados, considerando esse conjunto 
+    separa de volta os textos em treino e teste, treina o modelo com os textos de treino, 
+    e usa esse modelo para realizar previsões no conjunto de teste 
+
+    Args: 
+        df: conjunto de redações
+    """
+    
+    df['TARGET'] = df[TARGETS_1].sum(axis=1)
+    df_train = df[df['group'] == 'train'].drop(columns = ['group'])
+    df_test = df[df['group'] == 'test'].drop(columns = ['group'])
+    
+    id_train = df_train[ID_VARS]
+    X_train = df_train.drop(columns = EXCLUDE_COLS,errors = 'ignore')
+    y_train = df_train['TARGET'].astype(float)
+    
+    ## treina o modelo 
+    xgb = XGBRegressor()
+    fittado = xgb.fit(X_train, y_train)
+    
+    id_test = df_test[ID_VARS]
+    X_test = df_test.drop(columns = EXCLUDE_COLS,errors = 'ignore')
+    y_test = df_test['TARGET'].astype(float)
+   
+  
+    preds = pd.DataFrame()
+    preds[ID_VARS] = id_test
+    preds['PRED_GERAL'] =  xgb.predict(X_test)
+    preds['PRED_GERAL'] = preds['PRED_GERAL'].astype(int)
+    preds['TARGET'] = y_test
 
     return preds
 
