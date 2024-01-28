@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from dags.predict.predict_from_text import predict_from_text
 
-from db import Database
+from save_essay import save
 
 app = FastAPI(default_response_class=ORJSONResponse)
 
@@ -40,13 +40,7 @@ def home():
 @app.post("/grade")
 async def text_grade(request: Request) -> dict[str, float]:
   grade = predict_from_text(request.essay)
-  Database().save_data(request.essay, grade)
+  #Database().save_data(request.essay, grade)
+  save({"essay": request.essay, "grade": grade})
 
   return {"grade": grade}
-
-
-@app.get("/essays")
-async def essays():
-  data = Database().get_data()
-
-  return {"essays": data}
