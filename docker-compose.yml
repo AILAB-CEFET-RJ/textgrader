@@ -20,6 +20,8 @@ services:
       - DATABASE_USER=myuser
       - DATABASE_PASSWORD=mypassword
     restart: always
+    networks:
+      - app_network
 
   frontend:
     container_name: textgrader_frontend
@@ -44,8 +46,15 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./sql/create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
     restart: always
+    networks:
+      - app_network
 
 volumes:
   postgres-data:
+
+networks:
+  app_network:
+    external: true
+    name: app_network
 
 
