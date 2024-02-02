@@ -179,7 +179,7 @@ def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
     df_test = df[df['group'] == 'test'].drop(columns = ['group'])
     
     id_train = df_train[ID_VARS]
-    X_train = df_train.drop(columns = EXCLUDE_COLS,errors = 'ignore')
+    X_train = df_train.drop(columns = EXCLUDE_COLS + ['TARGET'],errors = 'ignore')
     y_train = df_train['TARGET'].astype(float)
     
     ## treina o modelo 
@@ -187,7 +187,7 @@ def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
     fittado = xgb.fit(X_train, y_train)
     
     id_test = df_test[ID_VARS]
-    X_test = df_test.drop(columns = EXCLUDE_COLS,errors = 'ignore')
+    X_test = df_test.drop(columns = EXCLUDE_COLS + ['TARGET'],errors = 'ignore')
     y_test = df_test['TARGET'].astype(float)
    
   
