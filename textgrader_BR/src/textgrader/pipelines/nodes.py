@@ -197,6 +197,7 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
     """
 
     dict_pred = {}
+    dict_model = {}
  
 
     for key, value in df_train_list.items():
@@ -210,7 +211,7 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
         df = pd.concat([df_train,df_test])
         df = df.drop(columns = 'texto',errors = 'ignore')
         pred1 = fit_predict_by_concept(df)
-        pred2 = fit_predict_general(df)
+        pred2,model = fit_predict_general(df)
       
 
         pred1 = pred1.reset_index()
@@ -222,9 +223,10 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
         general_preds = pred1.merge(pred2, on = ['index','sindex','tema','conjunto'])
 
         dict_pred[key] =  general_preds
+        dict_model[key] = model
 
 
-    return dict_pred
+    return dict_pred,dict_model
 
 
 def prepare_reports(df_real_lista :pd.DataFrame,

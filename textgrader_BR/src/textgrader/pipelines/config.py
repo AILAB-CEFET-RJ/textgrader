@@ -29,7 +29,7 @@ ID_VARS = ['index','tema','conjunto']
 
 ALL_TARGETS = TARGETS_1  
 
-EXCLUDE_COLS = ALL_TARGETS + ID_VARS
+EXCLUDE_COLS = ALL_TARGETS + ID_VARS + ['TARGET']
  
                                  
 TF_IDF_MAX_FEATURES = [32,64]

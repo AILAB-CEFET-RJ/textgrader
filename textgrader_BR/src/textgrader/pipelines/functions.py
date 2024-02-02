@@ -4,6 +4,7 @@ from nltk import word_tokenize, sent_tokenize
 from .config import * 
 from xgboost import XGBRegressor
 import pickle
+import shap
 
 
 def get_competencias(coluna : pd.Series) -> str:
@@ -197,7 +198,17 @@ def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
     preds['PRED_GERAL'] = preds['PRED_GERAL'].astype(int)
     preds['TARGET'] = y_test
 
-    return preds
+
+    # Create object that can calculate shap values
+    explainer = shap.TreeExplainer(fittado)
+
+    # calculate shap values. This is what we will plot.
+    # Calculate shap_values for all of val_X rather than a single row, to have more data for plot.
+    shap_values = explainer.shap_values(X_test)
+
+    shap.summary_plot(shap_values, X_test)
+
+    return preds,shap_values
 
 
 def separate_sets(df:pd.DataFrame) -> tuple:
