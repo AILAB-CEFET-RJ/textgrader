@@ -46,13 +46,5 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="vectorize_train",
             ),
 
-                            
-            node(
-                func= fit_predict_both_ways,
-                inputs= ['vectorized_train_list','vectorized_test_list'],
-                outputs= 'pred_geral_lista',
-                name="fir_predict_both_ways",
-            ),
- 
         ]
     )

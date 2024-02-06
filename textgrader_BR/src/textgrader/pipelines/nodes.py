@@ -6,7 +6,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import cohen_kappa_score
 import pickle
 from typing import Dict
-
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
+from gensim import corpora
+from gensim.models import LsiModel
+import tensorflow_hub as hub
+from xgboost import XGBClassifier,XGBRegressor
+from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
+ 
 def get_text_jsons(dicio_jsons: dict) -> pd.DataFrame:
     """
         Junta todos os Jsons em um único arquivo, criando uma coluna para indicar o tema das redações
@@ -114,7 +120,7 @@ def create_versioned_dict(dfs_dict: Dict, create_folder=False) -> Dict:
 
 
 
-def fit_vectorizer(df_train: pd.DataFrame) -> pickle:
+def fit_tf_idf(df_train: pd.DataFrame) -> pickle:
     """
     Método responsável por usar o conjunto de treino para treinar o vetorizador de textos 
 
@@ -145,6 +151,85 @@ def fit_vectorizer(df_train: pd.DataFrame) -> pickle:
     return dicio_tf_idf
 
 
+
+def fit_doc_2_vec(df_train: pd.DataFrame) -> pickle:
+    lista_ensaios = list(df_train['texto'])
+    essay_corpora = [word_tokenize(i) for i in lista_ensaios]
+
+    documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(essay_corpora)]
+
+    dicio_docs = {}
+
+    for vector_size in [32,64]:
+        model = Doc2Vec(documents, vector_size=vector_size)
+
+        key = f'd2v_{vector_size}'
+        dicio_docs[key] = model
+
+    return dicio_docs
+
+
+def fit_vectorizer(df_train):
+    dicio_geral = {}
+
+
+    dicio_tf_idf = fit_tf_idf(df_train)
+    dicio_geral.update(dicio_tf_idf)
+
+    dicio_doc_2_vec = fit_doc_2_vec(df_train)
+    dicio_geral.update(dicio_doc_2_vec)
+
+    try: 
+        dicio_use = fit_use()
+        dicio_geral.update(dicio_use)
+    except:
+        print('nao é possível trabalhar com o Universal sentence encoder')
+
+    
+    dicio_lsi = fit_lsi(df_train)
+    dicio_geral.update(dicio_lsi)
+
+
+    
+    print(dicio_geral.keys())
+
+    return dicio_geral
+
+
+ 
+def fit_lsi(df_train):
+
+    lista = list(df_train['texto'])
+
+    texts = []
+    for essay in lista:
+        ## tokeniza o ensaio
+        tokenized = word_tokenize(essay)
+        ## adiciona a lista de palavras na lista de listas que representa o corpus
+        texts.append(tokenized)
+
+    ## constroi o dicionario a partir da lista de listas que representa o nosso corpus
+    dictionary = corpora.Dictionary(texts)
+
+    ## constroi a matriz termo-documento a partir da lista de listas que representa o nosso corpus
+    doc_term_matrix = [dictionary.doc2bow(doc) for doc in texts]
+
+    dicio_lsi = {}
+
+    for vector_size in [32,64]:
+        ## constroi o modelo LSI a partir da matriz termo-documento, do numero de tópicos e do dicionario
+        lsamodel = LsiModel(doc_term_matrix,num_topics = vector_size, id2word = dictionary)
+        key = f'LSI_{vector_size}'
+
+        dicio_lsi[key] = lsamodel
+
+    return dicio_lsi
+
+
+ 
+
+
+
 def vectorize_all(df_train: pd.DataFrame,df_test: pd.DataFrame,model : pickle) -> tuple:
     """
         Método responsavel por vetorizar os conjuntos de treino e teste
@@ -170,6 +255,14 @@ def vectorize_all(df_train: pd.DataFrame,df_test: pd.DataFrame,model : pickle) -
     return df_train_list,df_test_list
 
 
+def fit_use():
+    embedder = hub.load("https://tfhub.dev/google/universal-sentence-encoder-multilingual-large/")
+
+    dicio = {'USE':embedder}
+
+    return dicio
+
+
 def separate_all(df_treino,df_teste):
 
     primeiro_treino, segundo_treino, terceiro_treino = separate_sets(df_treino)
@@ -179,7 +272,7 @@ def separate_all(df_treino,df_teste):
     return primeiro_treino,primeiro_teste
 
 
-def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame) -> tuple:
+def general_fit(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame,model_type) -> tuple:
     """
         Realiza o pipeline de treino e previsão tanto de forma geral, quanto de forma separada por tema
 
@@ -203,28 +296,36 @@ def fit_predict_both_ways(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame
         df_train = df_train_list[key]()
         df_test = df_test_list[key]()
 
-        print(key)
+        new_key = f'{key}'
 
         df_train['group'] = 'train'
         df_test['group'] = 'test'
         df = pd.concat([df_train,df_test])
         df = df.drop(columns = 'texto',errors = 'ignore')
-        pred1 = fit_predict_by_concept(df)
-        pred2 = fit_predict_general(df)
+        pred = fit_predict_general(df,model_type)
       
-
-        pred1 = pred1.reset_index()
-        pred1.columns = ['index','sindex','tema','conjunto','SOMA_PREDS']
-
-        pred2 = pred2.reset_index()
-        pred2.columns = ['index','sindex','tema','conjunto','PRED_GERAL','TARGET']
-
-        general_preds = pred1.merge(pred2, on = ['index','sindex','tema','conjunto'])
-
-        dict_pred[key] =  general_preds
+        dict_pred[new_key] =  pred
 
 
     return dict_pred
+
+
+def classification_fit(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame):
+    model = RandomForestClassifier()
+
+    dict_resp = general_fit(df_train_list,df_test_list,model)
+
+    return dict_resp
+
+
+def regression_fit(df_train_list: pd.DataFrame,df_test_list: pd.DataFrame):
+    model = RandomForestRegressor()
+
+    dict_resp = general_fit(df_train_list,df_test_list,model)
+
+    return dict_resp
+
+
 
 
 def prepare_reports(df_real_lista :pd.DataFrame,

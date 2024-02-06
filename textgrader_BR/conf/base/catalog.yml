@@ -139,11 +139,21 @@
 
 
 
- pred_geral_lista:
+ reg_pred_geral_lista:
     type:  PartitionedDataSet
     dataset:
       type: pandas.ParquetDataSet
-    path:  data/07_model_output/pred_geral/
+    path:  data/07_model_output/pred_geral/regressao
+    filename_suffix: ".parquet"
+
+
+
+
+ class_pred_geral_lista:
+    type:  PartitionedDataSet
+    dataset:
+      type: pandas.ParquetDataSet
+    path:  data/07_model_output/pred_geral/classificacao
     filename_suffix: ".parquet"
 
  pred_especifica_lista:

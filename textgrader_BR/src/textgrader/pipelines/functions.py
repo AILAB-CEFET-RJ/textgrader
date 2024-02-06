@@ -4,6 +4,9 @@ from nltk import word_tokenize, sent_tokenize
 from .config import * 
 from xgboost import XGBRegressor
 import pickle
+import numpy as np
+from gensim import corpora
+from gensim.models import LsiModel
 
 
 def get_competencias(coluna : pd.Series) -> str:
@@ -162,7 +165,7 @@ def fit_predict_by_concept(df: pd.DataFrame) -> pd.DataFrame:
     return preds
 
 
-def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
+def fit_predict_general(df: pd.DataFrame, model_type) -> pd.DataFrame:
     """
     Realiza um pipeline de treino e teste dentro de um conjunto de textos
 
@@ -182,9 +185,8 @@ def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
     X_train = df_train.drop(columns = EXCLUDE_COLS + ['TARGET'],errors = 'ignore')
     y_train = df_train['TARGET'].astype(float)
     
-    ## treina o modelo 
-    xgb = XGBRegressor()
-    fittado = xgb.fit(X_train, y_train)
+   
+    fittado = model_type.fit(X_train, y_train)
     
     id_test = df_test[ID_VARS]
     X_test = df_test.drop(columns = EXCLUDE_COLS + ['TARGET'],errors = 'ignore')
@@ -193,7 +195,7 @@ def fit_predict_general(df: pd.DataFrame) -> pd.DataFrame:
   
     preds = pd.DataFrame()
     preds[ID_VARS] = id_test
-    preds['PRED_GERAL'] =  xgb.predict(X_test)
+    preds['PRED_GERAL'] =  model_type.predict(X_test)
     preds['PRED_GERAL'] = preds['PRED_GERAL'].astype(int)
     preds['TARGET'] = y_test
 
@@ -250,6 +252,20 @@ def prepare_report_table(df_real: pd.DataFrame,df_pred : pd.DataFrame) -> pd.Dat
     return df
 
 
+def embed_one_text(text,model):
+    words = word_tokenize(text)
+    vector = model.infer_vector(words)
+
+    return vector
+
+def embed_words(word_vector,model):
+    serie = word_vector.apply(lambda x:embed_one_text(x,model))
+    df = pd.DataFrame.from_records(np.array(serie))
+
+    return df
+
+
+
 
 def vectorize_data(df: pd.DataFrame,model_dict: pickle) -> pd.DataFrame:
     """
@@ -259,7 +275,7 @@ def vectorize_data(df: pd.DataFrame,model_dict: pickle) -> pd.DataFrame:
         df: dataset que contém as redações
         model: vetorizador TF-IDF pré-treinado
     """
-    lista = list(df['texto'])
+   
 
     dicio = {}
 
@@ -267,25 +283,109 @@ def vectorize_data(df: pd.DataFrame,model_dict: pickle) -> pd.DataFrame:
 
         model = value()
 
-        ## realiza efetivamente a vetorização, transformando em uma matriz esparsa
-        X = model.transform(lista)
-
-        # transforma a matriz esparsa em um dataframe organizado com as frequencias TF-IDF das palavras 
-        df_vetorizado = pd.DataFrame(X.A, columns=model.get_feature_names_out())
+        if 'd2v' in key:
+            print('foi doc-2-vec')
+            vectorized_df = vectorize_doc_2_vec(df,model)
+        elif 'TF' in key:
+            print('foi tf-idf')
+            vectorized_df = vectorize_tf_idf(df,model)
+        elif 'USE' in key:
+            vectorized_df = vectorize_use(df,model)
+        else: 
+            vectorized_df = vectorize_lsi(df,model)
         
-        ## caso as redações contenham palavras que dão nome as features do datased
-        ## (ex: texto, link, palavra) devemos removê-las
-
-        colunas_a_remover = df.columns 
-
-        df_vetorizado = df_vetorizado.drop(columns = colunas_a_remover, errors = 'ignore')
-
-        df = pd.concat([df,df_vetorizado],axis = 1)
-        df = df.drop(columns = ['texto'],errors = 'ignore')
-
-        dicio[key] = df
-
+        dicio[key] = vectorized_df
  
     retorno = dicio
     
     return retorno, dicio
+
+
+def vectorize_lsi(df,model):
+    object_gensim = embed_lsi(df,model)
+    df_embedded = gensim_object_to_dataframe(object_gensim)
+    df = pd.concat([df,df_embedded], axis = 1)
+
+    return df
+
+def embed_lsi(df,model):
+
+    lista = list(df['texto'])
+
+    texts = []
+    for essay in lista:
+        ## tokeniza o ensaio
+        tokenized = word_tokenize(essay)
+        ## adiciona a lista de palavras na lista de listas que representa o corpus
+        texts.append(tokenized)
+
+    ## constroi o dicionario a partir da lista de listas que representa o nosso corpus
+    dictionary = corpora.Dictionary(texts)
+
+    ## constroi a matriz termo-documento a partir da lista de listas que representa o nosso corpus
+    doc_term_matrix = [dictionary.doc2bow(doc) for doc in texts]
+
+    df_embed = model[doc_term_matrix]
+
+    
+
+    return df_embed
+
+
+
+def gensim_object_to_dataframe(doc_to_topic_list):
+    ## pega uma lista de tuplas chave-valor como [(1,10),(2,100),(3,1000)] e transforma em uma tupla com os valores 
+    ## como por exemplo (10,100,1000)
+    func = lambda x:tuple(v for k,v in x)
+
+    ## para cada documento , ou seja, lista de tuplas (feature,valor), transforma em tupla unica com todos os valores
+    ## e monta um listao de duplas
+    list_of_tuples = [func(document) for document in doc_to_topic_list]
+
+    df = pd.DataFrame.from_records(list_of_tuples)
+    
+    return df
+
+    
+
+
+def vectorize_use(df,model):
+    embeddings = model(df['texto'])
+    embed_features = pd.DataFrame(embeddings.numpy())
+
+    df = pd.concat([df,embed_features], axis = 1)
+    df = df.drop(columns = ['texto'], errors = "ignore")
+    df.columns = df.columns.astype(str)
+
+    return df
+
+def vectorize_tf_idf(df,model):
+    lista = list(df['texto'])
+
+    ## realiza efetivamente a vetorização, transformando em uma matriz esparsa
+    X = model.transform(lista)
+
+    # transforma a matriz esparsa em um dataframe organizado com as frequencias TF-IDF das palavras 
+    df_vetorizado = pd.DataFrame(X.A, columns=model.get_feature_names_out())
+    
+    ## caso as redações contenham palavras que dão nome as features do datased
+    ## (ex: texto, link, palavra) devemos removê-las
+
+    colunas_a_remover = df.columns 
+
+    df_vetorizado = df_vetorizado.drop(columns = colunas_a_remover, errors = 'ignore')
+
+    df = pd.concat([df,df_vetorizado],axis = 1)
+    df = df.drop(columns = ['texto'],errors = 'ignore')
+
+    return df
+
+
+def vectorize_doc_2_vec(df,model):
+  
+    df_embed = embed_words(df['texto'],model)
+    df = pd.concat([df,df_embed], axis = 1)
+    df = df.drop(columns = ['texto'], errors = "ignore")
+    df.columns = df.columns.astype(str)
+
+    return df

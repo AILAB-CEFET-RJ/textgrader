@@ -6,8 +6,9 @@ from kedro.pipeline import Pipeline
 
  
  
-from .pipelines import second_data_proc as sdp
- 
+from .pipelines import pipeline_basico as sdp
+from .pipelines import regressao as rg
+from .pipelines import classificacao as cls
 
 def register_pipelines() -> Dict[str, Pipeline]:
     
@@ -18,7 +19,8 @@ def register_pipelines() -> Dict[str, Pipeline]:
     """
     pipelines = {
  
-        'textgrader': sdp.create_pipeline()
+       
+        'textgrader': sdp.create_pipeline() + rg.create_pipeline() + cls.create_pipeline()
     }
 
   
