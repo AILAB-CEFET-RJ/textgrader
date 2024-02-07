@@ -136,7 +136,7 @@ def fit_tf_idf(df_train: pd.DataFrame) -> pickle:
 
     dicio_tf_idf = {}
 
-    for count in TF_IDF_MAX_FEATURES:
+    for count in MAX_FEATURES:
         ## cria o vetorizador que utiliza TF-IDF
         tv = TfidfVectorizer(min_df = 10,max_features=count)
 
@@ -160,7 +160,7 @@ def fit_doc_2_vec(df_train: pd.DataFrame) -> pickle:
 
     dicio_docs = {}
 
-    for vector_size in [32,64]:
+    for vector_size in MAX_FEATURES:
         model = Doc2Vec(documents, vector_size=vector_size)
 
         key = f'd2v_{vector_size}'
@@ -216,7 +216,7 @@ def fit_lsi(df_train):
 
     dicio_lsi = {}
 
-    for vector_size in [32,64]:
+    for vector_size in MAX_FEATURES:
         ## constroi o modelo LSI a partir da matriz termo-documento, do numero de tópicos e do dicionario
         lsamodel = LsiModel(doc_term_matrix,num_topics = vector_size, id2word = dictionary)
         key = f'LSI_{vector_size}'
