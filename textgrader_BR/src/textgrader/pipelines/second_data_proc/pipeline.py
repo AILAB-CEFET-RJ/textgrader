@@ -46,12 +46,23 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="vectorize_train",
             ),
 
-                            
+            node(
+                func= save_model,
+                inputs= 'primeiro_treino',
+                outputs= 'trained_model',
+                name="save_model",
+            ),
             node(
                 func= fit_predict_both_ways,
+<<<<<<< Updated upstream
                 inputs= ['vectorized_train_list','vectorized_test_list'],
                 outputs= ['pred_geral_lista','pred_especifica_lista'],
                 name="fir_predict_both_ways",
+=======
+                inputs= ['primeiro_treino','primeiro_teste', 'trained_model'],
+                outputs= ['primeira_pred_geral','primeira_pred_especifica'],
+                name="fit_predict_both_ways",
+>>>>>>> Stashed changes
             ),
 
             node(

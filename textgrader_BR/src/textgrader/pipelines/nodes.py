@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import pandas as pd
 import numpy as np
 from .functions import *
@@ -260,3 +261,5 @@ def prepare_reports(df_real_lista :pd.DataFrame,
         dicio[key] = df_score
 
     return dicio
+=======
+>>>>>>> Stashed changes

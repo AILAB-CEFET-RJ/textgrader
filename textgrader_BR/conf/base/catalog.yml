@@ -78,6 +78,9 @@
     type: pickle.PickleDataSet
     filepath: data/06_models/tf-idf_vectorizer.pkl
 
+ trained_model:
+    type: pickle.PickleDataSet
+    filepath: data/06_models/xgboost_model.pkl
 
  vectorized_train:
     type: pandas.ParquetDataSet
@@ -170,6 +173,7 @@
  final_scores_experiment:
     type: pandas.ParquetDataSet
     filepath: data/08_reporting/pred_geral/primeiro_conjunto/final_scores_experiment.parquet
+<<<<<<< Updated upstream
 
  final_scores_lista:
     type:  PartitionedDataSet
@@ -180,3 +184,5 @@
 
 
 
+=======
+>>>>>>> Stashed changes
