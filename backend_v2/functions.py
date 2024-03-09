@@ -1,6 +1,9 @@
 import pandas as pd
 import pickle
 from support import use_vectorizer
+import os
+from datetime import datetime
+import json
 
 
 def use_vectorizer(df_train):
@@ -30,4 +33,13 @@ def evaluate_redacao(redacao):
 
 
 
- 
+def persist_essay(essay, grades):
+    if not os.path.exists('essays'):
+        os.makedirs('essays')
+
+    now = datetime.now()
+    filename = now.strftime("%Y%m%d_%H%M%S")
+        
+    obj = {"essay": essay, "grades": grades, "date": filename}
+    with open (f'essays/{filename}.json', 'w') as f:
+        json.dump(obj, f, ensure_ascii=False, indent=4)

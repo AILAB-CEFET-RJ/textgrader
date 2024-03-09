@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from functions import use_vectorizer, evaluate_redacao
+from functions import use_vectorizer, evaluate_redacao, persist_essay
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -25,6 +25,7 @@ def segundo_endpoint():
     response = jsonify({"grades": obj})
     response.headers.add('Access-Control-Allow-Origin', '*')
 
+    persist_essay(essay, obj)
     return response
   
 
