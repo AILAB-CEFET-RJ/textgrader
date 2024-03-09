@@ -7,13 +7,15 @@ services:
     volumes:
       - ./backend_v2:/app
     ports:
-      - "5000:5000"
+      - "3006:5000"
+    restart: always
   frontend:
-    container_name: frontend
+    container_name: textgrader_frontend
     image: node:lts-alpine
     working_dir: "/frontend"
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "yarn && yarn prod"
     ports:
-      - 3000:3000
+      - 3005:3000
     volumes:
       - ./frontend:/frontend
+    restart: always

@@ -1,48 +1,60 @@
-import '@/styles/globals.css';
+import '@/styles/globals.css'
+import 'antd/dist/reset.css'
+import { Header, Content } from 'antd/lib/layout/layout'
+import type { AppProps } from 'next/app'
+import Image from 'next/image'
+import Head from 'next/head'
+import { Layout, Menu } from 'antd'
+import { InfoCircleOutlined, FileTextOutlined, HomeOutlined } from '@ant-design/icons'
+import type { MenuProps } from 'antd'
+import Link from 'next/link'
+import { S } from '@/styles/App.styles'
+import { useState } from 'react'
+import cefetBranco from '../../public/cefetBranco.png'
 
-import 'antd/dist/reset.css';
-
-import { Header, Content, Footer } from 'antd/lib/layout/layout';
-
-import type { AppProps } from 'next/app';
-
-import { Layout, Menu } from 'antd';
-
-import Link from 'next/link';
+const items: MenuProps['items'] = [
+  {
+    label: <Link href='/textgrader'>Início</Link>,
+    key: 'inicio',
+    icon: <HomeOutlined />,
+  },
+  {
+    label: <Link href='/textgrader/redacao'>Redação</Link>,
+    key: 'redacao',
+    icon: <FileTextOutlined />,
+  },
+  {
+    label: <Link href='/textgrader/sobre'>Sobre</Link>,
+    key: 'sobre',
+    icon: <InfoCircleOutlined />,
+  },
+]
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [current, setCurrent] = useState('inicio')
+  const github = 'https://github.com/'
+
+  const onClick: MenuProps['onClick'] = e => {
+    setCurrent(e.key)
+  }
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-        >
-          <Menu.Item>
-            <Link href="/">
-              Início
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link href="/redacao">
-              Redação
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link href="/sobre">
-              Sobre
-            </Link>
-          </Menu.Item>
-        </Menu>
+    <Layout style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+      <Head>
+        <title>CEFET | Text Grader</title>
+      </Head>
+      <Header style={{ position: 'sticky', top: 0, zIndex: 1, padding: 0 }}>
+        <Menu theme='dark' onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
       </Header>
-      <Content style={{ padding: '20px 0' }} ><Component {...pageProps} /></Content>
-      <Footer style={{ textAlign: 'center', gap: "6px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Content style={{ alignSelf: 'center' }}>
+        <Component {...pageProps} />
+      </Content>
+      <S.MyFooter>
         ©2023 Created by
-        <a href="https://github.com/cassiofb-dev" style={{ textDecoration: "none", color: "#000", fontWeight: "bold" }}>Cassio</a>
-        <a href="https://github.com/juliemoura" style={{ textDecoration: "none", color: "#000", fontWeight: "bold" }}>Julie</a>
-        <a href="https://github.com/Gustavo-Pettine" style={{ textDecoration: "none", color: "#000", fontWeight: "bold" }}>Pettine</a>
-      </Footer>
+        <S.NameLink href={`${github}cassiofb-dev`}>Cassio</S.NameLink>
+        <S.NameLink href={`${github}juliemoura`}>Julie</S.NameLink>
+        <S.NameLink href={`${github}Gustavo-Pettine`}>Pettine</S.NameLink>
+      </S.MyFooter>
     </Layout>
   )
 }

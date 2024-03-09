@@ -1,6 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from functions import use_vectorizer, evaluate_redacao
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app) 
 
 @app.route("/")
 def primeiro_endpoint_get():
@@ -19,8 +22,10 @@ def segundo_endpoint():
         "nota4": nota4,
         "nota5": nota5
     }
-    return (obj, 200)
+    response = jsonify({"grades": obj})
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
+    return response
   
 
 if __name__ == "__main__":
