@@ -13,15 +13,8 @@ def primeiro_endpoint_get():
 def segundo_endpoint():
     essay = request.json['essay']
     
-    nota1,nota2,nota3,nota4,nota5 = evaluate_redacao(essay)
+    obj = evaluate_redacao(essay)
 
-    obj = {
-        "nota1": nota1,
-        "nota2": nota2,
-        "nota3": nota3,
-        "nota4": nota4,
-        "nota5": nota5
-    }
     response = jsonify({"grades": obj})
     response.headers.add('Access-Control-Allow-Origin', '*')
 

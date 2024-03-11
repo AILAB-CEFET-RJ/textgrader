@@ -2,7 +2,6 @@ import '@/styles/globals.css'
 import 'antd/dist/reset.css'
 import { Header, Content } from 'antd/lib/layout/layout'
 import type { AppProps } from 'next/app'
-import Image from 'next/image'
 import Head from 'next/head'
 import { Layout, Menu } from 'antd'
 import { InfoCircleOutlined, FileTextOutlined, HomeOutlined } from '@ant-design/icons'
@@ -10,21 +9,20 @@ import type { MenuProps } from 'antd'
 import Link from 'next/link'
 import { S } from '@/styles/App.styles'
 import { useState } from 'react'
-import cefetBranco from '../../public/cefetBranco.png'
 
 const items: MenuProps['items'] = [
   {
-    label: <Link href='/textgrader'>Início</Link>,
+    label: <Link href='/'>Início</Link>,
     key: 'inicio',
     icon: <HomeOutlined />,
   },
   {
-    label: <Link href='/textgrader/redacao'>Redação</Link>,
+    label: <Link href='/redacao'>Redação</Link>,
     key: 'redacao',
     icon: <FileTextOutlined />,
   },
   {
-    label: <Link href='/textgrader/sobre'>Sobre</Link>,
+    label: <Link href='/sobre'>Sobre</Link>,
     key: 'sobre',
     icon: <InfoCircleOutlined />,
   },

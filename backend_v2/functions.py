@@ -23,13 +23,12 @@ def evaluate_redacao(redacao):
     modelo_salvo = pickle.load(open('model.pkl','rb'))
     result = modelo_salvo.predict(texto_df)
 
-    nota1 = result[0][0]
-    nota2 = result[0][1]
-    nota3 = result[0][2]
-    nota4 = result[0][3]
-    nota5 = result[0][4]
-        
-    return nota1,nota2,nota3,nota4,nota5
+    notas = {}
+    for i in range(1,6):
+        key = f"nota_{i}"
+        notas[key] = result[0][i-1]
+
+    return notas
 
 
 
