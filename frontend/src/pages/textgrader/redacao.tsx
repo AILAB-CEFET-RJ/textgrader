@@ -28,7 +28,7 @@ const Redacao = () => {
   }
 
   const getEssayGrade = async () => {
-    const response = await axios.post('http://localhost:3006/model', {
+    const response = await axios.post('http://localhost:5000/model', {
       essay: essay,
     })
 
