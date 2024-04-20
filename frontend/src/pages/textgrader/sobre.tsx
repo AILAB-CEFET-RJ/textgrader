@@ -6,7 +6,7 @@ const Sobre = () => {
   const [content, setContent] = useState('')
 
   useEffect(() => {
-    fetch('/README.md').then(response => {
+    fetch('../../README.md').then(response => {
       response.text().then(text => {
         setContent(text)
       })
