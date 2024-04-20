@@ -1,6 +1,6 @@
 import { S } from '@/styles/Home.styles'
 import Image from 'next/image'
-import BookPagesImg from '../../public/bookPages.jpg'
+import BookPagesImg from '../../../public/bookPages.jpg'
 
 const Home = () => {
   return (
