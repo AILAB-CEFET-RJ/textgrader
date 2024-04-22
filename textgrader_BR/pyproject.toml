@@ -1,7 +1,7 @@
 [tool.kedro]
 package_name = "textgrader"
 project_name = "textgrader"
- 
+project_version = "0.18.14" 
  
 kedro_init_version = "0.18.14"
 
