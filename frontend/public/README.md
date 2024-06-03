@@ -12,7 +12,7 @@
   <a href="#license">License</a>
 </p>
 
-![cefet-logo](cefet-logo.jpg)
+![cefet-logo](cefet-logo.png)
 
 ## About
 
