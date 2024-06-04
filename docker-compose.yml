@@ -1,27 +1,31 @@
 version: "3.9"
 
 services:
-  backend:
-    container_name: backend
+  flask-app:
     image: python:3.10
-    working_dir: "/backend"
-    command: sh -c "
-      python -m venv venv && . venv/bin/activate && pip install -U pip &&
-      pip install -U "jax[cpu]" tensorflow-cpu tensorflow_text tensorflow_hub scikit-learn nltk gensim pyarrow &&
-      pip install -U pandas fastapi "uvicorn[standard]" orjson openpyxl colorlog pyspellchecker coloredlogs &&
-      cd src && python requirements.py && python run.py task general_tasks task_correct_essays &&
-      python run.py task general_tasks task_pipeline_essays && uvicorn api:app --host 0.0.0.0 --reload"
-    ports:
-      - 8000:8000
+    command: bash -c "cd app/ && pip install -r requirements.txt && python app.py"
     volumes:
-      - ./backend:/backend
-
+      - ./backend_v2:/app
+    ports:
+      - "5000:5000"
+    restart: always
   frontend:
-    container_name: frontend
+    container_name: textgrader_frontend
     image: node:lts-alpine
     working_dir: "/frontend"
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "yarn && yarn prod"
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ./frontend:/frontend
+    restart: always
+    #nginx:
+    #image: nginx:latest
+    #ports:
+    #  - "8080:80"
+    #volumes:
+    #  - ./nginx.conf:/etc/nginx/nginx.conf
+    #depends_on:
+    #  - flask-app
+    #  - frontend
+
