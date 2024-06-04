@@ -9,3 +9,6 @@ down:
 
 remove-logs:
 	cd backend/src && sudo rm -r *_log.txt
+
+execute-pipeline:
+	cd textgrader-pt-br && python create_dataset.py
