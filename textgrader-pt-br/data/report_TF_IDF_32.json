@@ -1,0 +1,23 @@
+{
+  "conceito":{
+    "0":"Compreender a proposta e aplicar conceitos das v\u00e1rias \u00e1reas de conhecimento para desenvolver o texto dissertativo-argumentativo em prosa",
+    "1":"Conhecimento dos mecanismos lingu\u00edsticos necess\u00e1rios para a constru\u00e7\u00e3o da argumenta\u00e7\u00e3o",
+    "2":"Dom\u00ednio da modalidade escrita formal",
+    "3":"Proposta de interven\u00e7\u00e3o com respeito aos direitos humanos",
+    "4":"Selecionar, relacionar, organizar e interpretar informa\u00e7\u00f5es em defesa de um ponto de vista"
+  },
+  "score_geral":{
+    "0":-0.0001955038,
+    "1":-0.0024963868,
+    "2":0.0035687554,
+    "3":0.0007175948,
+    "4":-0.0011172429
+  },
+  "score_especifica":{
+    "0":0.0005980612,
+    "1":0.0040588461,
+    "2":0.0217833956,
+    "3":0.004098589,
+    "4":0.0058079771
+  }
+}

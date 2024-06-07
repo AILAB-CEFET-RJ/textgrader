@@ -92,5 +92,4 @@ for key, value in df_test_list.items():
 
     df_score = pd.merge(score_geral, score_especifica, on=['conceito'])
 
-    df_score.to_csv(f"{OUTPUT_DF}/report_{key}.csv")
-    #dicio[key] = df_score
+    df_score.to_json(f"{OUTPUT_DF}/report_{key}.json", indent=2)
