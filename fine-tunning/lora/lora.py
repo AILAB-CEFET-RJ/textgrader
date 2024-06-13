@@ -71,7 +71,8 @@ print("+"*50)
 from transformers import AutoModelForSeq2SeqLM
 
 # huggingface hub model id
-model_id = "philschmid/flan-t5-xxl-sharded-fp16"
+# model_id = "philschmid/flan-t5-xxl-sharded-fp16"
+model_id = "google/flan-ul2"
 
 # load model from the hub
 model = AutoModelForSeq2SeqLM.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
@@ -120,7 +121,7 @@ output_dir = "lora-flan-t5-xxl"
 # Define training args
 training_args = Seq2SeqTrainingArguments(
     output_dir=output_dir,
-    auto_find_batch_size=True,
+    auto_find_batch_size=False,
     learning_rate=1e-3,  # higher learning rate
     num_train_epochs=5,
     logging_dir=f"{output_dir}/logs",
