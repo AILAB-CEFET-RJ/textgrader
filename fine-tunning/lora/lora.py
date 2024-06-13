@@ -13,12 +13,12 @@ print(f"Test dataset size: {len(dataset['test'])}")
 # Train dataset size: 14732
 # Test dataset size: 819
 
-model_id = "google/flan-t5-xl"
+model_id = "google/flan-t5-sm"
 
 # Load tokenizer of FLAN-t5-XL
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-
+print("#"*50)
 # The maximum total input sequence length after tokenization.
 # Sequences longer than this will be truncated, sequences shorter will be padded.
 tokenized_inputs = concatenate_datasets([dataset["train"], dataset["test"]]).map(
@@ -58,7 +58,7 @@ def preprocess_function(sample, padding="max_length"):
     model_inputs["labels"] = labels["input_ids"]
     return model_inputs
 
-
+print("-"*50)
 tokenized_dataset = dataset.map(preprocess_function, batched=True, remove_columns=["dialogue", "summary", "id"])
 print(f"Keys of tokenized dataset: {list(tokenized_dataset['train'].features)}")
 
@@ -66,6 +66,8 @@ print(f"Keys of tokenized dataset: {list(tokenized_dataset['train'].features)}")
 tokenized_dataset["train"].save_to_disk("data/train")
 tokenized_dataset["test"].save_to_disk("data/eval")
 
+
+print("+"*50)
 from transformers import AutoModelForSeq2SeqLM
 
 # huggingface hub model id
@@ -74,6 +76,8 @@ model_id = "philschmid/flan-t5-xxl-sharded-fp16"
 # load model from the hub
 model = AutoModelForSeq2SeqLM.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
 
+
+print("%"*50)
 from peft import LoraConfig, get_peft_model, prepare_model_for_int8_training, TaskType
 
 # Define LoRA Config
@@ -92,6 +96,8 @@ model = prepare_model_for_int8_training(model)
 model = get_peft_model(model, lora_config)
 model.print_trainable_parameters()
 
+
+print("*"*50)
 # trainable params: 18874368 || all params: 11154206720 || trainable%: 0.16921300163961817
 from transformers import DataCollatorForSeq2Seq
 
@@ -105,6 +111,8 @@ data_collator = DataCollatorForSeq2Seq(
     pad_to_multiple_of=8
 )
 
+
+print("="*50)
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 
 output_dir = "lora-flan-t5-xxl"
@@ -131,9 +139,12 @@ trainer = Seq2SeqTrainer(
 )
 model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
 
+
+print("#"*50)
+print("Trainer train")
 # train model
 trainer.train()
-
+print("#"*50)
 # Save our LoRA model & tokenizer results
 peft_model_id="results"
 trainer.model.save_pretrained(peft_model_id)
