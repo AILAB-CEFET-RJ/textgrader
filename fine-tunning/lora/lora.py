@@ -13,7 +13,7 @@ print(f"Test dataset size: {len(dataset['test'])}")
 # Train dataset size: 14732
 # Test dataset size: 819
 
-model_id = "google/flan-t5-sm"
+model_id = "google/flan-t5-small"
 
 # Load tokenizer of FLAN-t5-XL
 tokenizer = AutoTokenizer.from_pretrained(model_id)
