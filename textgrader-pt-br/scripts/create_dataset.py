@@ -2,7 +2,7 @@ import glob
 from settings import *
 import pandas as pd
 import numpy as np
-from settings import DF_PATH, ALL_TARGETS
+from settings import DF_PATH, ALL_TARGETS, COLUMNS_REPLACE
 
 
 def get_competencias(coluna: pd.Series) -> str:
@@ -55,9 +55,10 @@ def process_all(df_entrada, coluna='nota'):
         competencia = get_competencias(df_competencias[item])
 
         ## obtém a nota da competencia presente na coluna, a armazena numa coluna que informará a nota da competencia
-        df_entrada[f'{competencia}_nota'] = df_competencias[item].transform(lambda x: x[coluna])
+        df_entrada[f'{COLUMNS_REPLACE[competencia]}'] = df_competencias[item].transform(lambda x: x[coluna])
 
     return df_entrada
+
 
 def read_files():
     json_files = glob.glob(DATA_PATH)
@@ -81,20 +82,20 @@ def read_files():
 
     df_total = pd.concat(lista_dfs)
 
-    df_total = df_total.drop(columns = ['texto_comentado', 'cometarios', 'titulo', 'link'], errors = 'ignore')
+    df_total = df_total.drop(columns=['texto_comentado', 'cometarios', 'titulo', 'link'], errors='ignore')
     return df_total
 
+
 def extract(df_total):
-    # Restante do código...
     ## marca os conjuntos
     df_total['conjunto'] = 2
     df_total['conjunto'] = np.where(df_total['tema'] <= 85, 1, df_total['conjunto'])
     df_total['conjunto'] = np.where(df_total['tema'] >= 137, 3, df_total['conjunto'])
 
     ## separa e refina cada conjunto separadamente
-    df_primeiro = df_total[df_total['conjunto'] == 1]
-    df_geral = process_all(df_primeiro)
-    df_geral = df_geral.drop(columns=['nota', 'competencias', '- Ruim_nota'], errors='ignore')
+    #df_primeiro = df_total[df_total['conjunto'] == 1]
+    df_geral = process_all(df_total)
+    df_geral = df_geral.drop(columns=['nota', 'competencias'], errors='ignore')
 
     ## o range dos targets 2 e 3 é de 0 a 10, com numeros quebrados,
     ## multiplicamos por 100, esses targets e passamos todos os targets para valores inteiros,
@@ -103,10 +104,20 @@ def extract(df_total):
     df_geral[ALL_TARGETS] = df_geral[ALL_TARGETS].astype(float)
     return df_geral
 
+
 df_total = read_files()
+
+df_total = df_total.assign(
+    c1=0.0, c2=0.0, c3=0.0, c4=0.0, c5=0.0,
+    c6=0.0, c7=0.0, c8=0.0, c9=0.0, c10=0.0,
+    c11=0.0, c12=0.0, c13=0.0, c14=0.0, c15=0.0,
+)
 
 df_geral = extract(df_total)
 
 df_geral.to_parquet(f'{OUTPUT_DF}/df_geral.parquet')
+df_geral.to_csv(f'{OUTPUT_DF}/df_geral.csv')
 
+print(len(df_geral))
 print("CREATE DATASET: DONE!")
+

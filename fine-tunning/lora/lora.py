@@ -87,8 +87,7 @@ lora_config = LoraConfig(
     target_modules=["q", "v"],
     lora_dropout=0.05,
     bias="none",
-    task_type=TaskType.SEQ_2_SEQ_LM
-)
+    task_type=TaskType.SEQ_2_SEQ_LM)
 # prepare int-8 model for training
 model = prepare_model_for_int8_training(model)
 
@@ -120,7 +119,7 @@ output_dir = "lora-flan-t5-xxl"
 # Define training args
 training_args = Seq2SeqTrainingArguments(
     output_dir=output_dir,
-    auto_find_batch_size=True,
+    auto_find_batch_size=False,
     learning_rate=1e-3,  # higher learning rate
     num_train_epochs=5,
     logging_dir=f"{output_dir}/logs",
@@ -143,7 +142,7 @@ model.config.use_cache = False  # silence the warnings. Please re-enable for inf
 print("#"*50)
 print("Trainer train")
 # train model
-trainer.train()
+trainer.train(resume_from_checkpoint=True)
 print("#"*50)
 # Save our LoRA model & tokenizer results
 peft_model_id="results"

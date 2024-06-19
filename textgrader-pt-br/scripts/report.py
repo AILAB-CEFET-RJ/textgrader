@@ -1,5 +1,5 @@
 import pandas as pd
-from settings import ID_VARS, TARGETS_1
+from settings import ID_VARS, TARGETS_1,ALL_TARGETS
 
 
 def prepare_report_table(df_real: pd.DataFrame, df_pred: pd.DataFrame) -> pd.DataFrame:
@@ -16,7 +16,7 @@ def prepare_report_table(df_real: pd.DataFrame, df_pred: pd.DataFrame) -> pd.Dat
         o conjunto de teste
     """
 
-    df_real = df_real[ID_VARS + TARGETS_1]
+    df_real = df_real[ID_VARS + ALL_TARGETS]
     df = pd.merge(df_real, df_pred, on=['index', 'tema', 'conjunto'], suffixes=['_real', '_pred'])
     df = df.melt(id_vars=['index', 'tema', 'conjunto'])
     df['valor'] = df['variable'].transform(lambda x: x.split('_')[-1])

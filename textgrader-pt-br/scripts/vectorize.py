@@ -1,8 +1,12 @@
 import pandas as pd
 from settings import OUTPUT_DF, TF_IDF_MAX_FEATURES
 from sklearn.feature_extraction.text import TfidfVectorizer
-import pyarrow
+import nltk
+from nltk.corpus import stopwords
 
+
+# Baixe os recursos necessários
+nltk.download('stopwords')
 
 def vectorize_data(df, model_dict, id) -> pd.DataFrame:
     """
@@ -13,8 +17,6 @@ def vectorize_data(df, model_dict, id) -> pd.DataFrame:
         model: vetorizador TF-IDF pré-treinado
     """
     lista = list(df['texto'])
-
-    dicio = {}
 
     for key, value in model_dict.items():
         model = value
@@ -53,7 +55,8 @@ dicio_tf_idf = {}
 
 for count in TF_IDF_MAX_FEATURES:
     ## cria o vetorizador que utiliza TF-IDF
-    tv = TfidfVectorizer(min_df = 10,max_features=count)
+    stop_words = stopwords.words('portuguese')
+    tv = TfidfVectorizer(min_df = 25,max_features=count)
 
     ## treina o vetorizador com o conjunto fornecido para treino
     vectorizer_vez = tv.fit(lista)

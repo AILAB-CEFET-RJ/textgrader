@@ -1,5 +1,5 @@
 import pandas as pd
-from settings import OUTPUT_DF, EXCLUDE_COLS, ID_VARS, TARGETS_1
+from settings import OUTPUT_DF, EXCLUDE_COLS, ID_VARS, TARGETS_1, ALL_TARGETS
 from xgboost import XGBRegressor
 from report import prepare_report_table
 from sklearn.metrics import cohen_kappa_score
@@ -21,7 +21,7 @@ def fit_predict(df: pd.DataFrame) -> pd.DataFrame:
 
     # id_train = df_train[ID_VARS]
     X_train = df_train.drop(columns=EXCLUDE_COLS, errors='ignore')
-    y_train = df_train[TARGETS_1].astype(float)
+    y_train = df_train[ALL_TARGETS].astype(float)
 
     ## treina o modelo
     xgb = XGBRegressor()
@@ -29,9 +29,9 @@ def fit_predict(df: pd.DataFrame) -> pd.DataFrame:
 
     id_test = df_test[ID_VARS]
     X_test = df_test.drop(columns=EXCLUDE_COLS, errors='ignore')
-    y_test = df_test[TARGETS_1].astype(float)
+    y_test = df_test[ALL_TARGETS].astype(float)
 
-    PRED_COLS = [col + f'_pred' for col in TARGETS_1]
+    PRED_COLS = [col + f'_pred' for col in ALL_TARGETS]
 
     preds = pd.DataFrame()
     preds[ID_VARS] = id_test

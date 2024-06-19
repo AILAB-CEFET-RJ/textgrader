@@ -39,12 +39,11 @@ def generate_word_sentence_features(df: pd.DataFrame, column='texto') -> pd.Data
         column: nome da coluna que conterá os textos
     """
 
-    df['word_count'] = df[column].apply(lambda x: word_count(x))
-    df['unique_word_count'] = df[column].apply(lambda x: word_count_unique(x))
-    df['sentence_count'] = df[column].apply(lambda x: sentence_count(x))
+    df[f'word_count_{column}'] = df[column].apply(lambda x: word_count(x))
+    df[f'unique_word_count_{column}'] = df[column].apply(lambda x: word_count_unique(x))
+    df[f'sentence_count_{column}'] = df[column].apply(lambda x: sentence_count(x))
 
     return df
-
 
 def separate_train_test(df: pd.DataFrame) -> tuple:
     """
@@ -61,6 +60,7 @@ def separate_train_test(df: pd.DataFrame) -> tuple:
     x_test = x_test.reset_index()
 
     return X_train, x_test
+
 
 
 df_geral = pd.read_parquet(f"{OUTPUT_DF}/df_geral.parquet")
