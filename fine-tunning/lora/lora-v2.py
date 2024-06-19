@@ -65,13 +65,13 @@ tokenized_dataset["train"].save_to_disk("data/train")
 
 
 print("+"*50)
-from transformers import AutoModelForSeq2SeqLM
+from transformers import AutoModelForSeq2SeqLM, AutoModelForSequenceClassification
 
 # huggingface hub model id
 model_id = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7" #"philschmid/flan-t5-xxl-sharded-fp16"
 
 # load model from the hub
-model = AutoModelForSeq2SeqLM.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
+model = AutoModelForSequenceClassification.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
 
 
 print("%"*50)
