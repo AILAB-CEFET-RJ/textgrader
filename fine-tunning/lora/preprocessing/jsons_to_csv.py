@@ -4,8 +4,8 @@ import json
 
 
 def preprocess_texto(texto):
-    t = str.replace(texto, "q", "que")
-    t = str.replace(t, "v", "5")
+    t = str.replace(texto, " q ", "que")
+    t = str.replace(t, " v ", "5")
 
     return t.lower()
 
