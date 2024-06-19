@@ -5,7 +5,7 @@ import numpy as np
 #https://www.philschmid.de/fine-tune-flan-t5-peft
 
 # Load dataset from the hub
-dataset = load_dataset('parquet', data_files='preprocessing/output.csv')
+dataset = load_dataset('parquet', data_files='preprocessing/output-parquet.parquet')
 
 print(f"Train dataset size: {len(dataset)}")
 
