@@ -68,7 +68,7 @@ print("+"*50)
 from transformers import AutoModelForSeq2SeqLM
 
 # huggingface hub model id
-model_id = "philschmid/flan-t5-xxl-sharded-fp16"
+model_id = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7" #"philschmid/flan-t5-xxl-sharded-fp16"
 
 # load model from the hub
 model = AutoModelForSeq2SeqLM.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
