@@ -139,7 +139,7 @@ model.config.use_cache = False  # silence the warnings. Please re-enable for inf
 print("#"*50)
 print("Trainer train")
 # train model
-trainer.train(resume_from_checkpoint=True)
+trainer.train()
 print("#"*50)
 # Save our LoRA model & tokenizer results
 peft_model_id="results"
