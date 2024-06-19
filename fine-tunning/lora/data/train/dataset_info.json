@@ -3,15 +3,15 @@
   "citation": "",
   "config_name": "default",
   "dataset_name": "parquet",
-  "dataset_size": 15523051,
+  "dataset_size": 15315183,
   "description": "",
   "download_checksums": {
     "/home/vanessa/Mestrado/textgrader/fine-tunning/lora/preprocessing/output-parquet.parquet": {
-      "num_bytes": 8512484,
+      "num_bytes": 8472528,
       "checksum": null
     }
   },
-  "download_size": 8512484,
+  "download_size": 8472528,
   "features": {
     "input_ids": {
       "feature": {
@@ -37,11 +37,11 @@
   },
   "homepage": "",
   "license": "",
-  "size_in_bytes": 24035535,
+  "size_in_bytes": 23787711,
   "splits": {
     "train": {
       "name": "train",
-      "num_bytes": 15523051,
+      "num_bytes": 15315183,
       "num_examples": 7628,
       "dataset_name": "parquet"
     }
