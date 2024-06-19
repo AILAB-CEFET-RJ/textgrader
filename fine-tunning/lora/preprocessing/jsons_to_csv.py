@@ -3,6 +3,13 @@ import pandas as pd
 import json
 
 
+def preprocess_texto(texto):
+    t = str.replace(texto, "q", "que")
+    t = str.replace(t, "v", "5")
+
+    return t.lower()
+
+
 def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
     files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
 
@@ -14,7 +21,8 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
         with open(file_path, 'r') as f:
             json_data = json.load(f)
             for obj in json_data:
-                df = df._append({"texto": obj["texto"], "nota": obj["nota"]}, ignore_index=True)
+                preprocessed = preprocess_texto(obj["texto"])
+                df = df._append({"texto": preprocessed, "nota": obj["nota"]}, ignore_index=True)
 
     # Salva o DataFrame como um arquivo CSV
     df.to_csv(csv_file, index=False)

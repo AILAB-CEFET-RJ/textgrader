@@ -73,8 +73,6 @@ model_id = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7" #"philsch
 # load model from the hub
 model = AutoModelForSequenceClassification.from_pretrained(model_id, load_in_8bit=True)
 
-
-print("%"*50)
 from peft import LoraConfig, get_peft_model, prepare_model_for_int8_training, TaskType
 
 # Define LoRA Config
