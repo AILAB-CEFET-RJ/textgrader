@@ -71,7 +71,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoModelForSequenceClassificati
 model_id = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7" #"philschmid/flan-t5-xxl-sharded-fp16"
 
 # load model from the hub
-model = AutoModelForSequenceClassification.from_pretrained(model_id, load_in_8bit=True, device_map="auto")
+model = AutoModelForSequenceClassification.from_pretrained(model_id, load_in_8bit=True)
 
 
 print("%"*50)
