@@ -127,6 +127,8 @@ training_args = Seq2SeqTrainingArguments(
     logging_strategy="steps",
     logging_steps=500,
     save_strategy="no",
+    adafactor=True,
+    gradient_checkpointing=True,
     report_to="tensorboard",
 )
 
