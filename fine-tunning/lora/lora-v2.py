@@ -108,9 +108,13 @@ data_collator = DataCollatorForSeq2Seq(
 
 
 print("="*50)
+<<<<<<< Updated upstream
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 import torch
 torch.cuda.empty_cache()
+=======
+from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, TrainingArguments
+>>>>>>> Stashed changes
 
 output_dir = "lora-output"
 
@@ -118,6 +122,8 @@ output_dir = "lora-output"
 training_args = Seq2SeqTrainingArguments(
     output_dir=output_dir,
     auto_find_batch_size=False,
+    per_device_train_batch_size=1,
+    per_gpu_train_batch_size=1,
     learning_rate=1e-3,  # higher learning rate
     num_train_epochs=5,
     logging_dir=f"{output_dir}/logs",
@@ -130,7 +136,7 @@ training_args = Seq2SeqTrainingArguments(
 # Create Trainer instance
 trainer = Seq2SeqTrainer(
     model=model,
-    args=training_args,
+    args=args,
     data_collator=data_collator,
     train_dataset=tokenized_dataset["train"],
 )
