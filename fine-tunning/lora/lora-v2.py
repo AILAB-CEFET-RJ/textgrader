@@ -132,7 +132,7 @@ training_args = Seq2SeqTrainingArguments(
 # Create Trainer instance
 trainer = Seq2SeqTrainer(
     model=model,
-    args=args,
+    args=training_args,
     data_collator=data_collator,
     train_dataset=tokenized_dataset["train"],
 )
