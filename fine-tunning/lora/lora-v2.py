@@ -9,7 +9,6 @@ dataset = load_dataset('parquet', data_files='preprocessing/output-parquet.parqu
 
 print(f"Train dataset size: {len(dataset)}")
 
-
 model_id = "google/flan-t5-small"
 
 # Load tokenizer of FLAN-t5-XL
@@ -65,13 +64,14 @@ tokenized_dataset["train"].save_to_disk("data/train")
 
 
 print("+"*50)
-from transformers import AutoModelForSeq2SeqLM, AutoModelForSequenceClassification
+from transformers import AutoModelForSeq2SeqLM, AutoModelForCausalLM
+
 
 # huggingface hub model id
-model_id = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7" #"philschmid/flan-t5-xxl-sharded-fp16"
+model_id = "meta-llama/Meta-Llama-3-8B" #"philschmid/flan-t5-xxl-sharded-fp16"
 
 # load model from the hub
-model = AutoModelForSequenceClassification.from_pretrained(model_id, load_in_8bit=True)
+model = AutoModelForCausalLM.from_pretrained(model_id)
 print(model)
 
 from peft import LoraConfig, get_peft_model, prepare_model_for_int8_training, TaskType

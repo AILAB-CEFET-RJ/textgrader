@@ -22,3 +22,6 @@ run-all:
 	python extract_features.py && \
 	python vectorize.py && \
 	python fit_predict.py
+
+hugging-face:
+	huggingface-cli login
