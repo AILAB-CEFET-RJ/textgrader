@@ -68,7 +68,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoModelForCausalLM
 
 
 # huggingface hub model id
-model_id = "meta-llama/Meta-Llama-3-8B" #"philschmid/flan-t5-xxl-sharded-fp16"
+model_id = "adalbertojunior/Llama-3-8B-Dolphin-Portuguese-v0.3" #"meta-llama/Meta-Llama-3-8B" #"philschmid/flan-t5-xxl-sharded-fp16"
 
 # load model from the hub
 model = AutoModelForCausalLM.from_pretrained(model_id)
@@ -109,8 +109,10 @@ data_collator = DataCollatorForSeq2Seq(
 
 print("="*50)
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
+import torch
+torch.cuda.empty_cache()
 
-output_dir = "lora-flan-t5-xxl"
+output_dir = "lora-output"
 
 # Define training args
 training_args = Seq2SeqTrainingArguments(
