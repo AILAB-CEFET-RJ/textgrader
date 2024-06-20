@@ -108,13 +108,9 @@ data_collator = DataCollatorForSeq2Seq(
 
 
 print("="*50)
-<<<<<<< Updated upstream
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 import torch
 torch.cuda.empty_cache()
-=======
-from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, TrainingArguments
->>>>>>> Stashed changes
 
 output_dir = "lora-output"
 
