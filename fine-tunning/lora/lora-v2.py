@@ -120,6 +120,7 @@ training_args = Seq2SeqTrainingArguments(
     auto_find_batch_size=False,
     per_device_train_batch_size=1,
     per_gpu_train_batch_size=1,
+    gradient_accumulation_steps=4,
     learning_rate=1e-3,  # higher learning rate
     num_train_epochs=5,
     logging_dir=f"{output_dir}/logs",
@@ -128,6 +129,8 @@ training_args = Seq2SeqTrainingArguments(
     save_strategy="no",
     report_to="tensorboard",
 )
+
+print(training_args)
 
 # Create Trainer instance
 trainer = Seq2SeqTrainer(
