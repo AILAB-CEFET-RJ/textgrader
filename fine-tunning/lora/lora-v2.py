@@ -108,7 +108,7 @@ data_collator = DataCollatorForSeq2Seq(
 
 
 print("="*50)
-from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
+from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, TrainingArguments
 import torch
 torch.cuda.empty_cache()
 
@@ -132,12 +132,28 @@ training_args = Seq2SeqTrainingArguments(
     report_to="tensorboard",
 )
 
+training_args_v2 = TrainingArguments(
+    output_dir=output_dir,
+    auto_find_batch_size=False,
+    per_device_train_batch_size=1,
+    per_gpu_train_batch_size=1,
+    gradient_accumulation_steps=4,
+    learning_rate=1e-3,  # higher learning rate
+    num_train_epochs=5,
+    logging_dir=f"{output_dir}/logs",
+    logging_strategy="steps",
+    logging_steps=500,
+    save_strategy="no",
+    adafactor=True,
+    gradient_checkpointing=True
+)
+
 print(training_args)
 
 # Create Trainer instance
 trainer = Seq2SeqTrainer(
     model=model,
-    args=training_args,
+    args=training_args_v2,
     data_collator=data_collator,
     train_dataset=tokenized_dataset["train"],
 )
