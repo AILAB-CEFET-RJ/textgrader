@@ -86,6 +86,7 @@ lora_config = LoraConfig(
     lora_alpha=32,
     target_modules=["q", "v"],
     lora_dropout=0.05,
+    use_dora=True,
     bias="none",
     task_type=TaskType.SEQ_2_SEQ_LM)
 # prepare int-8 model for training
@@ -114,7 +115,7 @@ data_collator = DataCollatorForSeq2Seq(
 print("="*50)
 from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments
 
-output_dir = "lora-flan-t5-xxl"
+output_dir = "../lora-flan-t5-xxl"
 
 # Define training args
 training_args = Seq2SeqTrainingArguments(
