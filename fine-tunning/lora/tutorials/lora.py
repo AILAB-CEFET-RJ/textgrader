@@ -78,7 +78,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_id, load_in_8bit=True, devic
 
 
 print("%"*50)
-from peft import LoraConfig, get_peft_model, prepare_model_for_int8_training, TaskType
+from peft import LoraConfig, get_peft_model, TaskType
 
 # Define LoRA Config
 lora_config = LoraConfig(
@@ -89,8 +89,6 @@ lora_config = LoraConfig(
     use_dora=True,
     bias="none",
     task_type=TaskType.SEQ_2_SEQ_LM)
-# prepare int-8 model for training
-model = prepare_model_for_int8_training(model)
 
 # add LoRA adaptor
 model = get_peft_model(model, lora_config)
