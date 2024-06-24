@@ -13,7 +13,7 @@ def preprocess_texto(texto):
 def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
     files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
 
-    df = pd.DataFrame(columns=["texto","nota"])
+    df = pd.DataFrame(columns=["texto","nota", "labels"])
 
     # Lê cada arquivo JSON e adiciona seus dados à lista
     for file in files:
@@ -34,7 +34,7 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
 json_directory = '../../../textgrader-pt-br/jsons'
 # Nome do arquivo CSV a ser salvo
 csv_file_path = 'output.csv'
-parquet_file_path = 'output-parquet-2.parquet'
+parquet_file_path = 'output-parquet.parquet'
 
 # Chama a função para converter JSONs em CSV
 jsons_to_csv(json_directory, csv_file_path, parquet_file_path)
