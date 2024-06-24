@@ -79,6 +79,7 @@ lr_scheduler = get_linear_schedule_with_warmup(
     num_training_steps=(len(train_dataloader)*num_epochs)
 )
 
+print(train_dataloader)
 model.to(device)
 for epoch in range(num_epochs):
     model.train()
