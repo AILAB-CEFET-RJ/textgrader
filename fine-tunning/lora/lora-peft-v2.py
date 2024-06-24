@@ -54,8 +54,7 @@ tokenize_datasets = datasets.map(
     remove_columns=["texto", "nota"],
 )
 
-tokenize_datasets = tokenize_datasets.add_column(name="labels", column="labels")
-tokenize_datasets = tokenize_datasets.rename_column("label", "labels")
+#tokenize_datasets = tokenize_datasets.rename_column("label", "labels")
 
 
 def collate_fn(examples):
