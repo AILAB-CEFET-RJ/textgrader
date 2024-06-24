@@ -22,7 +22,7 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
             json_data = json.load(f)
             for obj in json_data:
                 preprocessed = preprocess_texto(obj["texto"])
-                df = df._append({"texto": preprocessed, "nota": obj["nota"]}, ignore_index=True)
+                df = df._append({"texto": preprocessed, "nota": int(obj["nota"])}, ignore_index=True)
 
     # Salva o DataFrame como um arquivo CSV
     df.to_csv(csv_file, index=False)
