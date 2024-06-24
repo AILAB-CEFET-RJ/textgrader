@@ -34,7 +34,7 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
 json_directory = '../../../textgrader-pt-br/jsons'
 # Nome do arquivo CSV a ser salvo
 csv_file_path = 'output.csv'
-parquet_file_path = 'output-parquet.parquet'
+parquet_file_path = 'output-parquet-2.parquet'
 
 # Chama a função para converter JSONs em CSV
 jsons_to_csv(json_directory, csv_file_path, parquet_file_path)
