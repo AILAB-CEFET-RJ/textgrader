@@ -14,7 +14,18 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
     files = [f for f in os.listdir(json_dir) if f.endswith('.json')]
 
     df = pd.DataFrame(columns=["texto","nota", "labels"])
-
+    notas = {
+        "20":1,
+        "40":2,
+        "50":3,
+        "80":4,
+        "100":5,
+        "120":6,
+        "150":7,
+        "160":8,
+        "200":9,
+        "0":0
+    }
     count = 0
     # Lê cada arquivo JSON e adiciona seus dados à lista
     for file in files:
@@ -26,7 +37,9 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
             for obj in json_data:
                 preprocessed = preprocess_texto(obj["texto"])
                 count +=1
-                df = df._append({"texto": preprocessed, "nota": obj["nota"], "labels":int(obj["nota"])}, ignore_index=True)
+                print(obj["nota"])
+                n = notas[obj["nota"]]
+                df = df._append({"texto": preprocessed, "nota": obj["nota"], "labels": n}, ignore_index=True)
 
 
     # Salva o DataFrame como um arquivo CSV
