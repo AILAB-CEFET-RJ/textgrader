@@ -19,7 +19,7 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
     # Lê cada arquivo JSON e adiciona seus dados à lista
     for file in files:
         file_path = os.path.join(json_dir, file)
-        if count >= 3000:
+        if count >= 1500:
             break
         with open(file_path, 'r') as f:
             json_data = json.load(f)
