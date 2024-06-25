@@ -129,6 +129,7 @@ for epoch in range(num_epochs):
             outputs = model(**batch)
         predictions = outputs.logits.argmax(dim=-1)
         predictions, references = predictions, batch["labels"]
+        print(f"predictions: {predictions} references: {references}")
         metric.add_batch(
             predictions=predictions,
             references=references,
