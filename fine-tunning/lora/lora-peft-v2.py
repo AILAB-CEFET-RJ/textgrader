@@ -106,5 +106,9 @@ for epoch in range(num_epochs):
 
     #eval_metric = metric.compute()
     print(f"epoch {epoch}:")#, eval_metric)
+<<<<<<< Updated upstream
 
 print("finish!!")
+=======
+print("finish!!!!!!!!")
+>>>>>>> Stashed changes
