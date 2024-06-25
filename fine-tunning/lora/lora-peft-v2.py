@@ -66,7 +66,7 @@ train_dataloader = DataLoader(tokenize_datasets["train"], shuffle=True, collate_
 #    tokenize_datasets["train"], shuffle=False, collate_fn=collate_fn, batch_size=batch_size
 #)
 
-model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True)
+model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, return_dict=True, num_labels=10)
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)
