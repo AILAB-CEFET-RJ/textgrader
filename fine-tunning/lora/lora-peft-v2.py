@@ -52,7 +52,7 @@ if getattr(tokenizer, "pad_token_id") is None:
 
 # datasets = load_dataset("glue", task)
 datasets = load_dataset("parquet", data_files="preprocessing/train_output-parquet.parquet")
-datasets_test = load_dataset("parquet", data_files="preprocessing/test-parquet.parquet")
+datasets_test = load_dataset("parquet", data_files="preprocessing/test_output-parquet.parquet")
 metric = evaluate.load("accuracy")
 
 
