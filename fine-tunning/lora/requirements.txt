@@ -8,3 +8,4 @@ loralib
 rouge-score
 tensorboard
 py7zr
+black

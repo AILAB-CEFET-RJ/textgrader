@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import json
+from sklearn.model_selection import train_test_split
 
 
 def preprocess_texto(texto):
@@ -37,15 +38,26 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
             for obj in json_data:
                 preprocessed = preprocess_texto(obj["texto"])
                 count +=1
-                print(obj["nota"])
+                if count % 100 == 0:
+                    print(count)
                 n = notas[obj["nota"]]
                 df = df._append({"texto": preprocessed, "nota": obj["nota"], "labels": n}, ignore_index=True)
 
+    # Divisão em treino e o restante (teste + validação)
+    train_data, temp_data = train_test_split(df, test_size=0.6, random_state=42)
+
+    # Divisão do restante em teste e validação
+    test_data, val_data = train_test_split(temp_data, test_size=0.5, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
-    df.to_csv(csv_file, index=False)
+    train_data.to_csv(f"train_{csv_file}", index=False)
+    test_data.to_csv(f"test_{csv_file}", index=False)
+    val_data.to_csv(f"val_{csv_file}", index=False)
+
     if parquet_file_path:
-        df.to_parquet(parquet_file_path, index=False)
+        train_data.to_parquet(f"train_{parquet_file_path}", index=False)
+        test_data.to_parquet(f"test_{parquet_file_path}", index=False)
+        val_data.to_parquet(f"val_{parquet_file_path}", index=False)
 
 
 # Diretório contendo os arquivos JSON
@@ -57,4 +69,4 @@ parquet_file_path = 'output-parquet.parquet'
 # Chama a função para converter JSONs em CSV
 jsons_to_csv(json_directory, csv_file_path, parquet_file_path)
 
-print(f'DataFrame salvo como {csv_file_path}')
+print(f'Arquivos salvos!')
