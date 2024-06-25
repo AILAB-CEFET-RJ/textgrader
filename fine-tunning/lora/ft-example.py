@@ -119,6 +119,7 @@ for text in text_list:
 
     print(text + " - " + id2label[predictions.tolist()[0]])
 
+'''
 # option 1: notebook login
 from huggingface_hub import notebook_login
 notebook_login() # ensure token gives write access
@@ -140,3 +141,5 @@ inference_model = AutoModelForSequenceClassification.from_pretrained(
 )
 tokenizer = AutoTokenizer.from_pretrained(config.base_model_name_or_path)
 model = PeftModel.from_pretrained(inference_model, model_id)
+
+'''
