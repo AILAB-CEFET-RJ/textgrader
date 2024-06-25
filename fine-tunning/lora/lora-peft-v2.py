@@ -107,3 +107,4 @@ for epoch in range(num_epochs):
     #eval_metric = metric.compute()
     print(f"epoch {epoch}:")#, eval_metric)
 
+print("finish!!")
