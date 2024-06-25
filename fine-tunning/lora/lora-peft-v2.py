@@ -1,8 +1,10 @@
 # https://huggingface.co/spaces/PEFT/sequence-classification/blob/main/LoRA.ipynb
 import argparse
 import os
+from datetime import date
 
 import torch
+import logging
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from peft import (
@@ -25,6 +27,14 @@ from transformers import (
     set_seed,
 )
 from tqdm import tqdm
+
+today = date.today()
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S',
+                    filename=f'logs/{today}.log',  # Nome do arquivo onde os logs serão salvos
+                    filemode='a')  # Modo 'a' append, para adicionar os logs ao arquivo existente
+
 
 ## todo: - consigo dividir os dados em treino e teste?
 ## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
@@ -99,7 +109,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
 )
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
-print(model)
+logging.info(model)
 
 optimizer = AdamW(model.parameters(), lr=lr)
 
@@ -135,6 +145,6 @@ for epoch in range(num_epochs):
         )
 
     eval_metric = metric.compute()
-    print(f"epoch {epoch}:", eval_metric)
+    logging.info(f"epoch {epoch}:", eval_metric)
 
-print("finish!!")
+logging.info("finish!!")
