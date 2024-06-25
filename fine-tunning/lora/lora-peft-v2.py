@@ -32,14 +32,14 @@ num_epochs = 5
 lr = 3e-4
 padding_side = "right" ## todo: padding ser right ou left faz alguma diferença?
 
-peft_config = LoraConfig(task_type="SEQ_CLS", inference_mode=False, r=8, lora_alpha=16, lora_dropout=0.1)
+peft_config = LoraConfig(task_type="SEQ_CLS", inference_mode=False, r=8, lora_alpha=16, lora_dropout=0.1, use_dora=True)
 
 tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, padding=padding_side)
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 #datasets = load_dataset("glue", task)
-datasets = load_dataset('parquet', data_files='preprocessing/output-parquet.parquet')
+datasets = load_dataset('parquet', data_files='preprocessing/output-parquet-3k.parquet')
 #metric = evaluate.load("glue", task)
 
 
