@@ -88,7 +88,7 @@ train_dataloader = DataLoader(
     batch_size=batch_size,
 )
 eval_dataloader = DataLoader(
-    tokenize_datasets_test["test"],
+    tokenize_datasets_test["train"],
     shuffle=False,
     collate_fn=collate_fn,
     batch_size=batch_size,
