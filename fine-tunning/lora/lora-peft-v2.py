@@ -44,7 +44,7 @@ datasets = load_dataset('parquet', data_files='preprocessing/output-parquet-3k.p
 
 
 def tokenize(examples):
-    outputs = tokenizer(examples["texto"], examples["nota"], truncation=True, max_length=None)
+    outputs = tokenizer(examples["texto"], truncation=True, max_length=512)
     return outputs
 
 
