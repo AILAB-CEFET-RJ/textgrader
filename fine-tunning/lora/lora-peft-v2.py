@@ -31,7 +31,7 @@ from tqdm import tqdm
 today = date.today()
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
+                    datefmt='%d-%m-%Y %H:%M:%S',
                     filename=f'logs/{today}.log',  # Nome do arquivo onde os logs serão salvos
                     filemode='a')  # Modo 'a' append, para adicionar os logs ao arquivo existente
 
@@ -40,7 +40,7 @@ logging.basicConfig(level=logging.DEBUG,
 ## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
 batch_size = 4
 model_name_or_path = "roberta-large"
-task = "mrpc"
+task = "mrpc" ## todo: que tarefa é essa?
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
@@ -110,6 +110,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 logging.info(model)
+print(model)
 
 optimizer = AdamW(model.parameters(), lr=lr)
 
@@ -146,5 +147,6 @@ for epoch in range(num_epochs):
 
     eval_metric = metric.compute()
     logging.info(f"epoch {epoch}:", eval_metric)
+    print(f"epoch {epoch}:", eval_metric)
 
 logging.info("finish!!")
