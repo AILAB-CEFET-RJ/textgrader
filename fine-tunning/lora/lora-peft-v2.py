@@ -36,7 +36,7 @@ if len(sys.argv) < 1:
     sys.exit()
 
 conjunto = sys.argv[1]
-if len(sys.argv)>1
+if len(sys.argv)>1:
     obs = sys.argv[2]
 else:
     obs = ""
