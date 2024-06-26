@@ -44,7 +44,7 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
                 n = labels[nota]
                 df = df._append({"texto": preprocessed, "nota": nota, "labels": n}, ignore_index=True)
 
-    with open(f'labels-{conjunto}.json', 'w', encoding='utf-8') as arquivo:
+    with open(f'labels_{conjunto}.json', 'w', encoding='utf-8') as arquivo:
         json.dump(labels, arquivo, indent=4)
 
     print(labels)
@@ -61,7 +61,7 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
 
 
 # Diretório contendo os arquivos JSON
-conjuntos = ["conjunto-1","conjunto-2"]
+conjuntos = ["conjunto_1","conjunto_2"]
 json_directory = '../../../textgrader-pt-br/jsons'
 # Nome do arquivo CSV a ser salvo
 csv_file_path = 'output.csv'
