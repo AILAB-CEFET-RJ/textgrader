@@ -32,10 +32,14 @@ from tqdm import tqdm
 import sys
 
 if len(sys.argv) < 1:
-    print("Uso: python meu_script.py <conjunto>")
+    print("Uso: python meu_script.py <conjunto> <obs-opcional>")
     sys.exit()
 
 conjunto = sys.argv[1]
+if len(sys.argv)>1
+    obs = sys.argv[2]
+else:
+    obs = ""
 
 batch_size = 4
 model_name_or_path = "roberta-large"
@@ -125,6 +129,7 @@ results = {
     "epochs": num_epochs,
     "metrics": {},
     "conjunto": conjunto,
+    "obs": obs,
 }
 
 for epoch in range(num_epochs):
@@ -159,7 +164,7 @@ import json
 import datetime
 today = datetime.date.today().strftime('%d-%m-%Y')
 results["date"] = today
-with open(f'results-{num_epochs}-conjunto{conjunto}-{today}.json', 'w', encoding='utf-8') as arquivo:
+with open(f'results/{num_epochs}epochs-conjunto{conjunto}-{today}.json', 'w', encoding='utf-8') as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
