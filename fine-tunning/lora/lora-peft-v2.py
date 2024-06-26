@@ -121,8 +121,10 @@ results = {
     "batch_size": batch_size,
     "model": model_name_or_path,
     "epochs": num_epochs,
-    "metrics": {}
+    "metrics": {},
+    "conjunto": conjunto,
 }
+
 for epoch in range(num_epochs):
     model.train()
     for step, batch in enumerate(train_dataloader):
@@ -152,7 +154,7 @@ for epoch in range(num_epochs):
     results["metrics"][epoch] = eval_metric
 
 import json
-with open(f'results-{num_epochs}.json', 'w', encoding='utf-8') as arquivo:
+with open(f'results-{num_epochs}-conjunto{conjunto}.json', 'w', encoding='utf-8') as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
