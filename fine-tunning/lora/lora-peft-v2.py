@@ -26,7 +26,15 @@ from transformers import (
 )
 from tqdm import tqdm
 
-## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
+## Qual conjunto de dados está sendo treinado?
+import sys
+
+if len(sys.argv) < 1:
+    print("Uso: python meu_script.py <conjunto>")
+    sys.exit()
+
+conjunto = sys.argv[1]
+
 batch_size = 4
 model_name_or_path = "roberta-large"
 task = "mrpc" ## todo: que tarefa é essa?
