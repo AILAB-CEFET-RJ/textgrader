@@ -1,6 +1,8 @@
 # https://huggingface.co/spaces/PEFT/sequence-classification/blob/main/LoRA.ipynb
 import argparse
 import os
+from datetime import date
+
 import torch
 import logging
 from torch.optim import AdamW
@@ -154,7 +156,9 @@ for epoch in range(num_epochs):
     results["metrics"][epoch] = eval_metric
 
 import json
-with open(f'results-{num_epochs}-conjunto{conjunto}.json', 'w', encoding='utf-8') as arquivo:
+today = date.today()
+results["date"] = today
+with open(f'results-{num_epochs}-conjunto{conjunto}-{date}.json', 'w', encoding='utf-8') as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
