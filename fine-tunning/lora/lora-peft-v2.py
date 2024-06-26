@@ -158,7 +158,7 @@ for epoch in range(num_epochs):
 import json
 today = date.today()
 results["date"] = today
-with open(f'results-{num_epochs}-conjunto{conjunto}-{date}.json', 'w', encoding='utf-8') as arquivo:
+with open(f'results-{num_epochs}-conjunto{conjunto}-{today.strftime('%d-%m-%Y')}.json', 'w', encoding='utf-8') as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
