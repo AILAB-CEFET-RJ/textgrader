@@ -109,7 +109,12 @@ lr_scheduler = get_linear_schedule_with_warmup(
 )
 
 model.to(device)
-
+results = {
+    "batch_size": batch_size,
+    "model": model_name_or_path,
+    "epochs": num_epochs,
+    "metrics": {}
+}
 for epoch in range(num_epochs):
     model.train()
     for step, batch in enumerate(train_dataloader):
@@ -136,5 +141,13 @@ for epoch in range(num_epochs):
 
     eval_metric = metric.compute()
     print(f"epoch {epoch}:", eval_metric)
+    results["metrics"][epoch] = eval_metric
+
+import json
+with open(f'results-{num_epochs}.json', 'w', encoding='utf-8') as arquivo:
+    json.dump(results, arquivo, indent=4)
+
 
 print("finish!!")
+
+
