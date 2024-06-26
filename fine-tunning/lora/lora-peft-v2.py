@@ -26,7 +26,6 @@ from transformers import (
 )
 from tqdm import tqdm
 
-## todo: - consigo dividir os dados em treino e teste?
 ## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
 batch_size = 20
 model_name_or_path = "roberta-large"
@@ -95,7 +94,7 @@ eval_dataloader = DataLoader(
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(
-    model_name_or_path, return_dict=True, num_labels=10
+    model_name_or_path, return_dict=True, num_labels=33
 )
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
