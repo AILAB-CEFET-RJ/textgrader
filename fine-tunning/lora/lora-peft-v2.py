@@ -28,7 +28,7 @@ from tqdm import tqdm
 
 ## todo: - consigo dividir os dados em treino e teste?
 ## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
-batch_size = 4
+batch_size = 20
 model_name_or_path = "roberta-large"
 task = "mrpc" ## todo: que tarefa é essa?
 peft_type = PeftType.LORA

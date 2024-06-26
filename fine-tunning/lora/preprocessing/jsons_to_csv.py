@@ -44,20 +44,15 @@ def jsons_to_csv(json_dir, csv_file, parquet_file_path=None):
                 df = df._append({"texto": preprocessed, "nota": obj["nota"], "labels": n}, ignore_index=True)
 
     # Divisão em treino e o restante (teste + validação)
-    train_data, temp_data = train_test_split(df, test_size=0.6, random_state=42)
-
-    # Divisão do restante em teste e validação
-    test_data, val_data = train_test_split(temp_data, test_size=0.5, random_state=42)
+    train_data, test_data = train_test_split(df, test_size=0.6, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
     train_data.to_csv(f"train_{csv_file}", index=False)
     test_data.to_csv(f"test_{csv_file}", index=False)
-    val_data.to_csv(f"val_{csv_file}", index=False)
 
     if parquet_file_path:
         train_data.to_parquet(f"train_{parquet_file_path}", index=False)
         test_data.to_parquet(f"test_{parquet_file_path}", index=False)
-        val_data.to_parquet(f"val_{parquet_file_path}", index=False)
 
 
 # Diretório contendo os arquivos JSON
