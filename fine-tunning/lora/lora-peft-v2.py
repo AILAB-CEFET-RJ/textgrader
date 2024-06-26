@@ -58,8 +58,8 @@ if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
-datasets = load_dataset("parquet", data_files=f"preprocessing/train_conjunto-{conjunto}-output.parquet")
-datasets_test = load_dataset("parquet", data_files=f"preprocessing/test_conjunto-{conjunto}-output.parquet")
+datasets = load_dataset("parquet", data_files=f"preprocessing/conjunto-{conjunto}/train_conjunto-{conjunto}-output.parquet")
+datasets_test = load_dataset("parquet", data_files=f"preprocessing/conjunto-{conjunto}/test_conjunto-{conjunto}-output.parquet")
 metric = evaluate.load("accuracy")
 
 
