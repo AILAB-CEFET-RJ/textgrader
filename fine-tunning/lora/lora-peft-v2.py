@@ -156,9 +156,10 @@ for epoch in range(num_epochs):
     results["metrics"][epoch] = eval_metric
 
 import json
-today = date.today()
+import datetime
+today = datetime.date.today().strftime('%d-%m-%Y')
 results["date"] = today
-with open(f'results-{num_epochs}-conjunto{conjunto}-{today.strftime('%d-%m-%Y')}.json', 'w', encoding='utf-8') as arquivo:
+with open(f'results-{num_epochs}-conjunto{conjunto}-{today}.json', 'w', encoding='utf-8') as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
