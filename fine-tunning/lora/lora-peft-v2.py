@@ -27,7 +27,7 @@ from transformers import (
 from tqdm import tqdm
 
 ## todo: - consigo juntar todas as redaçẽos para fazer um classificador de nota geral?
-batch_size = 20
+batch_size = 4
 model_name_or_path = "roberta-large"
 task = "mrpc" ## todo: que tarefa é essa?
 peft_type = PeftType.LORA
