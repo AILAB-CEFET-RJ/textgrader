@@ -168,6 +168,7 @@ with open(f'results/{num_epochs}epochs-conjunto{conjunto}-{today}.json', 'w', en
     json.dump(results, arquivo, indent=4)
 
 
+# model.save_pretrained()
 print("finish!!")
 
 
