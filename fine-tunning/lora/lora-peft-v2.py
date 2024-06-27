@@ -1,49 +1,41 @@
 # https://huggingface.co/spaces/PEFT/sequence-classification/blob/main/LoRA.ipynb
-import argparse
-import os
-from datetime import date
 
+import json
+import datetime
+import time
 import torch
-import logging
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from peft import (
-    get_peft_config,
     get_peft_model,
-    get_peft_model_state_dict,
-    set_peft_model_state_dict,
     LoraConfig,
     PeftType,
-    PrefixTuningConfig,
-    PromptEncoderConfig,
 )
-
+import sys
 import evaluate
 from datasets import load_dataset
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
-    set_seed,
 )
 from tqdm import tqdm
-
-## Qual conjunto de dados está sendo treinado?
-import sys
 
 if len(sys.argv) < 1:
     print("Uso: python meu_script.py <conjunto> <obs-opcional>")
     sys.exit()
 
 conjunto = sys.argv[1]
-if len(sys.argv)>1:
+if len(sys.argv) > 1:
     obs = sys.argv[2]
 else:
     obs = ""
 
+start_time = time.time()
+
 batch_size = 4
 model_name_or_path = "roberta-large"
-task = "mrpc" ## todo: que tarefa é essa?
+task = "mrpc"  ## todo: que tarefa é essa?
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
@@ -64,8 +56,12 @@ if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
-datasets = load_dataset("parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet")
-datasets_test = load_dataset("parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet")
+datasets = load_dataset(
+    "parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet"
+)
+datasets_test = load_dataset(
+    "parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet"
+)
 metric = evaluate.load("accuracy")
 
 
@@ -130,6 +126,7 @@ results = {
     "metrics": {},
     "conjunto": conjunto,
     "obs": obs,
+    "padding_side": padding_side,
 }
 
 for epoch in range(num_epochs):
@@ -160,15 +157,19 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", eval_metric)
     results["metrics"][epoch] = eval_metric
 
-import json
-import datetime
-today = datetime.date.today().strftime('%d-%m-%Y')
+today = datetime.date.today().strftime("%d-%m-%Y")
+end_time = time.time()
+elapsed_time = end_time - start_time
 results["date"] = today
-with open(f'results/{num_epochs}epochs-conjunto{conjunto}-{today}.json', 'w', encoding='utf-8') as arquivo:
+results["processing_time"] = elapsed_time
+
+with open(
+    f"results/conjunto{conjunto}-{num_epochs}-epochs-{today}.json",
+    "w",
+    encoding="utf-8",
+) as arquivo:
     json.dump(results, arquivo, indent=4)
 
 
 # model.save_pretrained()
 print("finish!!")
-
-
