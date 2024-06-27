@@ -24,4 +24,4 @@ run-conjunto2:
 	nohup python lora-peft-v2.py 2 $(OBS)
 	sleep 10
 
-all: run-conjunto1 run-conjunto2 git-all
+all: run-conjunto1 git-all
