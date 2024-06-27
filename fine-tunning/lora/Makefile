@@ -1,5 +1,6 @@
 FILES = results/*
 COMMIT_MESSAGE = "Atualizando arquivos de resultados"
+OBS ?= ""
 
 .PHONY: add commit push git-all run-conjunto2 run-conjunto1
 
@@ -15,10 +16,10 @@ push:
 git-all: add commit push
 
 run-conjunto1:
-	nohup python lora-peft-v2.py 1
+	nohup python lora-peft-v2.py 1 $(OBS)
 
 
 run-conjunto2:
-	nohup python lora-peft-v2.py 2
+	nohup python lora-peft-v2.py 2 $(OBS)
 
 all: run-conjunto1 run-conjunto2 git-all
