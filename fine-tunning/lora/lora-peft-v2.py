@@ -35,12 +35,12 @@ start_time = time.time()
 
 batch_size = 4
 model_name_or_path = "roberta-large"
-task = "mrpc"  ## todo: que tarefa é essa?
+task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
-padding_side = "right"  ## todo: padding ser right ou left faz alguma diferença?
+padding_side = "right"
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
