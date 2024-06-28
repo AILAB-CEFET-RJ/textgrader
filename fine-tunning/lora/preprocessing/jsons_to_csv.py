@@ -49,7 +49,7 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
 
     print(labels)
     # Divisão em treino e o restante (teste + validação)
-    train_data, test_data = train_test_split(df, test_size=0.8, random_state=42)
+    train_data, test_data = train_test_split(df, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
     train_data.to_csv(f"train_{conjunto}_{csv_file}", index=False)
