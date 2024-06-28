@@ -1,7 +1,7 @@
 # https://huggingface.co/spaces/PEFT/sequence-classification/blob/main/LoRA.ipynb
 
 import json
-import datetime
+from datetime import datetime
 import time
 import torch
 from torch.optim import AdamW
@@ -145,9 +145,9 @@ results = {
     "conjunto": conjunto,
     "obs": obs,
     "padding_side": padding_side,
-    "train_size": len(tokenize_datasets),
-    "test_size": len(tokenize_datasets_test),
-    "eval_size": len(tokenize_datasets_eval),
+    "train_size": tokenize_datasets.info.dataset_size,
+    "test_size": tokenize_datasets_test.info.dataset_size,
+    "eval_size": tokenize_datasets_eval.info.dataset_size,
     "n_labels": n_labels,
 }
 
@@ -198,11 +198,11 @@ results["validation_metric"] = eval_metric
 
 
 ## Saving log file
-today = datetime.date.today().strftime("%d-%m-%Y-%H-%M")
+today = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 end_time = time.time()
 elapsed_time = end_time - start_time
 results["date"] = today
-results["processing_time"] = elapsed_time
+results["processing_time"] = elapsed_time/60
 
 with open(
     f"results/conjunto{conjunto}-{num_epochs}-epochs-{today}.json",
