@@ -33,7 +33,8 @@ else:
 
 start_time = time.time()
 
-batch_size = 4
+## Definindo configurações
+batch_size = 6
 model_name_or_path = "roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
@@ -41,6 +42,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
 padding_side = "right"
+n_labels = 33
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -62,6 +64,10 @@ datasets = load_dataset(
 datasets_test = load_dataset(
     "parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet"
 )
+datasets_eval = load_dataset(
+    "parquet", data_files=f"preprocessing/val_conjunto_{conjunto}_output.parquet"
+)
+
 metric = evaluate.load("accuracy")
 
 
@@ -83,6 +89,12 @@ tokenize_datasets_test = datasets_test.map(
     remove_columns=["texto", "nota"],
 )
 
+tokenize_datasets_eval = datasets_eval.map(
+    tokenize,
+    batched=True,
+    remove_columns=["texto", "nota"],
+)
+
 # tokenize_datasets = tokenize_datasets.rename_column("label", "labels")
 
 
@@ -96,6 +108,12 @@ train_dataloader = DataLoader(
     collate_fn=collate_fn,
     batch_size=batch_size,
 )
+test_dataloader = DataLoader(
+    tokenize_datasets_test["train"],
+    shuffle=False,
+    collate_fn=collate_fn,
+    batch_size=batch_size,
+)
 eval_dataloader = DataLoader(
     tokenize_datasets_test["train"],
     shuffle=False,
@@ -104,7 +122,7 @@ eval_dataloader = DataLoader(
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(
-    model_name_or_path, return_dict=True, num_labels=33
+    model_name_or_path, return_dict=True, num_labels=n_labels
 )
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
@@ -127,9 +145,10 @@ results = {
     "conjunto": conjunto,
     "obs": obs,
     "padding_side": padding_side,
-    "train_size": len(datasets),
-    "test_size": len(datasets_test),
-    "device": device,
+    "train_size": len(tokenize_datasets),
+    "test_size": len(tokenize_datasets_test),
+    "eval_size": len(tokenize_datasets_eval),
+    "n_labels": n_labels,
 }
 
 for epoch in range(num_epochs):
@@ -144,7 +163,7 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
 
     model.eval()
-    for step, batch in enumerate(tqdm(eval_dataloader)):
+    for step, batch in enumerate(tqdm(test_dataloader)):
         batch.to(device)
         with torch.no_grad():
             outputs = model(**batch)
@@ -156,10 +175,29 @@ for epoch in range(num_epochs):
             references=references,
         )
 
-    eval_metric = metric.compute()
-    print(f"epoch {epoch}:", eval_metric)
-    results["metrics"][epoch] = eval_metric
+    test_metric = metric.compute()
+    print(f"epoch {epoch}:", test_metric)
+    results["metrics"][epoch] = test_metric
 
+## using evaluation data
+for step, batch in enumerate(tqdm(eval_dataloader)):
+    batch.to(device)
+    with torch.no_grad():
+        outputs = model(**batch)
+    predictions = outputs.logits.argmax(dim=-1)
+    predictions, references = predictions, batch["labels"]
+    print(f"predictions: {predictions} references: {references}")
+    metric.add_batch(
+        predictions=predictions,
+        references=references,
+    )
+
+eval_metric = metric.compute()
+print(f"Validation metric: {eval_metric}")
+results["validation_metric"] = eval_metric
+
+
+## Saving log file
 today = datetime.date.today().strftime("%d-%m-%Y-%H-%M")
 end_time = time.time()
 elapsed_time = end_time - start_time
