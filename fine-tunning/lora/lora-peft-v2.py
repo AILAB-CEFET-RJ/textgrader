@@ -127,6 +127,9 @@ results = {
     "conjunto": conjunto,
     "obs": obs,
     "padding_side": padding_side,
+    "train_size": len(datasets),
+    "test_size": len(datasets_test),
+    "device": device,
 }
 
 for epoch in range(num_epochs):
@@ -157,7 +160,7 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", eval_metric)
     results["metrics"][epoch] = eval_metric
 
-today = datetime.date.today().strftime("%d-%m-%Y")
+today = datetime.date.today().strftime("%d-%m-%Y-%H-%M")
 end_time = time.time()
 elapsed_time = end_time - start_time
 results["date"] = today
