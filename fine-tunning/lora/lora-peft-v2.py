@@ -65,7 +65,7 @@ datasets_test = load_dataset(
     "parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet"
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"preprocessing/val_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"preprocessing/eval_conjunto_{conjunto}_output.parquet"
 )
 
 metric = evaluate.load("accuracy")
