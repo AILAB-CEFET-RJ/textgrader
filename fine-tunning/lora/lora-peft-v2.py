@@ -34,7 +34,7 @@ else:
 start_time = time.time()
 
 ## Definindo configurações
-batch_size = 6
+batch_size = 5
 model_name_or_path = "roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
@@ -145,9 +145,9 @@ results = {
     "conjunto": conjunto,
     "obs": obs,
     "padding_side": padding_side,
-    "train_size": tokenize_datasets.info.dataset_size,
-    "test_size": tokenize_datasets_test.info.dataset_size,
-    "eval_size": tokenize_datasets_eval.info.dataset_size,
+    "train_size": len(tokenize_datasets["train"]["input_ids"]),
+    "test_size": len(tokenize_datasets_test["train"]["input_ids"]),
+    "eval_size": len(tokenize_datasets_eval["train"]["input_ids"]),
     "n_labels": n_labels,
 }
 
