@@ -1,0 +1,27 @@
+{
+    "batch_size": 4,
+    "model": "roberta-large",
+    "epochs": 5,
+    "metrics": {
+        "0": {
+            "accuracy": 0.3403341288782816
+        },
+        "1": {
+            "accuracy": 0.3403341288782816
+        },
+        "2": {
+            "accuracy": 0.3403341288782816
+        },
+        "3": {
+            "accuracy": 0.3403341288782816
+        },
+        "4": {
+            "accuracy": 0.3403341288782816
+        }
+    },
+    "conjunto": "1",
+    "obs": "testando_com_nova_quantidade_de_redacoes_no_treino",
+    "padding_side": "right",
+    "date": "27-06-2024",
+    "processing_time": 4537.880686998367
+}
