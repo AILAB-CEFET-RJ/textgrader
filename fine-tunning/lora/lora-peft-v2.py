@@ -198,7 +198,7 @@ results["validation_metric"] = eval_metric
 
 
 ## Saving log file
-today = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+today = datetime.now().strftime('%Y-%m-%d-%H-%M')
 end_time = time.time()
 elapsed_time = end_time - start_time
 results["date"] = today
