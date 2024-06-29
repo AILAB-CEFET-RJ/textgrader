@@ -171,7 +171,7 @@ results["date"] = today
 results["processing_time"] = elapsed_time / 60
 
 with open(
-        f"results/{today}-conjunto{conjunto}-cross-validation.json",
+        f"results/cv-{today}-conjunto{conjunto}-cross-validation.json",
         "w",
         encoding="utf-8",
 ) as arquivo:
