@@ -11,7 +11,7 @@ from peft import (
 )
 import sys
 import evaluate
-from datasets import load_dataset
+from datasets import load_dataset, load_metric
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
@@ -61,7 +61,7 @@ datasets = load_dataset(
     "parquet", data_files=f"preprocessing/df_conjunto_{conjunto}_output.parquet"
 )
 
-metric = evaluate.load("accuracy")
+#metric = evaluate.load("accuracy")
 
 
 def tokenize(examples):
@@ -146,6 +146,7 @@ for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
             optimizer.zero_grad()
 
         model.eval()
+        metric = load_metric("accuracy")
         for step, batch in enumerate(tqdm(val_dataloader)):
             batch.to(device)
             with torch.no_grad():
@@ -161,7 +162,6 @@ for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
         print(f"epoch {epoch}:", val_metric)
         results["metrics"][f"fold_{fold_count}_epoch_{epoch}"] = val_metric
 
-    metric.reset()
 
 # Salvar resultados em um arquivo JSON
 today = datetime.now().strftime('%d-%m-%Y-%H-%M')
