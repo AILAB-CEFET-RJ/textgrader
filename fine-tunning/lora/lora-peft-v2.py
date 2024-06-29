@@ -115,7 +115,7 @@ test_dataloader = DataLoader(
     batch_size=batch_size,
 )
 eval_dataloader = DataLoader(
-    tokenize_datasets_test["train"],
+    tokenize_datasets_eval["train"],
     shuffle=False,
     collate_fn=collate_fn,
     batch_size=batch_size,
