@@ -1,0 +1,22 @@
+{
+    "batch_size": 5,
+    "model": "roberta-large",
+    "epochs": 1,
+    "metrics": {
+        "0": {
+            "accuracy": 0.520684168655529
+        }
+    },
+    "conjunto": "1",
+    "obs": "testing_new_logs_logic",
+    "padding_side": "right",
+    "train_size": 5028,
+    "test_size": 2514,
+    "eval_size": 838,
+    "n_labels": 33,
+    "validation_metric": {
+        "accuracy": 0.520684168655529
+    },
+    "date": "2024-06-28 21:14:55",
+    "processing_time": 14.631273496150971
+}
