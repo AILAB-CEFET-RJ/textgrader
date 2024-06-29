@@ -205,7 +205,7 @@ results["date"] = today
 results["processing_time"] = elapsed_time/60
 
 with open(
-    f"results/conjunto{conjunto}-{num_epochs}-epochs-{today}.json",
+    f"results/{today}-conjunto{conjunto}-{num_epochs}-epochs.json",
     "w",
     encoding="utf-8",
 ) as arquivo:

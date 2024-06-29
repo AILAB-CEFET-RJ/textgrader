@@ -56,11 +56,13 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
     train_data.to_csv(f"train_{conjunto}_{csv_file}", index=False)
     test_data.to_csv(f"test_{conjunto}_{csv_file}", index=False)
     val_data.to_csv(f"eval_{conjunto}_{csv_file}", index=False)
+    df.to_csv(f"df_{conjunto}_{csv_file}", index=False)
 
     if parquet_file_path:
         train_data.to_parquet(f"train_{conjunto}_{parquet_file_path}", index=False)
         test_data.to_parquet(f"test_{conjunto}_{parquet_file_path}", index=False)
         val_data.to_parquet(f"eval_{conjunto}_{parquet_file_path}", index=False)
+        df.to_parquet(f"df_{conjunto}_{parquet_file_path}", index=False)
 
 
 # Diretório contendo os arquivos JSON
