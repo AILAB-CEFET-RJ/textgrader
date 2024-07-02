@@ -22,6 +22,7 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import os
 
 if len(sys.argv) < 2:
     print("Uso: python meu_script.py <conjunto> <obs-opcional>")
@@ -203,31 +204,31 @@ eval_metric = metric.compute()
 print(f"Validation metric: {eval_metric}")
 results["validation_metric"] = eval_metric
 
+## Criar a pasta 'results' se não existir
+today = datetime.now().strftime('%d-%m-%Y-%H-%M')
+end_time = time.time()
+folder_name = f"{today}-conjunto{conjunto}-{num_epochs}-epochs"
+os.makedirs(folder_name, exist_ok=True)
+
 ## Calcular a matriz de confusão
 cm = confusion_matrix(all_references, all_predictions)
 
 ## Salvar a matriz de confusão como CSV
 cm_df = pd.DataFrame(cm)
-cm_df.to_csv(f"results/confusion_matrix_{conjunto}_{num_epochs}_epochs.csv", index=False)
+cm_df.to_csv(f"{folder_name}/confusion_matrix.csv", index=False)
 
 ## Visualizar a matriz de confusão
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot(cmap=plt.cm.Blues)
 plt.title("Confusion Matrix")
 
-## Salvar a matriz de confusão como PNG
-plt.savefig(f"results/confusion_matrix_{conjunto}_{num_epochs}_epochs.png")
-plt.show()
-
 ## Saving log file
-today = datetime.now().strftime('%d-%m-%Y-%H-%M')
-end_time = time.time()
 elapsed_time = end_time - start_time
 results["date"] = today
 results["processing_time"] = elapsed_time/60
 
 with open(
-    f"results/{today}-conjunto{conjunto}-{num_epochs}-epochs.json",
+    f"{folder_name}/results.json",
     "w",
     encoding="utf-8",
 ) as arquivo:
