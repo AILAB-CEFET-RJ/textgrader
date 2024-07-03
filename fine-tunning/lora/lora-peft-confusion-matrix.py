@@ -207,15 +207,15 @@ results["validation_metric"] = eval_metric
 ## Criar a pasta 'results' se não existir
 today = datetime.now().strftime('%d-%m-%Y-%H-%M')
 end_time = time.time()
-folder_name = f"{today}-conjunto{conjunto}-{num_epochs}-epochs"
-os.makedirs(folder_name, exist_ok=True)
+folder_path = f"results/{today}-conjunto{conjunto}-{num_epochs}-epochs"
+os.makedirs(folder_path, exist_ok=True)
 
 ## Calcular a matriz de confusão
 cm = confusion_matrix(all_references, all_predictions)
 
 ## Salvar a matriz de confusão como CSV
 cm_df = pd.DataFrame(cm)
-cm_df.to_csv(f"{folder_name}/confusion_matrix.csv", index=False)
+cm_df.to_csv(f"{folder_path}/confusion_matrix.csv", index=False)
 
 ## Visualizar a matriz de confusão
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)
@@ -228,7 +228,7 @@ results["date"] = today
 results["processing_time"] = elapsed_time/60
 
 with open(
-    f"{folder_name}/results.json",
+    f"{folder_path}/results.json",
     "w",
     encoding="utf-8",
 ) as arquivo:
