@@ -1,0 +1,89 @@
+{
+    "batch_size": 5,
+    "model": "roberta-large",
+    "epochs": 5,
+    "metrics": {
+        "fold_1_epoch_0": {
+            "accuracy": 0.5692124105011933
+        },
+        "fold_1_epoch_1": {
+            "accuracy": 0.6372315035799523
+        },
+        "fold_1_epoch_2": {
+            "accuracy": 0.6593078758949881
+        },
+        "fold_1_epoch_3": {
+            "accuracy": 0.6670644391408115
+        },
+        "fold_1_epoch_4": {
+            "accuracy": 0.6718377088305489
+        },
+        "fold_2_epoch_0": {
+            "accuracy": 0.538782816229117
+        },
+        "fold_2_epoch_1": {
+            "accuracy": 0.2834128878281623
+        },
+        "fold_2_epoch_2": {
+            "accuracy": 0.315035799522673
+        },
+        "fold_2_epoch_3": {
+            "accuracy": 0.315035799522673
+        },
+        "fold_2_epoch_4": {
+            "accuracy": 0.315035799522673
+        },
+        "fold_3_epoch_0": {
+            "accuracy": 0.5477326968973747
+        },
+        "fold_3_epoch_1": {
+            "accuracy": 0.6181384248210023
+        },
+        "fold_3_epoch_2": {
+            "accuracy": 0.6449880668257757
+        },
+        "fold_3_epoch_3": {
+            "accuracy": 0.6485680190930787
+        },
+        "fold_3_epoch_4": {
+            "accuracy": 0.6390214797136038
+        },
+        "fold_4_epoch_0": {
+            "accuracy": 0.565035799522673
+        },
+        "fold_4_epoch_1": {
+            "accuracy": 0.6420047732696897
+        },
+        "fold_4_epoch_2": {
+            "accuracy": 0.6599045346062052
+        },
+        "fold_4_epoch_3": {
+            "accuracy": 0.6545346062052506
+        },
+        "fold_4_epoch_4": {
+            "accuracy": 0.6700477326968973
+        },
+        "fold_5_epoch_0": {
+            "accuracy": 0.5727923627684964
+        },
+        "fold_5_epoch_1": {
+            "accuracy": 0.6366348448687351
+        },
+        "fold_5_epoch_2": {
+            "accuracy": 0.6420047732696897
+        },
+        "fold_5_epoch_3": {
+            "accuracy": 0.6443914081145584
+        },
+        "fold_5_epoch_4": {
+            "accuracy": 0.6599045346062052
+        }
+    },
+    "conjunto": "1",
+    "obs": "testando_logs",
+    "padding_side": "right",
+    "train_size": 8380,
+    "n_labels": 33,
+    "date": "03-07-2024-02-26",
+    "processing_time": 387.0071447292964
+}
