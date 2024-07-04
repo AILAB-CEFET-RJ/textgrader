@@ -1,5 +1,4 @@
-import json
-from datetime import datetime
+import logs
 import time
 import torch
 from torch.optim import AdamW
@@ -10,7 +9,6 @@ from peft import (
     PeftType,
 )
 import sys
-import evaluate
 from datasets import load_dataset, load_metric
 from transformers import (
     AutoModelForSequenceClassification,
@@ -58,10 +56,14 @@ if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 datasets = load_dataset(
-    "parquet", data_files=f"preprocessing/df_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet"
 )
 
-#metric = evaluate.load("accuracy")
+datasets_eval = load_dataset(
+    "parquet", data_files=f"preprocessing/eval_conjunto_{conjunto}_output.parquet"
+)
+
+# metric = evaluate.load("accuracy")
 
 
 def tokenize(examples):
@@ -70,6 +72,12 @@ def tokenize(examples):
 
 
 tokenize_datasets = datasets.map(
+    tokenize,
+    batched=True,
+    remove_columns=["texto", "nota"],
+)
+
+tokenize_datasets_eval = datasets_eval.map(
     tokenize,
     batched=True,
     remove_columns=["texto", "nota"],
@@ -162,19 +170,39 @@ for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
         print(f"epoch {epoch}:", val_metric)
         results["metrics"][f"fold_{fold_count}_epoch_{epoch}"] = val_metric
 
+## using evaluation data
+eval_dataloader = DataLoader(
+    tokenize_datasets_eval["train"],
+    shuffle=False,
+    collate_fn=collate_fn,
+    batch_size=batch_size,
+)
+
+all_predictions = []
+all_references = []
+
+for step, batch in enumerate(tqdm(eval_dataloader)):
+    batch.to(device)
+    with torch.no_grad():
+        outputs = model(**batch)
+    predictions = outputs.logits.argmax(dim=-1)
+    predictions, references = predictions, batch["labels"]
+    all_predictions.extend(predictions.cpu().numpy())
+    all_references.extend(references.cpu().numpy())
+    print(f"predictions: {predictions} references: {references}")
+    metric.add_batch(
+        predictions=predictions,
+        references=references,
+    )
+
+eval_metric = metric.compute()
+print(f"Validation metric: {eval_metric}")
+results["validation_metric"] = eval_metric
 
 # Salvar resultados em um arquivo JSON
-today = datetime.now().strftime('%d-%m-%Y-%H-%M')
 end_time = time.time()
 elapsed_time = end_time - start_time
-results["date"] = today
 results["processing_time"] = elapsed_time / 60
 
-with open(
-        f"results/cv-{today}-conjunto{conjunto}-cross-validation.json",
-        "w",
-        encoding="utf-8",
-) as arquivo:
-    json.dump(results, arquivo, indent=4)
-
+logs.saving_results(results, "cv")
 print("Finish!")

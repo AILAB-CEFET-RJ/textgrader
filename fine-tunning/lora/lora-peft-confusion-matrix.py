@@ -1,7 +1,7 @@
-import json
-from datetime import datetime
+import logs
 import time
 import torch
+from datetime import datetime
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from peft import (
@@ -18,11 +18,9 @@ from transformers import (
     get_linear_schedule_with_warmup,
 )
 from tqdm import tqdm
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-import matplotlib.pyplot as plt
-import numpy as np
+from sklearn.metrics import confusion_matrix
 import pandas as pd
-import os
+
 
 if len(sys.argv) < 2:
     print("Uso: python meu_script.py <conjunto> <obs-opcional>")
@@ -204,35 +202,17 @@ eval_metric = metric.compute()
 print(f"Validation metric: {eval_metric}")
 results["validation_metric"] = eval_metric
 
-## Criar a pasta 'results' se não existir
-today = datetime.now().strftime('%d-%m-%Y-%H-%M')
-end_time = time.time()
-folder_path = f"results/{today}-conjunto{conjunto}-{num_epochs}-epochs"
-os.makedirs(folder_path, exist_ok=True)
-
 ## Calcular a matriz de confusão
 cm = confusion_matrix(all_references, all_predictions)
-
-## Salvar a matriz de confusão como CSV
 cm_df = pd.DataFrame(cm)
-cm_df.to_csv(f"{folder_path}/confusion_matrix.csv", index=False)
-
-## Visualizar a matriz de confusão
-disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-disp.plot(cmap=plt.cm.Blues)
-plt.title("Confusion Matrix")
 
 ## Saving log file
+end_time = time.time()
 elapsed_time = end_time - start_time
-results["date"] = today
-results["processing_time"] = elapsed_time/60
 
-with open(
-    f"{folder_path}/results.json",
-    "w",
-    encoding="utf-8",
-) as arquivo:
-    json.dump(results, arquivo, indent=4)
+results["processing_time"] = elapsed_time / 60
+
+logs.saving_results(results, "cm", cm_df)
 
 # model.save_pretrained()
 print("finish!!")
