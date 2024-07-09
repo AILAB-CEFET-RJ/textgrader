@@ -42,7 +42,7 @@ peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
-padding_side = "right"
+padding_side = "left" #"right"
 n_labels = 33
 
 peft_config = LoraConfig(
