@@ -9,7 +9,7 @@ def saving_results(results, label="", cm=None):
     results["date"] = today
 
     folder_path = (
-        f"results/{today}-conjunto{results['conjunto']}-{results['num_epochs']}-epochs"
+        f"results/{today}-conjunto{results['conjunto']}-{results['epochs']}-epochs"
     )
     os.makedirs(folder_path, exist_ok=True)
 
