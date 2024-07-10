@@ -1,0 +1,49 @@
+{
+    "batch_size": 5,
+    "model": "roberta-large",
+    "epochs": 10,
+    "metrics": {
+        "0": {
+            "accuracy": 0.5322195704057279
+        },
+        "1": {
+            "accuracy": 0.6105807478122514
+        },
+        "2": {
+            "accuracy": 0.6499602227525855
+        },
+        "3": {
+            "accuracy": 0.6205250596658711
+        },
+        "4": {
+            "accuracy": 0.656722354813047
+        },
+        "5": {
+            "accuracy": 0.6388225934765315
+        },
+        "6": {
+            "accuracy": 0.6368337311058074
+        },
+        "7": {
+            "accuracy": 0.6392203659506762
+        },
+        "8": {
+            "accuracy": 0.6352426412092284
+        },
+        "9": {
+            "accuracy": 0.6252983293556086
+        }
+    },
+    "conjunto": "1",
+    "obs": "change_apochs_to_15",
+    "padding_side": "left",
+    "train_size": 5028,
+    "test_size": 2514,
+    "eval_size": 838,
+    "n_labels": 33,
+    "validation_metric": {
+        "accuracy": 0.6097852028639618
+    },
+    "processing_time": 122.20310802459717,
+    "date": "10-07-2024-10-23"
+}
