@@ -16,7 +16,7 @@ push:
 git-all: add commit push
 
 run-conjunto1:
-	nohup python lora-peft-v2.py 1 $(OBS)
+	nohup python lora-peft-confusion-matrix.py 1 $(OBS)
 	sleep 10
 
 
