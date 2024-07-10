@@ -1,0 +1,34 @@
+{
+    "batch_size": 5,
+    "model": "roberta-large",
+    "epochs": 5,
+    "metrics": {
+        "0": {
+            "accuracy": 0.48647573587907716
+        },
+        "1": {
+            "accuracy": 0.6340493237867939
+        },
+        "2": {
+            "accuracy": 0.652744630071599
+        },
+        "3": {
+            "accuracy": 0.6459824980111376
+        },
+        "4": {
+            "accuracy": 0.6603023070803501
+        }
+    },
+    "conjunto": "1",
+    "obs": "padding_left",
+    "padding_side": "left",
+    "train_size": 5028,
+    "test_size": 2514,
+    "eval_size": 838,
+    "n_labels": 33,
+    "validation_metric": {
+        "accuracy": 0.6443914081145584
+    },
+    "processing_time": 62.10928217172623,
+    "date": "09-07-2024-21-00"
+}
