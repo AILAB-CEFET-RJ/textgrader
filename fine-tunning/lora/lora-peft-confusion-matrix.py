@@ -36,11 +36,11 @@ start_time = time.time()
 
 ## Definindo configurações
 batch_size = 5
-model_name_or_path = "roberta-large"
+model_name_or_path = "neuralmind/bert-large-portuguese-cased" #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-num_epochs = 10
+num_epochs = 5
 lr = 3e-4
 padding_side = "left" #"right"
 n_labels = 33
