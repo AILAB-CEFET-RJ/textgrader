@@ -28,9 +28,9 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
             json_data = json.load(f)
             for obj in json_data:
                 preprocessed = preprocess_texto(obj["texto"])
-                count += 1
-                if count % 1000 == 0:
-                    print(count)
+                #count += 1
+                #if count % 1000 == 0:
+                #    print(count)
 
                 nota = 0
                 try:
@@ -58,15 +58,15 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
 
     print(labels)
 
-    with open('grouped_by_grades.json', 'w', encoding='utf-8') as arquivo:
-        json.dump(grouped_by_grades, arquivo, indent=4)
-
     # Divisão em treino e o restante (teste + validação)
     train_data, temp_data = train_test_split(df, test_size=0.4, random_state=42)
     test_data, val_data = train_test_split(temp_data, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
     train_data.to_csv(f"train_{conjunto}_{csv_file}", index=False)
+    labels_unicas = train_data["nota"].nunique()
+    print(f"Quantidade de labels unicas no conjuntos de treino do {conjunto}: {labels_unicas}")
+
     test_data.to_csv(f"test_{conjunto}_{csv_file}", index=False)
     val_data.to_csv(f"eval_{conjunto}_{csv_file}", index=False)
     df.to_csv(f"df_{conjunto}_{csv_file}", index=False)
