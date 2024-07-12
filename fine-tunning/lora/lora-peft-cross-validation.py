@@ -40,7 +40,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
 padding_side = "right"
-n_labels = 33
+n_labels = 56
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
