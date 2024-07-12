@@ -15,11 +15,11 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
     dir_fmt = f"{json_dir}/{conjunto}"
     files = [f for f in os.listdir(dir_fmt) if f.endswith('.json')]
 
-    df = pd.DataFrame(columns=["texto","nota", "labels"])
+    df = pd.DataFrame(columns=["texto", "nota", "labels"])
     labels = {}
     label_count = 0
     count = 0
-    # Lê cada arquivo JSON e adiciona seus dados à lista
+    total_by_grades = {}
     for file in files:
         file_path = os.path.join(dir_fmt, file)
         #if count >= 3000:
@@ -28,7 +28,7 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
             json_data = json.load(f)
             for obj in json_data:
                 preprocessed = preprocess_texto(obj["texto"])
-                count +=1
+                count += 1
                 if count % 1000 == 0:
                     print(count)
 
@@ -38,16 +38,29 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
                 except Exception as e:
                     nota = int(float(obj["nota"]))
 
+                if nota not in total_by_grades.keys():
+                    total_by_grades[nota] = 1
+                else:
+                    total_by_grades[nota] += 1
+
                 if nota not in labels.keys():
                     labels[nota] = label_count
                     label_count += 1
+
                 n = labels[nota]
                 df = df._append({"texto": preprocessed, "nota": nota, "labels": n}, ignore_index=True)
 
     with open(f'labels_{conjunto}.json', 'w', encoding='utf-8') as arquivo:
         json.dump(labels, arquivo, indent=4)
 
+    with open(f'count_labels_{conjunto}.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(total_by_grades, arquivo, indent=4)
+
     print(labels)
+
+    with open('grouped_by_grades.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(grouped_by_grades, arquivo, indent=4)
+
     # Divisão em treino e o restante (teste + validação)
     train_data, temp_data = train_test_split(df, test_size=0.4, random_state=42)
     test_data, val_data = train_test_split(temp_data, random_state=42)
@@ -66,7 +79,7 @@ def jsons_to_csv(json_dir, csv_file, conjunto, parquet_file_path=None):
 
 
 # Diretório contendo os arquivos JSON
-conjuntos = ["conjunto_1","conjunto_2"]
+conjuntos = ["conjunto_1","conjunto_2","conjunto_3"]
 json_directory = '../../../textgrader-pt-br/jsons'
 # Nome do arquivo CSV a ser salvo
 csv_file_path = 'output.csv'

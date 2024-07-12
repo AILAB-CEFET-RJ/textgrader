@@ -1,0 +1,25 @@
+{
+    "batch_size": 4,
+    "model": "roberta-large",
+    "epochs": 5,
+    "metrics": {
+        "0": {
+            "accuracy": 0.2464309539693129
+        },
+        "1": {
+            "accuracy": 0.28325550366911273
+        },
+        "2": {
+            "accuracy": 0.27951967978652437
+        },
+        "3": {
+            "accuracy": 0.32034689793195464
+        },
+        "4": {
+            "accuracy": 0.3290193462308205
+        }
+    },
+    "conjunto": "2",
+    "obs": "notas_gerais",
+    "date": "26-06-2024"
+}
