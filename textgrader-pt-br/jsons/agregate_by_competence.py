@@ -1,6 +1,7 @@
+## script utilizado para dividir em pastas de acordo com o conjunto de competencias de cada redação
+
 import os
 import json
-from collections import defaultdict
 import shutil
 
 
