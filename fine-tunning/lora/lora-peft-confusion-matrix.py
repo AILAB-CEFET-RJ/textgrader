@@ -44,6 +44,7 @@ num_epochs = 5
 lr = 3e-4
 padding_side = "left" #"right"
 n_labels = 33
+data_dir = "preprocessing/data"
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -60,13 +61,13 @@ if getattr(tokenizer, "pad_token_id") is None:
 
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
-    "parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}_output.parquet"
 )
 datasets_test = load_dataset(
-    "parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/test_conjunto_{conjunto}_output.parquet"
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"preprocessing/eval_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}_output.parquet"
 )
 
 metric = evaluate.load("accuracy")
@@ -180,7 +181,7 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", test_metric)
     results["metrics"][epoch] = test_metric
 
-## using evaluation data
+## using evaluation data_old
 all_predictions = []
 all_references = []
 

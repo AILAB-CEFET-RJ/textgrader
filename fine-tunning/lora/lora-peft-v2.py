@@ -58,14 +58,15 @@ if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
+data_dir = "preprocessing/data"
 datasets = load_dataset(
-    "parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}_output.parquet"
 )
 datasets_test = load_dataset(
-    "parquet", data_files=f"preprocessing/test_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/test_conjunto_{conjunto}_output.parquet"
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"preprocessing/eval_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}_output.parquet"
 )
 
 metric = evaluate.load("accuracy")
@@ -179,7 +180,7 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", test_metric)
     results["metrics"][epoch] = test_metric
 
-## using evaluation data
+## using evaluation data_old
 for step, batch in enumerate(tqdm(eval_dataloader)):
     batch.to(device)
     with torch.no_grad():

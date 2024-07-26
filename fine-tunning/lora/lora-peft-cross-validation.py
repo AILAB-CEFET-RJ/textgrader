@@ -55,12 +55,13 @@ tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, padding=padding_si
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
+data_dir = "preprocessing/data"
 datasets = load_dataset(
-    "parquet", data_files=f"preprocessing/train_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}_output.parquet"
 )
 
 datasets_eval = load_dataset(
-    "parquet", data_files=f"preprocessing/eval_conjunto_{conjunto}_output.parquet"
+    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}_output.parquet"
 )
 
 # metric = evaluate.load("accuracy")
@@ -170,7 +171,7 @@ for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
         print(f"epoch {epoch}:", val_metric)
         results["metrics"][f"fold_{fold_count}_epoch_{epoch}"] = val_metric
 
-## using evaluation data
+## using evaluation data_old
 eval_dataloader = DataLoader(
     tokenize_datasets_eval["train"],
     shuffle=False,
