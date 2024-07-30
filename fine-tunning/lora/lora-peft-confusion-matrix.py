@@ -44,7 +44,7 @@ num_epochs = 5
 lr = 3e-4
 padding_side = "left" #"right"
 n_labels = 33
-data_dir = "preprocessing/data"
+data_dir = "preprocessing/data_one_label"
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -181,7 +181,7 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", test_metric)
     results["metrics"][epoch] = test_metric
 
-## using evaluation data_old
+## using evaluation data_one_label
 all_predictions = []
 all_references = []
 

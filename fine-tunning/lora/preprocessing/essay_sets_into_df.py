@@ -97,7 +97,7 @@ def creating_train_test_divisor(df, conjunto):
     print(f"Quantidade de labels unicas no conjuntos total do {conjunto}: {labels_unicas}")
 
 
-folder_name = "data"
+folder_name = "data_multilabel"
 if not os.path.exists(folder_name):
     os.makedirs(folder_name)
     print(f"Pasta '{folder_name}' criada.")

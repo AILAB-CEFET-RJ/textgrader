@@ -59,8 +59,8 @@ tokenized_dataset = dataset.map(preprocess_function, batched=True, remove_column
 print(f"Keys of tokenized dataset: {list(tokenized_dataset['train'].features)}")
 
 # save datasets to disk for later easy loading
-tokenized_dataset["train"].save_to_disk("data_old/train")
-#tokenized_dataset["test"].save_to_disk("data_old/eval")
+tokenized_dataset["train"].save_to_disk("data_one_label/train")
+#tokenized_dataset["test"].save_to_disk("data_one_label/eval")
 
 
 print("+"*50)

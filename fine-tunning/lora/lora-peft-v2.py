@@ -43,6 +43,7 @@ num_epochs = 5
 lr = 3e-4
 padding_side = "right"
 n_labels = 33
+data_dir = "preprocessing/data_one_label"
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -58,7 +59,7 @@ if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
-data_dir = "preprocessing/data"
+
 datasets = load_dataset(
     "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}.parquet"
 )
@@ -180,7 +181,7 @@ for epoch in range(num_epochs):
     print(f"epoch {epoch}:", test_metric)
     results["metrics"][epoch] = test_metric
 
-## using evaluation data_old
+## using evaluation data_one_label
 for step, batch in enumerate(tqdm(eval_dataloader)):
     batch.to(device)
     with torch.no_grad():

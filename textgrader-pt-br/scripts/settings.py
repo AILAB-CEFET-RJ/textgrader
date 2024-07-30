@@ -46,6 +46,6 @@ EXCLUDE_COLS = ALL_TARGETS + ID_VARS
 TF_IDF_MAX_FEATURES = [32,64]
 
 DATA_PATH = "../jsons/*.json"
-OUTPUT_DF = "../data_old/"
+OUTPUT_DF = "../data_one_label/"
 
 DF_PATH = "../data/dataframe.csv"
