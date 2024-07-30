@@ -56,13 +56,13 @@ def transform_into_df(data, set_name):
             n = labels[nota]
 
             selected_fields = {
-                "id": essay["id"],
+                #"id": essay["id"],
                 "texto": essay["texto"],
                 #"texto_comentado": essay["texto_comentado"],
                 #"comentarios": essay["cometarios"],
                 "nota": nota,
-                "titulo": essay["titulo"],
-                "tema": essay["tema"],
+                #"titulo": essay["titulo"],
+                #"tema": essay["tema"],
                 #"link": essay["link"],
                 "labels": n,
             }
@@ -103,6 +103,7 @@ def creating_train_test_divisor(df, conjunto):
     print(f"Quantidade de labels unicas no conjuntos de val do {conjunto}: {labels_unicas}")
 
     df.to_parquet(f"{folder_name}/df_{conjunto}.parquet", index=False)
+    df.to_csv(f"{folder_name}/df_{conjunto}.csv", index=False)
     labels_unicas = df["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos total do {conjunto}: {labels_unicas}")
     total_labels[conjunto] = labels_unicas
