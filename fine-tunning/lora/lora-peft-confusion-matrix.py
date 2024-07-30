@@ -47,7 +47,8 @@ lr = 3e-4
 padding_side = "left" #"right"
 #n_labels = 33
 data_dir = "preprocessing/data_one_label"
-conjuntos_labels = json.load(f"{data_dir}/total_label_count.json")
+with open(f"{data_dir}/total_label_count.json", 'r') as arquivo:
+    conjuntos_labels = json.load(arquivo)
 n_labels = conjuntos_labels[conjunto]
 print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
 
