@@ -1,3 +1,5 @@
+import json
+
 import logs
 import time
 import torch
@@ -43,8 +45,12 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
 padding_side = "left" #"right"
-n_labels = 33
+#n_labels = 33
 data_dir = "preprocessing/data_one_label"
+conjuntos_labels = json.load(f"{data_dir}/total_label_count.json")
+n_labels = conjuntos_labels[conjunto]
+print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
+
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",

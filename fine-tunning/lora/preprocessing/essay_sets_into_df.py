@@ -6,6 +6,14 @@ import json
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+total_labels = {
+    "conjunto_1": 0,
+    "conjunto_2": 0,
+    "conjunto_3": 0,
+}
+should_get_competency = False
+folder_name = "data_multilabel" if should_get_competency else 'data_one_label'
+
 
 def get_data(directory):
     json_data = {}
@@ -59,11 +67,12 @@ def transform_into_df(data, set_name):
                 "labels": n,
             }
 
-            competencias = essay["competencias"]
-            for c in competencias:
-                c_name = c["competencia"].replace(" ", "_")
-                selected_fields[f"nota_{c_name}"] = c["nota"]
-                selected_fields[f"nivel_{c_name}"] = c["motivo"]
+            if should_get_competency:
+                competencias = essay["competencias"]
+                for c in competencias:
+                    c_name = c["competencia"].replace(" ", "_")
+                    selected_fields[f"nota_{c_name}"] = c["nota"]
+                    selected_fields[f"nivel_{c_name}"] = c["motivo"]
 
             new_df = pd.DataFrame([selected_fields])
             df = df._append(new_df)
@@ -82,6 +91,7 @@ def creating_train_test_divisor(df, conjunto):
     # Salva o DataFrame como um arquivo CSV
     train_data.to_parquet(f"{folder_name}/train_{conjunto}.parquet", index=False)
     labels_unicas = train_data["nota"].nunique()
+
     print(f"Quantidade de labels unicas no conjuntos de treino do {conjunto}: {labels_unicas}")
 
     test_data.to_parquet(f"{folder_name}/test_{conjunto}.parquet", index=False)
@@ -95,9 +105,9 @@ def creating_train_test_divisor(df, conjunto):
     df.to_parquet(f"{folder_name}/df_{conjunto}.parquet", index=False)
     labels_unicas = df["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos total do {conjunto}: {labels_unicas}")
+    total_labels[conjunto] = labels_unicas
 
 
-folder_name = "data_multilabel"
 if not os.path.exists(folder_name):
     os.makedirs(folder_name)
     print(f"Pasta '{folder_name}' criada.")
@@ -116,3 +126,6 @@ for directory in directories:
     creating_train_test_divisor(df, directory)
 
     print(f"----------------> {directory} done! <----------------")
+
+with open(f'{folder_name}/total_label_count.json', 'w', encoding='utf-8') as arquivo:
+    json.dump(total_labels, arquivo, indent=4)
