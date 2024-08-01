@@ -18,6 +18,8 @@ from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
+    AutoModelForCausalLM, #todo: testar esses modelos
+    AutoModelForSeq2SeqLM
 )
 from tqdm import tqdm
 

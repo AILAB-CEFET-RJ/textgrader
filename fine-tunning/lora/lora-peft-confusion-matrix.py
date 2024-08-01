@@ -37,8 +37,8 @@ else:
 start_time = time.time()
 
 ## Definindo configurações
-batch_size = 5
-model_name_or_path = "neuralmind/bert-large-portuguese-cased" #"roberta-large"
+batch_size = 8
+model_name_or_path = "meta-llama/Meta-Llama-3.1-8B-Instruct" #"neuralmind/bert-large-portuguese-cased" #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -68,13 +68,13 @@ if getattr(tokenizer, "pad_token_id") is None:
 
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
-    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}.parquet"
+    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}_interval.parquet"
 )
 datasets_test = load_dataset(
-    "parquet", data_files=f"{data_dir}/test_conjunto_{conjunto}.parquet"
+    "parquet", data_files=f"{data_dir}/test_conjunto_{conjunto}_interval.parquet"
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}.parquet"
+    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}_interval.parquet"
 )
 
 metric = evaluate.load("accuracy")

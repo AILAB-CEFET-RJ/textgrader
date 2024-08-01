@@ -13,7 +13,7 @@ total_labels = {
 }
 should_get_competency = False
 folder_name = "data_multilabel" if should_get_competency else 'data_one_label'
-
+should_compute_notas_as_intervals = True
 
 def get_data(directory):
     json_data = {}
@@ -32,6 +32,31 @@ def get_data(directory):
     return json_data
 
 
+def compute_notas_as_intervals(nota):
+    if nota == 0:
+        return 0
+    elif 0 < nota <= 100:
+        return 1
+    elif 100 < nota <= 200:
+        return 2
+    elif 200 < nota <= 300:
+        return 3
+    elif 300 < nota <= 400:
+        return 4
+    elif 400 < nota <= 500:
+        return 5
+    elif 500 < nota <= 600:
+        return 6
+    elif 600 < nota <= 700:
+        return 7
+    elif 700 < nota <= 800:
+        return 8
+    elif 800 < nota <= 900:
+        return 9
+    elif 900 < nota <= 1000:
+        return 10
+
+
 def transform_into_df(data, set_name):
     df = pd.DataFrame()
     themes = []
@@ -48,6 +73,10 @@ def transform_into_df(data, set_name):
                 nota = int(essay["nota"])
             except Exception as e:
                 nota = int(float(essay["nota"]))
+
+            # apenas as notas do conjunto 1 variam de 0 a 1000
+            if should_compute_notas_as_intervals and set_name == "conjunto_1":
+                nota = compute_notas_as_intervals(nota)
 
             if nota not in labels.keys():
                 labels[nota] = label_count
@@ -89,21 +118,21 @@ def creating_train_test_divisor(df, conjunto):
     test_data, val_data = train_test_split(temp_data, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
-    train_data.to_parquet(f"{folder_name}/train_{conjunto}.parquet", index=False)
+    train_data.to_parquet(f"{folder_name}/train_{conjunto}_interval.parquet", index=False)
     labels_unicas = train_data["nota"].nunique()
 
     print(f"Quantidade de labels unicas no conjuntos de treino do {conjunto}: {labels_unicas}")
 
-    test_data.to_parquet(f"{folder_name}/test_{conjunto}.parquet", index=False)
+    test_data.to_parquet(f"{folder_name}/test_{conjunto}_interval.parquet", index=False)
     labels_unicas = test_data["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de test do {conjunto}: {labels_unicas}")
 
-    val_data.to_parquet(f"{folder_name}/eval_{conjunto}.parquet", index=False)
+    val_data.to_parquet(f"{folder_name}/eval_{conjunto}_interval.parquet", index=False)
     labels_unicas = val_data["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de val do {conjunto}: {labels_unicas}")
 
-    df.to_parquet(f"{folder_name}/df_{conjunto}.parquet", index=False)
-    df.to_csv(f"{folder_name}/df_{conjunto}.csv", index=False)
+    df.to_parquet(f"{folder_name}/df_{conjunto}.parquet_interval", index=False)
+    df.to_csv(f"{folder_name}/df_{conjunto}_interval.csv", index=False)
     labels_unicas = df["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos total do {conjunto}: {labels_unicas}")
     total_labels[conjunto] = labels_unicas
@@ -128,5 +157,5 @@ for directory in directories:
 
     print(f"----------------> {directory} done! <----------------")
 
-with open(f'{folder_name}/total_label_count.json', 'w', encoding='utf-8') as arquivo:
+with open(f'{folder_name}/total_label_count_interval.json', 'w', encoding='utf-8') as arquivo:
     json.dump(total_labels, arquivo, indent=4)
