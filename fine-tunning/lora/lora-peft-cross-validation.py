@@ -11,7 +11,7 @@ from peft import (
 import sys
 from datasets import load_dataset, load_metric
 from transformers import (
-    AutoModelForSequenceClassification,
+    AutoModelForCausalLM,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
 )
@@ -31,16 +31,21 @@ else:
 
 start_time = time.time()
 
-## Definindo configurações
 batch_size = 5
-model_name_or_path = "roberta-large"
+model_name_or_path = "meta-llama/Meta-Llama-3.1-8B-Instruct" #"neuralmind/bert-large-portuguese-cased" #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_epochs = 5
 lr = 3e-4
-padding_side = "right"
-n_labels = 11
+padding_side = "left" #"right"
+#n_labels = 33
+data_dir = "preprocessing/data_one_label"
+with open(f"{data_dir}/total_label_count_interval.json", 'r') as arquivo:
+    conjuntos_labels = json.load(arquivo)
+n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
+print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
+
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -126,7 +131,7 @@ for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
         batch_size=batch_size,
     )
 
-    model = AutoModelForSequenceClassification.from_pretrained(
+    model = AutoModelForCausalLM.from_pretrained(
         model_name_or_path, return_dict=True, num_labels=n_labels
     )
     model = get_peft_model(model, peft_config)

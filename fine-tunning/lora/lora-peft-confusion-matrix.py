@@ -16,6 +16,7 @@ import evaluate
 from datasets import load_dataset
 from transformers import (
     AutoModelForSequenceClassification,
+    AutoModelForCausalLM,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
 )
@@ -38,7 +39,7 @@ start_time = time.time()
 
 ## Definindo configurações
 batch_size = 5
-model_name_or_path = "neuralmind/bert-large-portuguese-cased" #"roberta-large"
+model_name_or_path = "meta-llama/Meta-Llama-3.1-8B-Instruct" #"neuralmind/bert-large-portuguese-cased" #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -130,7 +131,7 @@ eval_dataloader = DataLoader(
     batch_size=batch_size,
 )
 
-model = AutoModelForSequenceClassification.from_pretrained(
+model = AutoModelForCausalLM.from_pretrained(
     model_name_or_path, return_dict=True, num_labels=n_labels
 )
 model = get_peft_model(model, peft_config)
