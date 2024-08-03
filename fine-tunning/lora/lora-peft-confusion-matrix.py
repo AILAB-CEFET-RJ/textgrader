@@ -109,7 +109,7 @@ model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)
 
-optimizer = AdamW(model.parameters(), lr=lr)
+optimizer = AdamW(model.parameters(), lr=configs.lr)
 
 lr_scheduler = get_linear_schedule_with_warmup(
     optimizer=optimizer,
