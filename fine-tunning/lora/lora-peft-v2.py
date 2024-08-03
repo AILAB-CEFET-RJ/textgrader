@@ -18,8 +18,6 @@ from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
-    AutoModelForCausalLM, #todo: testar esses modelos
-    AutoModelForSeq2SeqLM
 )
 from tqdm import tqdm
 import configs
@@ -37,14 +35,17 @@ peft_config = LoraConfig(
     use_dora=True,
 )
 
-tokenizer = AutoTokenizer.from_pretrained(configs.model_name_or_path, padding=configs.padding_side)
+tokenizer = AutoTokenizer.from_pretrained(
+    configs.model_name_or_path, padding=configs.padding_side
+)
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
 
 datasets = load_dataset(
-    "parquet", data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}.parquet",
 )
 datasets_test = load_dataset(
     "parquet", data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}.parquet"
@@ -183,11 +184,11 @@ results["validation_metric"] = eval_metric
 
 
 ## Saving log file
-today = datetime.now().strftime('%d-%m-%Y-%H-%M')
+today = datetime.now().strftime("%d-%m-%Y-%H-%M")
 end_time = time.time()
 elapsed_time = end_time - start_time
 results["date"] = today
-results["processing_time"] = elapsed_time/60
+results["processing_time"] = elapsed_time / 60
 
 with open(
     f"results/{today}-conjunto{configs.conjunto}-{configs.num_epochs}-epochs.json",

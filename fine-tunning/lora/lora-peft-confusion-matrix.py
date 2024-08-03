@@ -23,36 +23,10 @@ from transformers import (
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
 import pandas as pd
+import configs
 
-
-if len(sys.argv) < 2:
-    print("Uso: python meu_script.py <conjunto> <obs-opcional>")
-    sys.exit()
-
-conjunto = sys.argv[1]
-if len(sys.argv) > 2:
-    obs = sys.argv[2]
-else:
-    obs = ""
-
+obs = configs.get_data_config()
 start_time = time.time()
-
-## Definindo configurações
-batch_size = 5
-model_name_or_path = "neuralmind/bert-large-portuguese-cased" #"roberta-large"
-task = "mrpc"
-peft_type = PeftType.LORA
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-num_epochs = 55
-lr = 3e-4
-padding_side = "left" #"right"
-#n_labels = 33
-data_dir = "preprocessing/data_one_label"
-with open(f"{data_dir}/total_label_count_interval.json", 'r') as arquivo:
-    conjuntos_labels = json.load(arquivo)
-n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
-print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
-
 
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
@@ -63,19 +37,24 @@ peft_config = LoraConfig(
     use_dora=True,
 )
 
-tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, padding=padding_side)
+tokenizer = AutoTokenizer.from_pretrained(
+    configs.model_name_or_path, padding=configs.padding_side
+)
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
-    "parquet", data_files=f"{data_dir}/train_conjunto_{conjunto}_interval.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_interval.parquet",
 )
 datasets_test = load_dataset(
-    "parquet", data_files=f"{data_dir}/test_conjunto_{conjunto}_interval.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_interval.parquet",
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"{data_dir}/eval_conjunto_{conjunto}_interval.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_interval.parquet",
 )
 
 metric = evaluate.load("accuracy")
@@ -116,55 +95,55 @@ train_dataloader = DataLoader(
     tokenize_datasets["train"],
     shuffle=True,
     collate_fn=collate_fn,
-    batch_size=batch_size,
+    batch_size=configs.batch_size,
 )
 test_dataloader = DataLoader(
     tokenize_datasets_test["train"],
     shuffle=False,
     collate_fn=collate_fn,
-    batch_size=batch_size,
+    batch_size=configs.batch_size,
 )
 eval_dataloader = DataLoader(
     tokenize_datasets_eval["train"],
     shuffle=False,
     collate_fn=collate_fn,
-    batch_size=batch_size,
+    batch_size=configs.batch_size,
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(
-    model_name_or_path, return_dict=True, num_labels=n_labels
+    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
 )
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)
 
-optimizer = AdamW(model.parameters(), lr=lr)
+optimizer = AdamW(model.parameters(), lr=configs.lr)
 
 lr_scheduler = get_linear_schedule_with_warmup(
     optimizer=optimizer,
-    num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs),
-    num_training_steps=(len(train_dataloader) * num_epochs),
+    num_warmup_steps=0.06 * (len(train_dataloader) * configs.num_epochs),
+    num_training_steps=(len(train_dataloader) * configs.num_epochs),
 )
 
-model.to(device)
+model.to(configs.device)
 results = {
-    "batch_size": batch_size,
-    "model": model_name_or_path,
-    "epochs": num_epochs,
+    "batch_size": configs.batch_size,
+    "model": configs.model_name_or_path,
+    "epochs": configs.num_epochs,
     "metrics": {},
-    "conjunto": conjunto,
+    "conjunto": configs.conjunto,
     "obs": obs,
-    "padding_side": padding_side,
+    "padding_side": configs.padding_side,
     "train_size": len(tokenize_datasets["train"]["input_ids"]),
     "test_size": len(tokenize_datasets_test["train"]["input_ids"]),
     "eval_size": len(tokenize_datasets_eval["train"]["input_ids"]),
-    "n_labels": n_labels,
+    "n_labels": configs.n_labels,
 }
 
-for epoch in range(num_epochs):
+for epoch in range(configs.num_epochs):
     model.train()
     for step, batch in enumerate(train_dataloader):
-        batch.to(device)
+        batch.to(configs.device)
         outputs = model(**batch)
         loss = outputs.loss
         loss.backward()
@@ -174,7 +153,7 @@ for epoch in range(num_epochs):
 
     model.eval()
     for step, batch in enumerate(tqdm(test_dataloader)):
-        batch.to(device)
+        batch.to(configs.device)
         with torch.no_grad():
             outputs = model(**batch)
         predictions = outputs.logits.argmax(dim=-1)
@@ -194,7 +173,7 @@ all_predictions = []
 all_references = []
 
 for step, batch in enumerate(tqdm(eval_dataloader)):
-    batch.to(device)
+    batch.to(configs.device)
     with torch.no_grad():
         outputs = model(**batch)
     predictions = outputs.logits.argmax(dim=-1)
