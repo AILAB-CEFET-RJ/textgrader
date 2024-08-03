@@ -39,7 +39,7 @@ start_time = time.time()
 
 ## Definindo configurações
 batch_size = 5
-model_name_or_path = "google-bert/bert-base-multilingual-cased" #"neuralmind/bert-large-portuguese-cased" #"roberta-large"
+model_name_or_path = "neuralmind/bert-large-portuguese-cased" #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
