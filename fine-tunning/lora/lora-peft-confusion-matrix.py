@@ -131,7 +131,7 @@ eval_dataloader = DataLoader(
     batch_size=batch_size,
 )
 
-model = AutoModelForCausalLM.from_pretrained(
+model = AutoModelForSequenceClassification.from_pretrained(
     model_name_or_path, return_dict=True, num_labels=n_labels
 )
 model = get_peft_model(model, peft_config)
