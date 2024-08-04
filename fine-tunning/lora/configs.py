@@ -17,7 +17,7 @@ padding_side = "left"  # "right"
 # n_labels = 33
 data_dir = "preprocessing/data_one_label"
 
-conjunto = 1
+conjunto = 2
 with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
     conjuntos_labels = json.load(arquivo)
 n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
