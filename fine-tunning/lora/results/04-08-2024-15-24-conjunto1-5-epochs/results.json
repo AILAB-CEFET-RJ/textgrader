@@ -1,0 +1,35 @@
+{
+    "batch_size": 5,
+    "model": "google-bert/bert-base-multilingual-cased",
+    "epochs": 5,
+    "metrics": {
+        "0": {
+            "accuracy": 0.30657748049052397
+        },
+        "1": {
+            "accuracy": 0.2931995540691193
+        },
+        "2": {
+            "accuracy": 0.35154217762913414
+        },
+        "3": {
+            "accuracy": 0.358974358974359
+        },
+        "4": {
+            "accuracy": 0.38758825715347456
+        }
+    },
+    "conjunto": 1,
+    "obs": "changing_configs",
+    "padding_side": "right",
+    "train_size": 5382,
+    "test_size": 2691,
+    "eval_size": 897,
+    "n_labels": 11,
+    "script_type": "confusion_matrix",
+    "validation_metric": {
+        "accuracy": 0.3857302118171683
+    },
+    "processing_time": 20.141859630743664,
+    "date": "04-08-2024-15-24"
+}
