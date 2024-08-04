@@ -11,13 +11,13 @@ model_name_or_path = "google-bert/bert-base-multilingual-cased"  # "neuralmind/b
 task = "mrpc"
 peft_type = PeftType.LORA
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-num_epochs = 55
+num_epochs = 5
 lr = 3e-4
-padding_side = "left"  # "right"
+padding_side = "right"
 # n_labels = 33
 data_dir = "preprocessing/data_one_label"
 
-conjunto = 3
+conjunto = 1
 with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
     conjuntos_labels = json.load(arquivo)
 n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
