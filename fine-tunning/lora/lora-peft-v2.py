@@ -9,9 +9,7 @@ from torch.utils.data import DataLoader
 from peft import (
     get_peft_model,
     LoraConfig,
-    PeftType,
 )
-import sys
 import evaluate
 from datasets import load_dataset
 from transformers import (
@@ -135,6 +133,7 @@ results = {
     "test_size": len(tokenize_datasets_test["train"]["input_ids"]),
     "eval_size": len(tokenize_datasets_eval["train"]["input_ids"]),
     "n_labels": configs.n_labels,
+    "script_type": "default",
 }
 
 for epoch in range(configs.num_epochs):

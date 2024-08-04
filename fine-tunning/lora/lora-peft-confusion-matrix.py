@@ -138,6 +138,7 @@ results = {
     "test_size": len(tokenize_datasets_test["train"]["input_ids"]),
     "eval_size": len(tokenize_datasets_eval["train"]["input_ids"]),
     "n_labels": configs.n_labels,
+    "script_type": "confusion_matrix",
 }
 
 for epoch in range(configs.num_epochs):

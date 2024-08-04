@@ -83,6 +83,7 @@ results = {
     "padding_side": configs.padding_side,
     "train_size": len(tokenize_datasets["train"]["input_ids"]),
     "n_labels": configs.n_labels,
+    "script_type": "cross_validation",
 }
 
 fold_count = 0
