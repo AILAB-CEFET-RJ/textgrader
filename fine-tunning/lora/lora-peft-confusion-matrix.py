@@ -37,9 +37,11 @@ peft_config = LoraConfig(
     use_dora=True,
 )
 
-tokenizer = AutoTokenizer.from_pretrained(
-    configs.model_name_or_path, padding=configs.padding_side
-)
+#tokenizer = AutoTokenizer.from_pretrained(
+#    configs.model_name_or_path, padding=configs.padding_side
+#)
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
+
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
@@ -110,9 +112,10 @@ eval_dataloader = DataLoader(
     batch_size=configs.batch_size,
 )
 
-model = AutoModelForSequenceClassification.from_pretrained(
-    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
-)
+# model = AutoModelForSequenceClassification.from_pretrained(
+#    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
+# )
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)
