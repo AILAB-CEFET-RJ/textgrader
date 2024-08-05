@@ -31,7 +31,7 @@ peft_config = LoraConfig(
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
-    "neuralmind/bert-large-portuguese-cased", padding=configs.padding_side
+    model, padding=configs.padding_side
 )
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
