@@ -1,7 +1,4 @@
-# https://huggingface.co/spaces/PEFT/sequence-classification/blob/main/LoRA.ipynb
-
-import json
-from datetime import datetime
+import logs
 import time
 import torch
 from torch.optim import AdamW
@@ -13,15 +10,16 @@ from peft import (
 import evaluate
 from datasets import load_dataset
 from transformers import (
-    AutoModelForSequenceClassification,
+    AutoModelForCausalLM,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
 )
 from tqdm import tqdm
+from sklearn.metrics import confusion_matrix
+import pandas as pd
 import configs
 
 obs = configs.get_data_config()
-
 start_time = time.time()
 
 peft_config = LoraConfig(
@@ -33,23 +31,26 @@ peft_config = LoraConfig(
     use_dora=True,
 )
 
-tokenizer = AutoTokenizer.from_pretrained(
-    configs.model_name_or_path, padding=configs.padding_side
-)
+#tokenizer = AutoTokenizer.from_pretrained(
+#    configs.model_name_or_path, padding=configs.padding_side
+#)
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
+
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # datasets = load_dataset("glue", task)
-
 datasets = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}.parquet",
+    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_interval.parquet",
 )
 datasets_test = load_dataset(
-    "parquet", data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_interval.parquet",
 )
 datasets_eval = load_dataset(
-    "parquet", data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}.parquet"
+    "parquet",
+    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_interval.parquet",
 )
 
 metric = evaluate.load("accuracy")
@@ -105,9 +106,10 @@ eval_dataloader = DataLoader(
     batch_size=configs.batch_size,
 )
 
-model = AutoModelForSequenceClassification.from_pretrained(
-    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
-)
+# model = AutoModelForSequenceClassification.from_pretrained(
+#    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
+# )
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)
@@ -133,7 +135,7 @@ results = {
     "test_size": len(tokenize_datasets_test["train"]["input_ids"]),
     "eval_size": len(tokenize_datasets_eval["train"]["input_ids"]),
     "n_labels": configs.n_labels,
-    "script_type": "default",
+    "script_type": "confusion_matrix",
 }
 
 for epoch in range(configs.num_epochs):
@@ -165,12 +167,17 @@ for epoch in range(configs.num_epochs):
     results["metrics"][epoch] = test_metric
 
 ## using evaluation data_one_label
+all_predictions = []
+all_references = []
+
 for step, batch in enumerate(tqdm(eval_dataloader)):
     batch.to(configs.device)
     with torch.no_grad():
         outputs = model(**batch)
     predictions = outputs.logits.argmax(dim=-1)
     predictions, references = predictions, batch["labels"]
+    all_predictions.extend(predictions.cpu().numpy())
+    all_references.extend(references.cpu().numpy())
     print(f"predictions: {predictions} references: {references}")
     metric.add_batch(
         predictions=predictions,
@@ -181,21 +188,17 @@ eval_metric = metric.compute()
 print(f"Validation metric: {eval_metric}")
 results["validation_metric"] = eval_metric
 
+## Calcular a matriz de confusão
+cm = confusion_matrix(all_references, all_predictions)
+cm_df = pd.DataFrame(cm)
 
 ## Saving log file
-today = datetime.now().strftime("%d-%m-%Y-%H-%M")
 end_time = time.time()
 elapsed_time = end_time - start_time
-results["date"] = today
+
 results["processing_time"] = elapsed_time / 60
 
-with open(
-    f"results/{today}-conjunto{configs.conjunto}-{configs.num_epochs}-epochs.json",
-    "w",
-    encoding="utf-8",
-) as arquivo:
-    json.dump(results, arquivo, indent=4)
-
+logs.saving_results(results, "cm", cm_df)
 
 # model.save_pretrained()
 print("finish!!")

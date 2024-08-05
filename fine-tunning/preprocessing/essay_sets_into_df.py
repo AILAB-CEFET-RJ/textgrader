@@ -144,7 +144,7 @@ if not os.path.exists(folder_name):
 else:
     print(f"Pasta '{folder_name}' já existe.")
 
-main_dir = "../../../textgrader-pt-br/jsons"
+main_dir = "../../textgrader-pt-br/jsons"
 directories = ['conjunto_1', 'conjunto_2', 'conjunto_3']
 
 for directory in directories:
