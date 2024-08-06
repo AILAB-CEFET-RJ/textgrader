@@ -5,6 +5,7 @@ from datasets import load_dataset
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
+AutoModelForSequenceClassification,
     BitsAndBytesConfig,
     DataCollatorWithPadding,
     Trainer,
@@ -45,24 +46,7 @@ def train_model(
     # load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(base_model, token=hf_token)
 
-    # QDoRA (quantized dora): IF YOU WANNA QUANTIZE THE MODEL
-    if quantize:
-        model = AutoModelForCausalLM.from_pretrained(
-            base_model,
-            token=hf_token,
-            quantization_config=BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_compute_dtype=(
-                    torch.bfloat16 if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else torch.float16
-                ),
-                bnb_4bit_use_double_quant=True,
-                bnb_4bit_quant_type="nf4",
-            ),
-        )
-        # setup for quantized training
-        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
-    else:
-        model = AutoModelForCausalLM.from_pretrained(base_model, token=hf_token)
+    model = AutoModelForSequenceClassification.from_pretrained(base_model, token=hf_token)
     # LoRa config for the PEFT model
     lora_config = LoraConfig(
         use_dora=use_dora,  # to use Dora OR compare to Lora just set the --use_dora

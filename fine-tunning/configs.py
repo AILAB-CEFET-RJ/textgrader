@@ -14,10 +14,16 @@ model_name_or_path = "neuralmind/bert-large-portuguese-cased"
 # #"roberta-large"
 task = "mrpc"
 peft_type = PeftType.LORA
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"> USING DEVICE {device}")
+
 num_epochs = 10
 lr = 3e-4
 padding_side = "right"
+lora_r = 8
+lora_alpha =16
+lora_dropout = 0.2
 # n_labels = 33
 data_dir = "preprocessing/data_one_label"
 

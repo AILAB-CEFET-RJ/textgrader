@@ -27,10 +27,12 @@ start_time = time.time()
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
     inference_mode=False,
-    r=8,
-    lora_alpha=16,
-    lora_dropout=0.1,
+    r=configs.lora_r,
+    lora_alpha=configs.lora_alpha,
+    lora_dropout=configs.lora_dropout,
     use_dora=True,
+    bias="none",
+    target_modules=(["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]),
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
@@ -163,6 +165,8 @@ for epoch in range(configs.num_epochs):
     test_metric = metric.compute()
     print(f"epoch {epoch}:", test_metric)
     results["metrics"][epoch] = test_metric
+    # Clear CUDA cache to free memory
+    torch.cuda.empty_cache()
 
 ## using evaluation data_one_label
 for step, batch in enumerate(tqdm(eval_dataloader)):
