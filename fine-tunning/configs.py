@@ -32,7 +32,7 @@ data_dir = "preprocessing/data_multilabel"
 
 conjunto = 1
 n_labels = 10
-sufix = "interval"
+sufix = "comp1"
 #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
 #    conjuntos_labels = json.load(arquivo)
 #n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
