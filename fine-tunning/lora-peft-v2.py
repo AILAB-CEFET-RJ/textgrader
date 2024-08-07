@@ -32,7 +32,6 @@ peft_config = LoraConfig(
     lora_dropout=configs.lora_dropout,
     use_dora=True,
     bias="none",
-    target_modules=(["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]),
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
