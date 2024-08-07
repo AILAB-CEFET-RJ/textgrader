@@ -63,7 +63,7 @@ def creating_train_test_divisor(df, path, competency_name):
 
 
 if __name__ == '__main__':
-    folder_name = "date_competencias"
+    folder_name = "data_competencias"
     create_folder(folder_name)
     main_dir = "../../textgrader-pt-br/jsons"
     directories = ['conjunto_1']
