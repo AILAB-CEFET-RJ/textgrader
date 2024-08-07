@@ -84,7 +84,7 @@ tokenize_datasets_eval = datasets_eval.map(
 
 
 def collate_fn(examples):
-    return tokenizer.pad(examples, padding="longest", return_tensors="pt")
+    return tokenizer.pad(examples, padding="longest")
 
 
 train_dataloader = DataLoader(

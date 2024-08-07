@@ -105,7 +105,7 @@ def transform_into_df(data, set_name):
                     c_name = comp.replace(" ", "_").replace(",", "").lower()
                     nota_column = f"nota_{c_name}"
                     if nota_column == "nota_domínio_da_modalidade_escrita_formal":
-                        selected_fields["labels"] = c["nota"]
+                        selected_fields["labels"] = str(c["nota"])
 
             new_df = pd.DataFrame([selected_fields])
             df = df._append(new_df)
