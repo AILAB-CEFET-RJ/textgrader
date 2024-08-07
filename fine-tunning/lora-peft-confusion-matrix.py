@@ -42,15 +42,15 @@ if getattr(tokenizer, "pad_token_id") is None:
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_comp1.parquet",
+    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_{configs.sufix}.parquet",
 )
 datasets_test = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_comp1.parquet",
+    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_{configs.sufix}.parquet",
 )
 datasets_eval = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_comp1.parquet",
+    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_{configs.sufix}.parquet",
 )
 
 metric = evaluate.load("accuracy")
