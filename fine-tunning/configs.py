@@ -7,7 +7,7 @@ import sys
 
 print("Definindo configs...")
 batch_size = 5
-model_name_or_path = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+model_name_or_path = "FacebookAI/xlm-roberta-base"
 # "neuralmind/bert-large-portuguese-cased"
 # "FacebookAI/xlm-roberta-base"
 # "google-bert/bert-base-multilingual-cased"
