@@ -4,12 +4,12 @@ import time
 import json
 
 
-def saving_results(results, label="", cm=None):
+def saving_results(results, label="", cm=None, comp=""):
     today = datetime.now().strftime("%d-%m-%Y-%H-%M")
     results["date"] = today
 
     folder_path = (
-        f"results/{today}-conjunto{results['conjunto']}-{results['epochs']}-epochs"
+        f"results/{today}-conjunto{results['conjunto']}-{results['epochs']}-epochs-{comp}"
     )
     os.makedirs(folder_path, exist_ok=True)
 

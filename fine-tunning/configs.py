@@ -27,12 +27,12 @@ lora_alpha =16
 lora_dropout = 0.2
 # n_labels = 33
 #data_dir = "preprocessing/data_one_label"
-data_dir = "preprocessing/data_multilabel"
+data_dir = "preprocessing/data_competencias/conjunto_1"
 
 
 conjunto = 1
 n_labels = 10
-sufix = "comp1"
+sufix = "domínio_da_modalidade_escrita_formal"
 #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
 #    conjuntos_labels = json.load(arquivo)
 #n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
