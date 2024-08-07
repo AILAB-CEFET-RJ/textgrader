@@ -31,10 +31,10 @@ peft_config = LoraConfig(
     use_dora=True,
 )
 
-#tokenizer = AutoTokenizer.from_pretrained(
-#    configs.model_name_or_path, padding=configs.padding_side
-#)
-tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
+tokenizer = AutoTokenizer.from_pretrained(
+    configs.model_name_or_path, padding=configs.padding_side
+)
+#tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
 
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -84,7 +84,7 @@ tokenize_datasets_eval = datasets_eval.map(
 
 
 def collate_fn(examples):
-    return tokenizer.pad(examples, padding="longest")
+    return tokenizer.pad(examples, padding="longest", return_tensors="pt")
 
 
 train_dataloader = DataLoader(
