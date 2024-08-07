@@ -26,13 +26,16 @@ lora_r = 8
 lora_alpha =16
 lora_dropout = 0.2
 # n_labels = 33
-data_dir = "preprocessing/data_one_label"
+#data_dir = "preprocessing/data_one_label"
+data_dir = "preprocessing/data_multilabel"
+
 
 conjunto = 1
-with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
-    conjuntos_labels = json.load(arquivo)
-n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
-print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
+n_labels = 10
+#with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
+#    conjuntos_labels = json.load(arquivo)
+#n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
+#print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
 
 
 def get_data_config():

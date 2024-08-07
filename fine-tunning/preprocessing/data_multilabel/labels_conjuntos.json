@@ -1,0 +1,62 @@
+{
+    "nota_domínio_da_modalidade_escrita_formal": {
+        "100": 2647,
+        "50": 385,
+        "150": 1230,
+        "160": 3145,
+        "200": 592,
+        "120": 871,
+        "80": 31,
+        "20": 25,
+        "0": 40,
+        "40": 4
+    },
+    "nota_compreender_a_proposta_e_aplicar_conceitos_das_várias_áreas_de_conhecimento_para_desenvolver_o_texto_dissertativo-argumentativo_em_prosa": {
+        "150": 1613,
+        "100": 1737,
+        "200": 760,
+        "50": 708,
+        "20": 74,
+        "160": 2310,
+        "120": 1517,
+        "80": 133,
+        "40": 78,
+        "0": 40
+    },
+    "nota_selecionar_relacionar_organizar_e_interpretar_informações_em_defesa_de_um_ponto_de_vista": {
+        "100": 2142,
+        "50": 1134,
+        "150": 775,
+        "20": 150,
+        "160": 1387,
+        "120": 2732,
+        "80": 353,
+        "200": 153,
+        "40": 100,
+        "0": 44
+    },
+    "nota_conhecimento_dos_mecanismos_linguísticos_necessários_para_a_construção_da_argumentação": {
+        "100": 2022,
+        "50": 584,
+        "150": 1210,
+        "20": 66,
+        "200": 3108,
+        "120": 764,
+        "160": 1150,
+        "0": 41,
+        "80": 21,
+        "40": 4
+    },
+    "nota_proposta_de_intervenção_com_respeito_aos_direitos_humanos": {
+        "100": 1668,
+        "50": 1026,
+        "150": 751,
+        "20": 280,
+        "0": 368,
+        "200": 1622,
+        "160": 1411,
+        "120": 994,
+        "80": 573,
+        "40": 277
+    }
+}

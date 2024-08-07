@@ -12,7 +12,7 @@ from datasets import load_dataset
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
-    get_linear_schedule_with_warmup,
+    get_linear_schedule_with_warmup, AutoModelForSequenceClassification,
 )
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
@@ -42,15 +42,15 @@ if getattr(tokenizer, "pad_token_id") is None:
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_interval.parquet",
+    data_files=f"{configs.data_dir}/train_conjunto_{configs.conjunto}_comp1.parquet",
 )
 datasets_test = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_interval.parquet",
+    data_files=f"{configs.data_dir}/test_conjunto_{configs.conjunto}_comp1.parquet",
 )
 datasets_eval = load_dataset(
     "parquet",
-    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_interval.parquet",
+    data_files=f"{configs.data_dir}/eval_conjunto_{configs.conjunto}_comp1.parquet",
 )
 
 metric = evaluate.load("accuracy")
@@ -106,10 +106,10 @@ eval_dataloader = DataLoader(
     batch_size=configs.batch_size,
 )
 
-# model = AutoModelForSequenceClassification.from_pretrained(
-#    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
-# )
-model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
+model = AutoModelForSequenceClassification.from_pretrained(
+    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
+)
+#model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
 model = get_peft_model(model, peft_config)
 model.print_trainable_parameters()
 print(model)

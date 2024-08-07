@@ -11,7 +11,7 @@ total_labels = {
     "conjunto_2": 0,
     "conjunto_3": 0,
 }
-should_get_competency = False
+should_get_competency = True
 folder_name = "data_multilabel" if should_get_competency else 'data_one_label'
 should_compute_notas_as_intervals = True
 
@@ -59,6 +59,8 @@ def compute_notas_as_intervals(nota):
 
 def transform_into_df(data, set_name):
     df = pd.DataFrame()
+    competencias_dict = {}
+
     themes = []
     label_count = 0
     labels = {}
@@ -93,15 +95,17 @@ def transform_into_df(data, set_name):
                 #"titulo": essay["titulo"],
                 #"tema": essay["tema"],
                 #"link": essay["link"],
-                "labels": n,
+                #"labels": n,
             }
 
             if should_get_competency:
                 competencias = essay["competencias"]
                 for c in competencias:
-                    c_name = c["competencia"].replace(" ", "_")
-                    selected_fields[f"nota_{c_name}"] = c["nota"]
-                    selected_fields[f"nivel_{c_name}"] = c["motivo"]
+                    comp = c["competencia"]
+                    c_name = comp.replace(" ", "_").replace(",", "").lower()
+                    nota_column = f"nota_{c_name}"
+                    if nota_column == "nota_domínio_da_modalidade_escrita_formal":
+                        selected_fields["labels"] = c["nota"]
 
             new_df = pd.DataFrame([selected_fields])
             df = df._append(new_df)
@@ -109,6 +113,8 @@ def transform_into_df(data, set_name):
     with open(f'{folder_name}/labels_{set_name}.json', 'w', encoding='utf-8') as arquivo:
         json.dump(labels, arquivo, indent=4)
 
+    with open(f'{folder_name}/labels_competencias_{set_name}.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(competencias_dict, arquivo, indent=4, ensure_ascii=False)
     return df
 
 
@@ -118,21 +124,21 @@ def creating_train_test_divisor(df, conjunto):
     test_data, val_data = train_test_split(temp_data, random_state=42)
 
     # Salva o DataFrame como um arquivo CSV
-    train_data.to_parquet(f"{folder_name}/train_{conjunto}_interval.parquet", index=False)
+    train_data.to_parquet(f"{folder_name}/train_{conjunto}_comp1.parquet", index=False)
     labels_unicas = train_data["nota"].nunique()
-
     print(f"Quantidade de labels unicas no conjuntos de treino do {conjunto}: {labels_unicas}")
 
-    test_data.to_parquet(f"{folder_name}/test_{conjunto}_interval.parquet", index=False)
+    test_data.to_parquet(f"{folder_name}/test_{conjunto}_comp1.parquet", index=False)
     labels_unicas = test_data["nota"].nunique()
+
     print(f"Quantidade de labels unicas no conjuntos de test do {conjunto}: {labels_unicas}")
 
-    val_data.to_parquet(f"{folder_name}/eval_{conjunto}_interval.parquet", index=False)
+    val_data.to_parquet(f"{folder_name}/eval_{conjunto}_comp1.parquet", index=False)
     labels_unicas = val_data["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de val do {conjunto}: {labels_unicas}")
 
-    df.to_parquet(f"{folder_name}/df_{conjunto}.parquet_interval", index=False)
-    df.to_csv(f"{folder_name}/df_{conjunto}_interval.csv", index=False)
+    df.to_parquet(f"{folder_name}/df_{conjunto}_comp1.parquet", index=False)
+    df.to_csv(f"{folder_name}/df_{conjunto}_comp1.csv", index=False)
     labels_unicas = df["nota"].nunique()
     print(f"Quantidade de labels unicas no conjuntos total do {conjunto}: {labels_unicas}")
     total_labels[conjunto] = labels_unicas
@@ -145,7 +151,7 @@ else:
     print(f"Pasta '{folder_name}' já existe.")
 
 main_dir = "../../textgrader-pt-br/jsons"
-directories = ['conjunto_1', 'conjunto_2', 'conjunto_3']
+directories = ['conjunto_1']
 
 for directory in directories:
     path_dir = os.path.join(main_dir, directory)
@@ -159,3 +165,4 @@ for directory in directories:
 
 with open(f'{folder_name}/total_label_count_interval.json', 'w', encoding='utf-8') as arquivo:
     json.dump(total_labels, arquivo, indent=4)
+
