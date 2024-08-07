@@ -57,7 +57,7 @@ metric = evaluate.load("accuracy")
 
 
 def tokenize(examples):
-    outputs = tokenizer(examples["texto"], truncation=True, max_length=512)
+    outputs = tokenizer(examples["texto"], truncation=True, max_length=512, padding=True)
     return outputs
 
 
