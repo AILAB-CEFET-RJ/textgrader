@@ -27,7 +27,7 @@ def creating_dataframes(path, set_name, json_content, competency_name):
 
             content = {
                 "texto": essay["texto"],
-                "label": label_comp,
+                "labels": label_comp,
             }
 
             new_df = pd.DataFrame([content])
@@ -46,24 +46,24 @@ def creating_train_test_divisor(df, path, competency_name):
     train_data.to_parquet(f"{path}/train_{suffixo}.parquet", index=False)
     train_data.to_csv(f"{path}/train_{suffixo}.csv", index=False)
 
-    labels_unicas = train_data["label"].nunique()
+    labels_unicas = train_data["labels"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de treino: {labels_unicas}")
 
     test_data.to_parquet(f"{path}/test_{suffixo}.parquet", index=False)
     test_data.to_csv(f"{path}/test_{suffixo}.csv", index=False)
 
-    labels_unicas = test_data["label"].nunique()
+    labels_unicas = test_data["labels"].nunique()
 
     print(f"Quantidade de labels unicas no conjuntos de test: {labels_unicas}")
 
     val_data.to_parquet(f"{path}/eval_{suffixo}.parquet", index=False)
     val_data.to_csv(f"{path}/eval_{suffixo}.csv", index=False)
-    labels_unicas = val_data["label"].nunique()
+    labels_unicas = val_data["labels"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de val: {labels_unicas}")
 
     df.to_parquet(f"{path}/df_{suffixo}.parquet", index=False)
     df.to_csv(f"{path}/df_{suffixo}.csv", index=False)
-    labels_unicas = df["label"].nunique()
+    labels_unicas = df["labels"].nunique()
     print(f"Quantidade de labels unicas no conjuntos total: {labels_unicas}")
 
 
