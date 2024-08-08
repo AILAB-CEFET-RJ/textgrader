@@ -44,15 +44,20 @@ def creating_train_test_divisor(df, path, competency_name):
 
     # Salva o DataFrame como um arquivo CSV
     train_data.to_parquet(f"{path}/train_{suffixo}.parquet", index=False)
+    train_data.to_csv(f"{path}/train_{suffixo}.csv", index=False)
+
     labels_unicas = train_data["label"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de treino: {labels_unicas}")
 
     test_data.to_parquet(f"{path}/test_{suffixo}.parquet", index=False)
+    test_data.to_csv(f"{path}/test_{suffixo}.csv", index=False)
+
     labels_unicas = test_data["label"].nunique()
 
     print(f"Quantidade de labels unicas no conjuntos de test: {labels_unicas}")
 
     val_data.to_parquet(f"{path}/eval_{suffixo}.parquet", index=False)
+    val_data.to_csv(f"{path}/eval_{suffixo}.csv", index=False)
     labels_unicas = val_data["label"].nunique()
     print(f"Quantidade de labels unicas no conjuntos de val: {labels_unicas}")
 
