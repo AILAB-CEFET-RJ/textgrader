@@ -25,9 +25,9 @@ start_time = time.time()
 peft_config = LoraConfig(
     task_type="SEQ_CLS",
     inference_mode=False,
-    r=8,
-    lora_alpha=16,
-    lora_dropout=0.1,
+    r=configs.lora_r,
+    lora_alpha=configs.lora_alpha,
+    lora_dropout=configs.lora_dropout,
     use_dora=True,
 )
 
@@ -41,16 +41,16 @@ if getattr(tokenizer, "pad_token_id") is None:
 
 # datasets = load_dataset("glue", task)
 datasets = load_dataset(
-    "parquet",
-    data_files=f"{configs.data_dir}/train_{configs.sufix}.parquet",
+    "csv",
+    data_files=f"{configs.data_dir}/train_{configs.sufix}.csv",
 )
 datasets_test = load_dataset(
-    "parquet",
-    data_files=f"{configs.data_dir}/test_{configs.sufix}.parquet",
+    "csv",
+    data_files=f"{configs.data_dir}/test_{configs.sufix}.csv",
 )
 datasets_eval = load_dataset(
-    "parquet",
-    data_files=f"{configs.data_dir}/eval_{configs.sufix}.parquet",
+    "csv",
+    data_files=f"{configs.data_dir}/eval_{configs.sufix}.csv",
 )
 
 metric = evaluate.load("accuracy")
