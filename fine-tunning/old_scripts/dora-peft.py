@@ -89,7 +89,7 @@ def train_model(
         per_device_eval_batch_size=batch_size,
         warmup_steps=100,
         weight_decay=0.01,
-        logging_dir="./logs",
+        logging_dir="../logs",
         logging_steps=eval_step,
         save_steps=save_step,
         save_total_limit=2,

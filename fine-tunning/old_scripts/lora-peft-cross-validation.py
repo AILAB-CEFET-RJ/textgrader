@@ -36,7 +36,7 @@ tokenizer = AutoTokenizer.from_pretrained(
 if getattr(tokenizer, "pad_token_id") is None:
     tokenizer.pad_token_id = tokenizer.eos_token_id
 
-data_dir = "preprocessing/data_one_label"
+data_dir = "../preprocessing/data_one_label"
 datasets = load_dataset(
     "parquet", data_files=f"{data_dir}/train_conjunto_{configs.conjunto}.parquet"
 )

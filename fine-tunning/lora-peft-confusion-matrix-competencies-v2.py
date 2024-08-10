@@ -1,4 +1,3 @@
-import logs
 import time
 import torch
 from torch.optim import AdamW
@@ -10,7 +9,6 @@ from peft import (
 import evaluate
 from datasets import load_dataset
 from transformers import (
-    AutoModelForCausalLM,
     AutoTokenizer,
     get_linear_schedule_with_warmup, AutoModelForSequenceClassification,
 )
