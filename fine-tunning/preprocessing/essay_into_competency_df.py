@@ -49,9 +49,9 @@ def creating_dataframes(path, set_name, json_content, competency_name):
                 c_name = clean_string(c)
 
                 #colocando as notas em um range menor
-                if comp["nota"] not in labels_mapping:
-                    labels_mapping[comp["nota"]] = label_count
-                    label_count += 1
+                #if comp["nota"] not in labels_mapping:
+                #    labels_mapping[comp["nota"]] = label_count
+                #    label_count += 1
 
                 if c_name == competency_name:
                     label_comp = comp["nota"]
@@ -59,7 +59,7 @@ def creating_dataframes(path, set_name, json_content, competency_name):
 
             content = {
                 "texto": essay["texto"],
-                "labels": labels_mapping[label_comp],
+                "labels": label_comp,
             }
 
             new_df = pd.DataFrame([content])
