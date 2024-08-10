@@ -39,7 +39,7 @@ def creating_dataframes(path, set_name, json_content, competency_name):
     print("-"*50)
     print(f"CONJUNTO: {set_name} COMPETENCIA:{competency_name}")
     print("-" * 50)
-    label_count = 0
+    label_count = 1
     labels_mapping = {}
     for file_content in json_content.values():
         for essay in file_content:
@@ -48,10 +48,9 @@ def creating_dataframes(path, set_name, json_content, competency_name):
                 c = comp["competencia"]
                 c_name = clean_string(c)
 
-                #colocando as notas em um range menor
-                #if comp["nota"] not in labels_mapping:
-                #    labels_mapping[comp["nota"]] = label_count
-                #    label_count += 1
+                if comp["nota"] not in labels_mapping:
+                    labels_mapping[comp["nota"]] = label_count
+                    label_count += 1
 
                 if c_name == competency_name:
                     label_comp = comp["nota"]
@@ -59,7 +58,7 @@ def creating_dataframes(path, set_name, json_content, competency_name):
 
             content = {
                 "texto": essay["texto"],
-                "labels": label_comp,
+                "labels": labels_mapping[label_comp],
             }
 
             new_df = pd.DataFrame([content])
