@@ -1,3 +1,4 @@
+import json
 import os
 
 import pandas as pd
@@ -35,10 +36,11 @@ def create_folder(path):
 
 def creating_dataframes(path, set_name, json_content, competency_name):
     df = pd.DataFrame()
-    competency_set = {}
     print("-"*50)
     print(f"CONJUNTO: {set_name} COMPETENCIA:{competency_name}")
     print("-" * 50)
+    label_count = 0
+    labels_mapping = {}
     for file_content in json_content.values():
         for essay in file_content:
             label_comp = 0
@@ -46,9 +48,10 @@ def creating_dataframes(path, set_name, json_content, competency_name):
                 c = comp["competencia"]
                 c_name = clean_string(c)
 
-                s = f"{set_name}_{c_name}"
-                if s not in competency_set:
-                    competency_set[s] = 0
+                #colocando as notas em um range menor
+                if comp["nota"] not in labels_mapping:
+                    labels_mapping[comp["nota"]] = label_count
+                    label_count += 1
 
                 if c_name == competency_name:
                     label_comp = comp["nota"]
@@ -56,11 +59,14 @@ def creating_dataframes(path, set_name, json_content, competency_name):
 
             content = {
                 "texto": essay["texto"],
-                "labels": label_comp,
+                "labels": labels_mapping[label_comp],
             }
 
             new_df = pd.DataFrame([content])
             df = df._append(new_df)
+
+    with open(f"data_competencias/{set_name}_labels.json", 'w', encoding='utf-8') as arquivo_json:
+        json.dump(labels_mapping, arquivo_json, ensure_ascii=False, indent=4)
 
     return df
 
