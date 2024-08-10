@@ -31,7 +31,7 @@ data_dir = "preprocessing/data_competencias/conjunto_1"
 
 
 conjunto = 1
-n_labels = 201
+n_labels = 11
 sufix = "domínio_da_modalidade_escrita_formal"
 #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
 #    conjuntos_labels = json.load(arquivo)
