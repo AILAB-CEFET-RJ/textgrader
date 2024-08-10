@@ -13,7 +13,7 @@ class Configs:
     def __init__(self):
         print("Definindo configs...")
         self.obs = None
-        self.batch_size = 5
+        self.batch_size = 4
         self.model_name_or_path = "FacebookAI/xlm-roberta-base"
         # "neuralmind/bert-large-portuguese-cased"
         # "FacebookAI/xlm-roberta-base"
@@ -38,7 +38,7 @@ class Configs:
         self.data_dir = "preprocessing/data_competencias/conjunto_1"
 
         self.conjunto = 1
-        self.n_labels = 10
+        self.n_labels = 200
         self.sufix = "dominio_da_modalidade_escrita_formal"
         #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
         #    conjuntos_labels = json.load(arquivo)
