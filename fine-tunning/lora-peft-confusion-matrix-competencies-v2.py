@@ -154,7 +154,7 @@ if __name__ == '__main__':
 
         test_metric = metric.compute()
         print(f"epoch {epoch}:", test_metric)
-        results["metrics"][epoch] = test_metric
+        config.metrics[epoch] = test_metric
 
     ## using evaluation data_one_label
     all_predictions = []

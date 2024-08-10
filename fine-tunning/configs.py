@@ -49,6 +49,7 @@ class Configs:
         self.competence = ""
         self.processing_time = None
         self.validation_metric = None
+        self.metrics = {}
 
     def get_data_config(self):
         if len(sys.argv) < 1:
