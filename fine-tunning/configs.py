@@ -25,7 +25,7 @@ class Configs:
         self.peft_type = PeftType.LORA
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"> USING DEVICE {device}")
+        print(f"> USING DEVICE {self.device}")
 
         self.num_epochs = 10
         self.lr = 3e-4
