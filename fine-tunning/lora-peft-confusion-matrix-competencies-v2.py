@@ -124,59 +124,73 @@ if __name__ == '__main__':
 
     model.to(config.device)
 
-    for epoch in range(config.num_epochs):
-        model.train()
-        for step, batch in enumerate(train_dataloader):
-            print(batch["labels"])
-            batch.to(config.device)
-            outputs = model(**batch)
-            loss = outputs.loss
-            loss.backward()
-            optimizer.step()
-            lr_scheduler.step()
-            optimizer.zero_grad()
+    labels_exception = None
+    try:
+        for epoch in range(config.num_epochs):
+            model.train()
+            for step, batch in enumerate(train_dataloader):
+                labels_exception = batch["labels"]
+                batch.to(config.device)
+                outputs = model(**batch)
+                loss = outputs.loss
+                loss.backward()
+                optimizer.step()
+                lr_scheduler.step()
+                optimizer.zero_grad()
 
-        model.eval()
+            model.eval()
 
+            print("-"*100)
+            for step, batch in enumerate(tqdm(test_dataloader)):
+                labels_exception = batch["labels"]
+                batch.to(config.device)
+                with torch.no_grad():
+                    outputs = model(**batch)
+                predictions = outputs.logits.argmax(dim=-1)
+                predictions, references = predictions, batch["labels"]
+                print(f"predictions: {predictions} references: {references}")
+                metric.add_batch(
+                    predictions=predictions,
+                    references=references,
+                )
+
+            test_metric = metric.compute()
+            print(f"epoch {epoch}:", test_metric)
+            config.metrics[epoch] = test_metric
+
+    except Exception as e:
+        print(f"Exception: {e}")
+        print(labels_exception)
         print("-"*100)
-        for step, batch in enumerate(tqdm(test_dataloader)):
-            print(batch["labels"])
+
+    ## using evaluation data_one_label
+    all_predictions = []
+    all_references = []
+
+    try:
+        for step, batch in enumerate(tqdm(eval_dataloader)):
+            labels_exception = batch["labels"]
             batch.to(config.device)
             with torch.no_grad():
                 outputs = model(**batch)
             predictions = outputs.logits.argmax(dim=-1)
             predictions, references = predictions, batch["labels"]
+            all_predictions.extend(predictions.cpu().numpy())
+            all_references.extend(references.cpu().numpy())
             print(f"predictions: {predictions} references: {references}")
             metric.add_batch(
                 predictions=predictions,
                 references=references,
             )
 
-        test_metric = metric.compute()
-        print(f"epoch {epoch}:", test_metric)
-        config.metrics[epoch] = test_metric
+        eval_metric = metric.compute()
+        print(f"Validation metric: {eval_metric}")
+        config.validation_metric = eval_metric
 
-    ## using evaluation data_one_label
-    all_predictions = []
-    all_references = []
-
-    for step, batch in enumerate(tqdm(eval_dataloader)):
-        batch.to(config.device)
-        with torch.no_grad():
-            outputs = model(**batch)
-        predictions = outputs.logits.argmax(dim=-1)
-        predictions, references = predictions, batch["labels"]
-        all_predictions.extend(predictions.cpu().numpy())
-        all_references.extend(references.cpu().numpy())
-        print(f"predictions: {predictions} references: {references}")
-        metric.add_batch(
-            predictions=predictions,
-            references=references,
-        )
-
-    eval_metric = metric.compute()
-    print(f"Validation metric: {eval_metric}")
-    config.validation_metric = eval_metric
+    except Exception as e:
+        print(f"Exception: {e}")
+        print(labels_exception)
+        print("-"*100)
 
     ## Calcular a matriz de confusão
     cm = confusion_matrix(all_references, all_predictions)
