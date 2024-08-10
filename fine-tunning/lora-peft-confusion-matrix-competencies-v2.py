@@ -21,43 +21,43 @@ from configs import Configs
 
 
 def get_datasets(data_dir, suffix):
-    datasets = load_dataset(
+    d = load_dataset(
         "parquet",
         data_files=f"{data_dir}/train_{suffix}.parquet",
     )
-    datasets_test = load_dataset(
+    d_test = load_dataset(
         "parquet",
         data_files=f"{data_dir}/test_{suffix}.parquet",
     )
-    datasets_eval = load_dataset(
+    d_eval = load_dataset(
         "parquet",
         data_files=f"{data_dir}/eval_{suffix}.parquet",
     )
-    return datasets, datasets_test, datasets_eval
+    return d, d_test, d_eval
 
 
 if __name__ == '__main__':
-    configs = Configs()
-    obs = configs.get_data_config()
+    config = Configs()
+    obs = config.get_data_config()
     start_time = time.time()
 
     peft_config = LoraConfig(
         task_type="SEQ_CLS",
         inference_mode=False,
-        r=configs.lora_r,
-        lora_alpha=configs.lora_alpha,
-        lora_dropout=configs.lora_dropout,
+        r=config.lora_r,
+        lora_alpha=config.lora_alpha,
+        lora_dropout=config.lora_dropout,
         use_dora=True,
     )
 
     tokenizer = AutoTokenizer.from_pretrained(
-        configs.model_name_or_path, padding=configs.padding_side
+        config.model_name_or_path, padding=config.padding_side
     )
 
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.sufix)
+    datasets, datasets_test, datasets_eval = get_datasets(config.data_dir, config.sufix)
 
     metric = evaluate.load("accuracy")
 
@@ -94,42 +94,42 @@ if __name__ == '__main__':
         tokenize_datasets["train"],
         shuffle=True,
         collate_fn=collate_fn,
-        batch_size=configs.batch_size,
+        batch_size=config.batch_size,
     )
     test_dataloader = DataLoader(
         tokenize_datasets_test["train"],
         shuffle=False,
         collate_fn=collate_fn,
-        batch_size=configs.batch_size,
+        batch_size=config.batch_size,
     )
     eval_dataloader = DataLoader(
         tokenize_datasets_eval["train"],
         shuffle=False,
         collate_fn=collate_fn,
-        batch_size=configs.batch_size,
+        batch_size=config.batch_size,
     )
 
     model = AutoModelForSequenceClassification.from_pretrained(
-        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
+        config.model_name_or_path, return_dict=True, num_labels=config.n_labels
     )
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
     print(model)
 
-    optimizer = AdamW(model.parameters(), lr=configs.lr)
+    optimizer = AdamW(model.parameters(), lr=config.lr)
 
     lr_scheduler = get_linear_schedule_with_warmup(
         optimizer=optimizer,
-        num_warmup_steps=0.06 * (len(train_dataloader) * configs.num_epochs),
-        num_training_steps=(len(train_dataloader) * configs.num_epochs),
+        num_warmup_steps=0.06 * (len(train_dataloader) * config.num_epochs),
+        num_training_steps=(len(train_dataloader) * config.num_epochs),
     )
 
-    model.to(configs.device)
+    model.to(config.device)
 
-    for epoch in range(configs.num_epochs):
+    for epoch in range(config.num_epochs):
         model.train()
         for step, batch in enumerate(train_dataloader):
-            batch.to(configs.device)
+            batch.to(config.device)
             outputs = model(**batch)
             loss = outputs.loss
             loss.backward()
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
         model.eval()
         for step, batch in enumerate(tqdm(test_dataloader)):
-            batch.to(configs.device)
+            batch.to(config.device)
             with torch.no_grad():
                 outputs = model(**batch)
             predictions = outputs.logits.argmax(dim=-1)
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     all_references = []
 
     for step, batch in enumerate(tqdm(eval_dataloader)):
-        batch.to(configs.device)
+        batch.to(config.device)
         with torch.no_grad():
             outputs = model(**batch)
         predictions = outputs.logits.argmax(dim=-1)
@@ -174,7 +174,7 @@ if __name__ == '__main__':
 
     eval_metric = metric.compute()
     print(f"Validation metric: {eval_metric}")
-    configs.validation_metric = eval_metric
+    config.validation_metric = eval_metric
 
     ## Calcular a matriz de confusão
     cm = confusion_matrix(all_references, all_predictions)
@@ -183,6 +183,6 @@ if __name__ == '__main__':
     ## Saving log file
     elapsed_time = time.time() - start_time
 
-    configs.processing_time = elapsed_time / 60
-    configs.save_to_json(cm_df)
+    config.processing_time = elapsed_time / 60
+    config.save_to_json(cm_df)
     print("finish!!")
