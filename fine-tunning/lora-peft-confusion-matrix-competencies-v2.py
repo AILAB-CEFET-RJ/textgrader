@@ -127,6 +127,7 @@ if __name__ == '__main__':
     for epoch in range(config.num_epochs):
         model.train()
         for step, batch in enumerate(train_dataloader):
+            print(batch)
             batch.to(config.device)
             outputs = model(**batch)
             loss = outputs.loss
@@ -137,6 +138,7 @@ if __name__ == '__main__':
 
         model.eval()
         for step, batch in enumerate(tqdm(test_dataloader)):
+            print(batch)
             batch.to(config.device)
             with torch.no_grad():
                 outputs = model(**batch)
