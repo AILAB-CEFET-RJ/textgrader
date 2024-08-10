@@ -107,7 +107,7 @@ eval_dataloader = DataLoader(
 )
 
 model = AutoModelForSequenceClassification.from_pretrained(
-    configs.model_name_or_path, return_dict=True #, num_labels=configs.n_labels
+    configs.model_name_or_path, return_dict=True , num_labels=configs.n_labels
 )
 #model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
 model = get_peft_model(model, peft_config)
