@@ -159,8 +159,9 @@ if __name__ == '__main__':
 
     except Exception as e:
         print(f"Exception: {e}")
-        print(e.with_traceback())
+        print(e.with_traceback(labels_exception))
         print(labels_exception)
+        print(labels_exception.shape)
         print("-" * 100)
 
     ## using evaluation data_one_label
