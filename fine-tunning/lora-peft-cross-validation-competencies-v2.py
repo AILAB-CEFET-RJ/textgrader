@@ -23,13 +23,13 @@ def get_datasets_cv(data_dir, suffix):
     print(f"> READING FROM {data_dir}/train_{suffix}.parquet")
     print(f"> READING FROM {data_dir}/eval_{suffix}.parquet")
     d = load_dataset(
-        "csv",
-        data_files=f"{data_dir}/train_{suffix}.csv",
+        "parquet",
+        data_files=f"{data_dir}/train_{suffix}.parquet",
     )
 
     d_eval = load_dataset(
-        "csv",
-        data_files=f"{data_dir}/eval_{suffix}.csv",
+        "parquet",
+        data_files=f"{data_dir}/eval_{suffix}.parquet",
     )
 
     return d, d_eval
@@ -60,7 +60,6 @@ if __name__ == '__main__':
 
 
     # metric = evaluate.load("accuracy")
-
 
     def tokenize(examples):
         outputs = tokenizer(examples["texto"], truncation=True, max_length=512)
@@ -127,7 +126,6 @@ if __name__ == '__main__':
             )
 
             model.to(config.device)
-
 
             for epoch in range(config.num_epochs):
                 model.train()
@@ -202,7 +200,6 @@ if __name__ == '__main__':
         print(labels_exception)
         print("-" * 100)
         traceback.print_exc()
-
 
     ## Saving log file
     elapsed_time = time.time() - start_time

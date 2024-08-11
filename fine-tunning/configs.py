@@ -38,7 +38,7 @@ class Configs:
         self.data_dir = "preprocessing/data_competencias/conjunto_1"
 
         self.conjunto = 1
-        self.n_labels = 10
+        self.n_labels = 11
         self.sufix = "dominio_da_modalidade_escrita_formal"
         #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
         #    conjuntos_labels = json.load(arquivo)

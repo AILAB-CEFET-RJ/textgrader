@@ -73,6 +73,7 @@ def creating_dataframes(path, set_name, json_content, competency_name):
 def creating_train_test_divisor(df, path, competency_name):
     # Divisão em treino e o restante (teste + validação)
     train_data, temp_data = train_test_split(df, test_size=0.4, random_state=42)
+
     test_data, val_data = train_test_split(temp_data, random_state=42)
     suffixo = competency_name
 

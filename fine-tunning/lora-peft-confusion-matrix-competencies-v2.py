@@ -38,6 +38,7 @@ if __name__ == '__main__':
     config = Configs()
     config.get_data_config()
     start_time = time.time()
+    config.script_type = "confusion-matrix-competencies"
 
     peft_config = LoraConfig(
         task_type="SEQ_CLS",
