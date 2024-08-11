@@ -1,5 +1,5 @@
 import time
-
+import traceback
 import evaluate
 import torch
 from torch.optim import AdamW
@@ -159,9 +159,9 @@ if __name__ == '__main__':
 
     except Exception as e:
         print(f"Exception: {e}")
-        print(e.with_traceback(labels_exception))
         print(labels_exception)
         print(labels_exception.shape)
+        traceback.print_exc()
         print("-" * 100)
 
     ## using evaluation data_one_label
@@ -199,6 +199,7 @@ if __name__ == '__main__':
         print(f"Exception: {e}")
         print(labels_exception)
         print("-" * 100)
+        traceback.print_exc()
 
 
     ## Saving log file
