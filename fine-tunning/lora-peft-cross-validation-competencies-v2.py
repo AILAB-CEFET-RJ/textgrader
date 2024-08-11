@@ -85,45 +85,46 @@ if __name__ == '__main__':
 
     fold_count = 0
 
-    for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
-        fold_count += 1
-        print(f"Training fold {fold_count}...")
+    labels_exception = None
+    try:
+        for train_idx, val_idx in kf.split(tokenize_datasets["train"]):
+            fold_count += 1
+            print(f"Training fold {fold_count}...")
 
-        train_dataset = tokenize_datasets["train"].select(train_idx)
-        val_dataset = tokenize_datasets["train"].select(val_idx)
+            train_dataset = tokenize_datasets["train"].select(train_idx)
+            val_dataset = tokenize_datasets["train"].select(val_idx)
 
-        train_dataloader = DataLoader(
-            train_dataset,
-            shuffle=True,
-            collate_fn=collate_fn,
-            batch_size=config.batch_size,
-        )
-        val_dataloader = DataLoader(
-            val_dataset,
-            shuffle=False,
-            collate_fn=collate_fn,
-            batch_size=config.batch_size,
-        )
+            train_dataloader = DataLoader(
+                train_dataset,
+                shuffle=True,
+                collate_fn=collate_fn,
+                batch_size=config.batch_size,
+            )
+            val_dataloader = DataLoader(
+                val_dataset,
+                shuffle=False,
+                collate_fn=collate_fn,
+                batch_size=config.batch_size,
+            )
 
-        model = AutoModelForCausalLM.from_pretrained(
-            config.model_name_or_path, return_dict=True, num_labels=config.n_labels
-        )
-        model = get_peft_model(model, peft_config)
-        model.print_trainable_parameters()
-        print(model)
+            model = AutoModelForCausalLM.from_pretrained(
+                config.model_name_or_path, return_dict=True, num_labels=config.n_labels
+            )
+            model = get_peft_model(model, peft_config)
+            model.print_trainable_parameters()
+            print(model)
 
-        optimizer = AdamW(model.parameters(), lr=config.lr)
+            optimizer = AdamW(model.parameters(), lr=config.lr)
 
-        lr_scheduler = get_linear_schedule_with_warmup(
-            optimizer=optimizer,
-            num_warmup_steps=0.06 * (len(train_dataloader) * config.num_epochs),
-            num_training_steps=(len(train_dataloader) * config.num_epochs),
-        )
+            lr_scheduler = get_linear_schedule_with_warmup(
+                optimizer=optimizer,
+                num_warmup_steps=0.06 * (len(train_dataloader) * config.num_epochs),
+                num_training_steps=(len(train_dataloader) * config.num_epochs),
+            )
 
-        model.to(config.device)
+            model.to(config.device)
 
-        labels_exception = None
-        try:
+
             for epoch in range(config.num_epochs):
                 model.train()
                 for step, batch in enumerate(train_dataloader):
@@ -153,10 +154,11 @@ if __name__ == '__main__':
                 val_metric = metric.compute()
                 print(f"epoch {epoch}:", val_metric)
                 config.metrics[f"fold_{fold_count}_epoch_{epoch}"] = val_metric
-        except Exception as e:
-            print(f"Exception: {e}")
-            print(labels_exception)
-            print("-" * 100)
+
+    except Exception as e:
+        print(f"Exception: {e}")
+        print(labels_exception)
+        print("-" * 100)
 
     ## using evaluation data_one_label
     eval_dataloader = DataLoader(
