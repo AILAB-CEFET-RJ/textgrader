@@ -23,13 +23,13 @@ def get_datasets_cv(data_dir, suffix):
     print(f"> READING FROM {data_dir}/train_{suffix}.parquet")
     print(f"> READING FROM {data_dir}/eval_{suffix}.parquet")
     d = load_dataset(
-        "parquet",
-        data_files=f"{data_dir}/train_{suffix}.parquet",
+        "csv",
+        data_files=f"{data_dir}/train_{suffix}.csv",
     )
 
     d_eval = load_dataset(
-        "parquet",
-        data_files=f"{data_dir}/eval_{suffix}.parquet",
+        "csv",
+        data_files=f"{data_dir}/eval_{suffix}.csv",
     )
 
     return d, d_eval
