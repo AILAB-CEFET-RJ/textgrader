@@ -103,12 +103,14 @@ if __name__ == '__main__':
                 collate_fn=collate_fn,
                 batch_size=config.batch_size,
             )
+
             val_dataloader = DataLoader(
                 val_dataset,
                 shuffle=False,
                 collate_fn=collate_fn,
                 batch_size=config.batch_size,
             )
+
 
             model = AutoModelForCausalLM.from_pretrained(
                 config.model_name_or_path, return_dict=True, num_labels=config.n_labels
@@ -139,6 +141,7 @@ if __name__ == '__main__':
                     lr_scheduler.step()
                     optimizer.zero_grad()
 
+
                 model.eval()
                 metric = evaluate.load("accuracy")
                 for step, batch in enumerate(tqdm(val_dataloader)):
@@ -163,6 +166,7 @@ if __name__ == '__main__':
         print(labels_exception.shape)
         traceback.print_exc()
         print("-" * 100)
+        exit(1)
 
     ## using evaluation data_one_label
     eval_dataloader = DataLoader(

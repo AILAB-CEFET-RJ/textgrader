@@ -2,26 +2,26 @@ FILES = results/*
 COMMIT_MESSAGE = "Atualizando arquivos de resultados"
 OBS ?= ""
 
-.PHONY: add commit push git-all run-conjunto2 run-conjunto1
+.PHONY: run_scripts clean
 
-add:
-	git add $(FILES)
+# Definir os nomes dos scripts
+SCRIPT1 = lora-peft-confusion-matrix-competencies-v2.py conjunto_1_competence
+SCRIPT2 = script2.py
+SCRIPT3 = script3.py
 
-commit:
-	git commit -m $(COMMIT_MESSAGE)
+# Definir a regra padrão que será executada quando você rodar "make"
+all: run_scripts
 
-push:
-	git push
+# Regra para rodar os scripts sequencialmente
+run_scripts:
+	@echo "Executando $(SCRIPT1)..."
+	python $(SCRIPT1)
+	@echo "Executando $(SCRIPT2)..."
+	python $(SCRIPT2)
+	@echo "Executando $(SCRIPT3)..."
+	python $(SCRIPT3)
 
-git-all: add commit push
-
-run-conjunto1:
-	nohup python lora-peft-confusion-matrix.py 1 $(OBS)
-	sleep 10
-
-
-run-conjunto2:
-	nohup python lora-peft-v2.py 2 $(OBS)
-	sleep 10
-
-all: run-conjunto1 git-all
+# Limpar arquivos temporários ou resultados
+clean:
+	@echo "Limpando arquivos temporários..."
+	# Insira os comandos para limpar arquivos aqui, se necessário
