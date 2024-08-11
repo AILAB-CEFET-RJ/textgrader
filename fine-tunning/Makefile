@@ -24,4 +24,5 @@ run_scripts:
 # Limpar arquivos temporários ou resultados
 clean:
 	@echo "Limpando arquivos temporários..."
+	rm -r nohup.out
 	# Insira os comandos para limpar arquivos aqui, se necessário
