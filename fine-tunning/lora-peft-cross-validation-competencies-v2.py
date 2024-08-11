@@ -66,13 +66,13 @@ if __name__ == '__main__':
     tokenize_datasets = datasets.map(
         tokenize,
         batched=True,
-        remove_columns=["texto", "nota"],
+        remove_columns=["texto"],
     )
 
     tokenize_datasets_eval = datasets_eval.map(
         tokenize,
         batched=True,
-        remove_columns=["texto", "nota"],
+        remove_columns=["texto"],
     )
 
 
@@ -122,33 +122,41 @@ if __name__ == '__main__':
 
         model.to(config.device)
 
-        for epoch in range(config.num_epochs):
-            model.train()
-            for step, batch in enumerate(train_dataloader):
-                batch.to(config.device)
-                outputs = model(**batch)
-                loss = outputs.loss
-                loss.backward()
-                optimizer.step()
-                lr_scheduler.step()
-                optimizer.zero_grad()
-
-            model.eval()
-            metric = load_metric("accuracy")
-            for step, batch in enumerate(tqdm(val_dataloader)):
-                batch.to(config.device)
-                with torch.no_grad():
+        labels_exception = None
+        try:
+            for epoch in range(config.num_epochs):
+                model.train()
+                for step, batch in enumerate(train_dataloader):
+                    labels_exception = batch["labels"]
+                    batch.to(config.device)
                     outputs = model(**batch)
-                predictions = outputs.logits.argmax(dim=-1)
-                predictions, references = predictions, batch["labels"]
-                metric.add_batch(
-                    predictions=predictions,
-                    references=references,
-                )
+                    loss = outputs.loss
+                    loss.backward()
+                    optimizer.step()
+                    lr_scheduler.step()
+                    optimizer.zero_grad()
 
-            val_metric = metric.compute()
-            print(f"epoch {epoch}:", val_metric)
-            config.metrics[f"fold_{fold_count}_epoch_{epoch}"] = val_metric
+                model.eval()
+                metric = load_metric("accuracy")
+                for step, batch in enumerate(tqdm(val_dataloader)):
+                    labels_exception = batch["labels"]
+                    batch.to(config.device)
+                    with torch.no_grad():
+                        outputs = model(**batch)
+                    predictions = outputs.logits.argmax(dim=-1)
+                    predictions, references = predictions, batch["labels"]
+                    metric.add_batch(
+                        predictions=predictions,
+                        references=references,
+                    )
+
+                val_metric = metric.compute()
+                print(f"epoch {epoch}:", val_metric)
+                config.metrics[f"fold_{fold_count}_epoch_{epoch}"] = val_metric
+        except Exception as e:
+            print(f"Exception: {e}")
+            print(labels_exception)
+            print("-" * 100)
 
     ## using evaluation data_one_label
     eval_dataloader = DataLoader(
@@ -161,24 +169,31 @@ if __name__ == '__main__':
     all_predictions = []
     all_references = []
 
-    metric = load_metric("accuracy")
-    for step, batch in enumerate(tqdm(eval_dataloader)):
-        batch.to(config.device)
-        with torch.no_grad():
-            outputs = model(**batch)
-        predictions = outputs.logits.argmax(dim=-1)
-        predictions, references = predictions, batch["labels"]
-        all_predictions.extend(predictions.cpu().numpy())
-        all_references.extend(references.cpu().numpy())
-        print(f"predictions: {predictions} references: {references}")
-        metric.add_batch(
-            predictions=predictions,
-            references=references,
-        )
+    try:
+        metric = load_metric("accuracy")
+        for step, batch in enumerate(tqdm(eval_dataloader)):
+            labels_exception = batch["labels"]
+            batch.to(config.device)
+            with torch.no_grad():
+                outputs = model(**batch)
+            predictions = outputs.logits.argmax(dim=-1)
+            predictions, references = predictions, batch["labels"]
+            all_predictions.extend(predictions.cpu().numpy())
+            all_references.extend(references.cpu().numpy())
+            print(f"predictions: {predictions} references: {references}")
+            metric.add_batch(
+                predictions=predictions,
+                references=references,
+            )
 
-    eval_metric = metric.compute()
-    print(f"Validation metric: {eval_metric}")
-    config.validation_metric = eval_metric
+        eval_metric = metric.compute()
+        print(f"Validation metric: {eval_metric}")
+        config.validation_metric = eval_metric
+    except Exception as e:
+        print(f"Exception: {e}")
+        print(labels_exception)
+        print("-" * 100)
+
 
     ## Saving log file
     elapsed_time = time.time() - start_time
