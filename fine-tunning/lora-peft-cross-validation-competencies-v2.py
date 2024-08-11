@@ -1,4 +1,6 @@
 import time
+
+import evaluate
 import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
@@ -138,7 +140,7 @@ if __name__ == '__main__':
                     optimizer.zero_grad()
 
                 model.eval()
-                metric = load_metric("accuracy")
+                metric = evaluate.load("accuracy")
                 for step, batch in enumerate(tqdm(val_dataloader)):
                     labels_exception = batch["labels"]
                     batch.to(config.device)
