@@ -20,6 +20,7 @@ from configs import Configs
 
 
 def get_datasets(data_dir, suffix):
+    print(f"Reading from {data_dir}/train_{suffix}.parquet")
     d = load_dataset(
         "parquet",
         data_files=f"{data_dir}/train_{suffix}.parquet",
