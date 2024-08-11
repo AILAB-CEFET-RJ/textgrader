@@ -208,5 +208,5 @@ if __name__ == '__main__':
     elapsed_time = time.time() - start_time
 
     config.processing_time = elapsed_time / 60
-    config.save_to_json()
+    config.save_to_json(label)
     print("finish!!")

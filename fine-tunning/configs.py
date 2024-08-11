@@ -46,7 +46,7 @@ class Configs:
         #print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
 
         self.date = datetime.now().strftime("%d-%m-%Y-%H-%M")
-        self.competence = ""
+        self.competence = "dominio_da_modalidade_escrita_formal"
         self.processing_time = None
         self.validation_metric = None
         self.metrics = {}
