@@ -34,37 +34,33 @@ def get_datasets(data_dir, suffix):
     return d, d_test, d_eval
 
 
-if __name__ == '__main__':
-    config = Configs()
-    config.get_data_config()
+def train_model(configs):
     start_time = time.time()
-    config.script_type = "confusion-matrix-competencies"
+    configs.script_type = "confusion-matrix-competencies"
 
     peft_config = LoraConfig(
         task_type="SEQ_CLS",
         inference_mode=False,
-        r=config.lora_r,
-        lora_alpha=config.lora_alpha,
-        lora_dropout=config.lora_dropout,
+        r=configs.lora_r,
+        lora_alpha=configs.lora_alpha,
+        lora_dropout=configs.lora_dropout,
         use_dora=True,
     )
 
     tokenizer = AutoTokenizer.from_pretrained(
-        config.model_name_or_path, padding=config.padding_side
+        configs.model_name_or_path, padding=configs.padding_side
     )
 
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    datasets, datasets_test, datasets_eval = get_datasets(config.data_dir, config.sufix)
+    datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
 
     metric = evaluate.load("accuracy")
-
 
     def tokenize(examples):
         outputs = tokenizer(examples["texto"], truncation=True, max_length=512)
         return outputs
-
 
     tokenize_datasets = datasets.map(
         tokenize,
@@ -84,54 +80,52 @@ if __name__ == '__main__':
         remove_columns=["texto"],
     )
 
-
     def collate_fn(examples):
         return tokenizer.pad(examples, padding="longest", return_tensors="pt")
-
 
     train_dataloader = DataLoader(
         tokenize_datasets["train"],
         shuffle=True,
         collate_fn=collate_fn,
-        batch_size=config.batch_size,
+        batch_size=configs.batch_size,
     )
     test_dataloader = DataLoader(
         tokenize_datasets_test["train"],
         shuffle=False,
         collate_fn=collate_fn,
-        batch_size=config.batch_size,
+        batch_size=configs.batch_size,
     )
     eval_dataloader = DataLoader(
         tokenize_datasets_eval["train"],
         shuffle=False,
         collate_fn=collate_fn,
-        batch_size=config.batch_size,
+        batch_size=configs.batch_size,
     )
 
     model = AutoModelForSequenceClassification.from_pretrained(
-        config.model_name_or_path, return_dict=True, num_labels=config.n_labels
+        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
     )
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
     print(model)
 
-    optimizer = AdamW(model.parameters(), lr=config.lr)
+    optimizer = AdamW(model.parameters(), lr=configs.lr)
 
     lr_scheduler = get_linear_schedule_with_warmup(
         optimizer=optimizer,
-        num_warmup_steps=0.06 * (len(train_dataloader) * config.num_epochs),
-        num_training_steps=(len(train_dataloader) * config.num_epochs),
+        num_warmup_steps=0.06 * (len(train_dataloader) * configs.num_epochs),
+        num_training_steps=(len(train_dataloader) * configs.num_epochs),
     )
 
-    model.to(config.device)
+    model.to(configs.device)
 
     labels_exception = None
     try:
-        for epoch in range(config.num_epochs):
+        for epoch in range(configs.num_epochs):
             model.train()
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
-                batch.to(config.device)
+                batch.to(configs.device)
                 outputs = model(**batch)
                 loss = outputs.loss
                 loss.backward()
@@ -141,10 +135,10 @@ if __name__ == '__main__':
 
             model.eval()
 
-            print("-"*100)
+            print("-" * 100)
             for step, batch in enumerate(tqdm(test_dataloader)):
                 labels_exception = batch["labels"]
-                batch.to(config.device)
+                batch.to(configs.device)
                 with torch.no_grad():
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
@@ -157,12 +151,12 @@ if __name__ == '__main__':
 
             test_metric = metric.compute()
             print(f"epoch {epoch}:", test_metric)
-            config.metrics[epoch] = test_metric
+            configs.metrics[epoch] = test_metric
 
     except Exception as e:
         print(f"Exception: {e}")
         print(labels_exception)
-        print("-"*100)
+        print("-" * 100)
 
     ## using evaluation data_one_label
     all_predictions = []
@@ -171,7 +165,7 @@ if __name__ == '__main__':
     try:
         for step, batch in enumerate(tqdm(eval_dataloader)):
             labels_exception = batch["labels"]
-            batch.to(config.device)
+            batch.to(configs.device)
             with torch.no_grad():
                 outputs = model(**batch)
             predictions = outputs.logits.argmax(dim=-1)
@@ -186,12 +180,12 @@ if __name__ == '__main__':
 
         eval_metric = metric.compute()
         print(f"Validation metric: {eval_metric}")
-        config.validation_metric = eval_metric
+        configs.validation_metric = eval_metric
 
     except Exception as e:
         print(f"Exception: {e}")
         print(labels_exception)
-        print("-"*100)
+        print("-" * 100)
 
     ## Calcular a matriz de confusão
     cm = confusion_matrix(all_references, all_predictions)
@@ -200,6 +194,15 @@ if __name__ == '__main__':
     ## Saving log file
     elapsed_time = time.time() - start_time
 
-    config.processing_time = elapsed_time / 60
-    config.save_to_json(cm_df)
+    configs.processing_time = elapsed_time / 60
+    configs.save_to_json(cm_df)
     print("finish!!")
+
+
+if __name__ == '__main__':
+    config = Configs()
+    config.get_data_config()
+
+    for comp in config.get_competencies_from_set():
+        config.competence = comp
+        train_model(config)

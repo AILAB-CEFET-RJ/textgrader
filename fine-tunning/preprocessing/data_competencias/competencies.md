@@ -1,0 +1,21 @@
+
+### CONJUNTO 1
+- dominio_da_modalidade_escrita_formal
+- compreender_a_proposta_e_aplicar_conceitos_das_varias_areas_de_conhecimento_para_desenvolver_o_texto_dissertativoargumentativo_em_prosa
+- selecionar_relacionar_organizar_e_interpretar_informacoes_em_defesa_de_um_ponto_de_vista
+- conhecimento_dos_mecanismos_linguisticos_necessarios_para_a_construcao_da_argumentacao
+- proposta_de_intervencao_com_respeito_aos_direitos_humanos
+
+### CONJUNTO 2
+- adequacao_ao_tema
+- adequacao_e_leitura_critica_da_coletanea
+- adequacao_ao_genero_textual
+- adequacao_a_modalidade_padrao_da_lingua
+- coesao_e_coerencia
+
+### CONJUNTO 3
+- conteudo
+- estrutura_do_texto
+- estrutura_de_ideias
+- vocabulario
+- gramatica_e_ortografia
