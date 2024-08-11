@@ -19,8 +19,9 @@ from sklearn.model_selection import KFold
 from configs import Configs
 
 
-def get_datasets(data_dir, suffix):
-    print(f"Reading from {data_dir}/train_{suffix}.parquet")
+def get_datasets_cv(data_dir, suffix):
+    print(f"> READING FROM {data_dir}/train_{suffix}.parquet")
+    print(f"> READING FROM {data_dir}/eval_{suffix}.parquet")
     d = load_dataset(
         "parquet",
         data_files=f"{data_dir}/train_{suffix}.parquet",
@@ -43,9 +44,9 @@ if __name__ == '__main__':
     peft_config = LoraConfig(
         task_type="SEQ_CLS",
         inference_mode=False,
-        r=8,
-        lora_alpha=16,
-        lora_dropout=0.1,
+        r=config.lora_r,
+        lora_alpha=config.lora_alpha,
+        lora_dropout=config.lora_dropout,
         use_dora=True,
     )
 
@@ -55,7 +56,7 @@ if __name__ == '__main__':
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    datasets, datasets_eval = get_datasets(config.data_dir, config.sufix)
+    datasets, datasets_eval = get_datasets_cv(config.data_dir, config.sufix)
 
 
     # metric = evaluate.load("accuracy")
