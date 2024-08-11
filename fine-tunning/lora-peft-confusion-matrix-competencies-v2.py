@@ -36,7 +36,7 @@ def get_datasets(data_dir, suffix):
 
 if __name__ == '__main__':
     config = Configs()
-    obs = config.get_data_config()
+    config.get_data_config()
     start_time = time.time()
 
     peft_config = LoraConfig(

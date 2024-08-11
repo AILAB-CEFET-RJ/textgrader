@@ -50,6 +50,7 @@ class Configs:
         self.processing_time = None
         self.validation_metric = None
         self.metrics = {}
+        self.script_type = None
 
     def get_data_config(self):
         if len(sys.argv) < 1:
@@ -85,6 +86,8 @@ class Configs:
             "date": self.date,
             "processing_time": self.processing_time,
             "validation_metric": self.validation_metric,
+            "metrics": self.metrics,
+            "script_type": self.script_type,
         }
 
     def save_to_json(self, confusion_matrix=None):
