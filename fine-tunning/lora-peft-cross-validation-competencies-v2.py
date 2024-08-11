@@ -111,7 +111,6 @@ if __name__ == '__main__':
                 batch_size=config.batch_size,
             )
 
-
             model = AutoModelForCausalLM.from_pretrained(
                 config.model_name_or_path, return_dict=True, num_labels=config.n_labels
             )
@@ -140,7 +139,6 @@ if __name__ == '__main__':
                     optimizer.step()
                     lr_scheduler.step()
                     optimizer.zero_grad()
-
 
                 model.eval()
                 metric = evaluate.load("accuracy")
