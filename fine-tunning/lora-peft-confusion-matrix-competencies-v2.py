@@ -204,5 +204,6 @@ if __name__ == '__main__':
     config.get_data_config()
 
     for comp in config.get_competencies_from_set():
+        print("> TRAINING:", comp)
         config.competence = comp
         train_model(config)
