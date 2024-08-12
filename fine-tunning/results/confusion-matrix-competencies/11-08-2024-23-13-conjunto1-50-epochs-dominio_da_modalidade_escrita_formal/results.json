@@ -1,0 +1,177 @@
+{
+    "obs": "testing_loop_competencies_50_epochs",
+    "batch_size": 4,
+    "model_name_or_path": "FacebookAI/xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 50,
+    "lr": 0.0003,
+    "padding_side": "right",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.2,
+    "data_dir": "preprocessing/data_competencias/conjunto_1",
+    "conjunto": 1,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "dominio_da_modalidade_escrita_formal",
+    "date": "11-08-2024-23-13",
+    "processing_time": 238.36753288110097,
+    "validation_metric": {
+        "accuracy": 0.6688963210702341
+    },
+    "metrics": {
+        "0": {
+            "accuracy": 0.4630248978075065
+        },
+        "1": {
+            "accuracy": 0.6261612783351914
+        },
+        "2": {
+            "accuracy": 0.6726124117428465
+        },
+        "3": {
+            "accuracy": 0.6952805648457823
+        },
+        "4": {
+            "accuracy": 0.704199182460052
+        },
+        "5": {
+            "accuracy": 0.6871051653660349
+        },
+        "6": {
+            "accuracy": 0.7053140096618358
+        },
+        "7": {
+            "accuracy": 0.6651802303976218
+        },
+        "8": {
+            "accuracy": 0.7079152731326644
+        },
+        "9": {
+            "accuracy": 0.6859903381642513
+        },
+        "10": {
+            "accuracy": 0.6971386101820884
+        },
+        "11": {
+            "accuracy": 0.653288740245262
+        },
+        "12": {
+            "accuracy": 0.7146042363433668
+        },
+        "13": {
+            "accuracy": 0.6376811594202898
+        },
+        "14": {
+            "accuracy": 0.707172054998142
+        },
+        "15": {
+            "accuracy": 0.6848755109624675
+        },
+        "16": {
+            "accuracy": 0.6703827573392791
+        },
+        "17": {
+            "accuracy": 0.6956521739130435
+        },
+        "18": {
+            "accuracy": 0.6793013749535489
+        },
+        "19": {
+            "accuracy": 0.693422519509476
+        },
+        "20": {
+            "accuracy": 0.6703827573392791
+        },
+        "21": {
+            "accuracy": 0.684132292827945
+        },
+        "22": {
+            "accuracy": 0.6982534373838721
+        },
+        "23": {
+            "accuracy": 0.6975102192493496
+        },
+        "24": {
+            "accuracy": 0.6711259754738016
+        },
+        "25": {
+            "accuracy": 0.6759568933481978
+        },
+        "26": {
+            "accuracy": 0.6770717205499814
+        },
+        "27": {
+            "accuracy": 0.6718691936083241
+        },
+        "28": {
+            "accuracy": 0.6986250464511334
+        },
+        "29": {
+            "accuracy": 0.6826458565589001
+        },
+        "30": {
+            "accuracy": 0.6826458565589001
+        },
+        "31": {
+            "accuracy": 0.7001114827201784
+        },
+        "32": {
+            "accuracy": 0.6670382757339279
+        },
+        "33": {
+            "accuracy": 0.6904496469713861
+        },
+        "34": {
+            "accuracy": 0.6781865477517651
+        },
+        "35": {
+            "accuracy": 0.6975102192493496
+        },
+        "36": {
+            "accuracy": 0.6804162021553326
+        },
+        "37": {
+            "accuracy": 0.6718691936083241
+        },
+        "38": {
+            "accuracy": 0.6714975845410628
+        },
+        "39": {
+            "accuracy": 0.6878483835005574
+        },
+        "40": {
+            "accuracy": 0.6911928651059086
+        },
+        "41": {
+            "accuracy": 0.6889632107023411
+        },
+        "42": {
+            "accuracy": 0.6811594202898551
+        },
+        "43": {
+            "accuracy": 0.6878483835005574
+        },
+        "44": {
+            "accuracy": 0.6848755109624675
+        },
+        "45": {
+            "accuracy": 0.68561872909699
+        },
+        "46": {
+            "accuracy": 0.6822742474916388
+        },
+        "47": {
+            "accuracy": 0.6863619472315124
+        },
+        "48": {
+            "accuracy": 0.6897064288368636
+        },
+        "49": {
+            "accuracy": 0.6845039018952063
+        }
+    },
+    "script_type": "confusion-matrix-competencies"
+}

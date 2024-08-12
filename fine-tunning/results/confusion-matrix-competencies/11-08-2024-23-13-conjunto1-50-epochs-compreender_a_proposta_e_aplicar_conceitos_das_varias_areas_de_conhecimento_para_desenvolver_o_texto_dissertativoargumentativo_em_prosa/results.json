@@ -1,0 +1,177 @@
+{
+    "obs": "testing_loop_competencies_50_epochs",
+    "batch_size": 4,
+    "model_name_or_path": "FacebookAI/xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 50,
+    "lr": 0.0003,
+    "padding_side": "right",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.2,
+    "data_dir": "preprocessing/data_competencias/conjunto_1",
+    "conjunto": 1,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "compreender_a_proposta_e_aplicar_conceitos_das_varias_areas_de_conhecimento_para_desenvolver_o_texto_dissertativoargumentativo_em_prosa",
+    "date": "11-08-2024-23-13",
+    "processing_time": 237.678369530042,
+    "validation_metric": {
+        "accuracy": 0.5462653288740246
+    },
+    "metrics": {
+        "0": {
+            "accuracy": 0.45001858045336307
+        },
+        "1": {
+            "accuracy": 0.5458937198067633
+        },
+        "2": {
+            "accuracy": 0.5548123374210331
+        },
+        "3": {
+            "accuracy": 0.5845410628019324
+        },
+        "4": {
+            "accuracy": 0.5726495726495726
+        },
+        "5": {
+            "accuracy": 0.5811965811965812
+        },
+        "6": {
+            "accuracy": 0.6020066889632107
+        },
+        "7": {
+            "accuracy": 0.6217019695280565
+        },
+        "8": {
+            "accuracy": 0.5782237086584913
+        },
+        "9": {
+            "accuracy": 0.5447788926049796
+        },
+        "10": {
+            "accuracy": 0.6105536975102193
+        },
+        "11": {
+            "accuracy": 0.5938312894834634
+        },
+        "12": {
+            "accuracy": 0.5689334819769603
+        },
+        "13": {
+            "accuracy": 0.5834262356001486
+        },
+        "14": {
+            "accuracy": 0.557785209959123
+        },
+        "15": {
+            "accuracy": 0.5555555555555556
+        },
+        "16": {
+            "accuracy": 0.5648457822370866
+        },
+        "17": {
+            "accuracy": 0.5741360089186176
+        },
+        "18": {
+            "accuracy": 0.5804533630620587
+        },
+        "19": {
+            "accuracy": 0.5481233742103307
+        },
+        "20": {
+            "accuracy": 0.5466369379412858
+        },
+        "21": {
+            "accuracy": 0.5837978446674099
+        },
+        "22": {
+            "accuracy": 0.5919732441471572
+        },
+        "23": {
+            "accuracy": 0.5834262356001486
+        },
+        "24": {
+            "accuracy": 0.5418060200668896
+        },
+        "25": {
+            "accuracy": 0.5473801560758083
+        },
+        "26": {
+            "accuracy": 0.5711631363805277
+        },
+        "27": {
+            "accuracy": 0.5704199182460052
+        },
+        "28": {
+            "accuracy": 0.5622445187662579
+        },
+        "29": {
+            "accuracy": 0.5566703827573393
+        },
+        "30": {
+            "accuracy": 0.5507246376811594
+        },
+        "31": {
+            "accuracy": 0.5745076179858789
+        },
+        "32": {
+            "accuracy": 0.5689334819769603
+        },
+        "33": {
+            "accuracy": 0.5667038275733928
+        },
+        "34": {
+            "accuracy": 0.5492382014121144
+        },
+        "35": {
+            "accuracy": 0.5704199182460052
+        },
+        "36": {
+            "accuracy": 0.5644741731698253
+        },
+        "37": {
+            "accuracy": 0.5704199182460052
+        },
+        "38": {
+            "accuracy": 0.5626161278335191
+        },
+        "39": {
+            "accuracy": 0.5481233742103307
+        },
+        "40": {
+            "accuracy": 0.5707915273132664
+        },
+        "41": {
+            "accuracy": 0.5492382014121144
+        },
+        "42": {
+            "accuracy": 0.5481233742103307
+        },
+        "43": {
+            "accuracy": 0.5574136008918618
+        },
+        "44": {
+            "accuracy": 0.5622445187662579
+        },
+        "45": {
+            "accuracy": 0.5681902638424378
+        },
+        "46": {
+            "accuracy": 0.5700483091787439
+        },
+        "47": {
+            "accuracy": 0.5611296915644741
+        },
+        "48": {
+            "accuracy": 0.5711631363805277
+        },
+        "49": {
+            "accuracy": 0.5707915273132664
+        }
+    },
+    "script_type": "confusion-matrix-competencies"
+}
