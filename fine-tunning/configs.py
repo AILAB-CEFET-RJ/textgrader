@@ -27,7 +27,7 @@ class Configs:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"> USING DEVICE {self.device}")
 
-        self.num_epochs = 10
+        self.num_epochs = 50
         self.lr = 3e-4
         self.padding_side = "right"
         self.lora_r = 8
@@ -91,9 +91,9 @@ class Configs:
         }
 
     def save_to_json(self, confusion_matrix=None):
-        os.makedirs(self.script_type, exist_ok=True)
+        os.makedirs(f"results/{self.script_type}", exist_ok=True)
         folder_path = (
-            f"results/{self.date}-conjunto{self.conjunto}-{self.num_epochs}-epochs-{self.competence}"
+            f"results/{self.script_type}/{self.date}-conjunto{self.conjunto}-{self.num_epochs}-epochs-{self.competence}"
         )
         os.makedirs(folder_path, exist_ok=True)
 
