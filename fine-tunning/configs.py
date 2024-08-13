@@ -108,10 +108,10 @@ class Configs:
         if self.conjunto == 1:
             return [
                 "dominio_da_modalidade_escrita_formal",
-                #"compreender_a_proposta_e_aplicar_conceitos_das_varias_areas_de_conhecimento_para_desenvolver_o_texto_dissertativoargumentativo_em_prosa",
-                #"selecionar_relacionar_organizar_e_interpretar_informacoes_em_defesa_de_um_ponto_de_vista",
-                #"conhecimento_dos_mecanismos_linguisticos_necessarios_para_a_construcao_da_argumentacao",
-                #"proposta_de_intervencao_com_respeito_aos_direitos_humanos"
+                "compreender_a_proposta_e_aplicar_conceitos_das_varias_areas_de_conhecimento_para_desenvolver_o_texto_dissertativoargumentativo_em_prosa",
+                "selecionar_relacionar_organizar_e_interpretar_informacoes_em_defesa_de_um_ponto_de_vista",
+                "conhecimento_dos_mecanismos_linguisticos_necessarios_para_a_construcao_da_argumentacao",
+                "proposta_de_intervencao_com_respeito_aos_direitos_humanos"
             ]
         if self.conjunto == 2:
             return [
