@@ -29,10 +29,10 @@ class Configs:
 
         self.num_epochs = 50
         self.lr = 3e-4
-        self.padding_side = "right"
-        self.lora_r = 8
-        self.lora_alpha = 16
-        self.lora_dropout = 0.2
+        self.padding_side = "left" #"right"
+        self.lora_r = 16
+        self.lora_alpha = 32
+        self.lora_dropout = 0.1
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
         self.data_dir = "preprocessing/data_competencias/conjunto_1"
