@@ -143,7 +143,7 @@ def train_model(configs):
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
-                print(f"predictions: {predictions} references: {references}")
+                #print(f"predictions: {predictions} references: {references}")
                 metric.add_batch(
                     predictions=predictions,
                     references=references,
@@ -172,7 +172,7 @@ def train_model(configs):
             predictions, references = predictions, batch["labels"]
             all_predictions.extend(predictions.cpu().numpy())
             all_references.extend(references.cpu().numpy())
-            print(f"predictions: {predictions} references: {references}")
+            #print(f"predictions: {predictions} references: {references}")
             metric.add_batch(
                 predictions=predictions,
                 references=references,
