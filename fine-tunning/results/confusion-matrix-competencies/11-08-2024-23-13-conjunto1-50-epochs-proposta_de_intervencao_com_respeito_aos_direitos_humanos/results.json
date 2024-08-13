@@ -1,0 +1,177 @@
+{
+    "obs": "testing_loop_competencies_50_epochs",
+    "batch_size": 4,
+    "model_name_or_path": "FacebookAI/xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 50,
+    "lr": 0.0003,
+    "padding_side": "right",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.2,
+    "data_dir": "preprocessing/data_competencias/conjunto_1",
+    "conjunto": 1,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "proposta_de_intervencao_com_respeito_aos_direitos_humanos",
+    "date": "11-08-2024-23-13",
+    "processing_time": 238.28790237506232,
+    "validation_metric": {
+        "accuracy": 0.5050167224080268
+    },
+    "metrics": {
+        "0": {
+            "accuracy": 0.3325901151988109
+        },
+        "1": {
+            "accuracy": 0.36306205871423264
+        },
+        "2": {
+            "accuracy": 0.4593088071348941
+        },
+        "3": {
+            "accuracy": 0.5213675213675214
+        },
+        "4": {
+            "accuracy": 0.4712002972872538
+        },
+        "5": {
+            "accuracy": 0.5024154589371981
+        },
+        "6": {
+            "accuracy": 0.5269416573764399
+        },
+        "7": {
+            "accuracy": 0.5131921218877741
+        },
+        "8": {
+            "accuracy": 0.5250836120401338
+        },
+        "9": {
+            "accuracy": 0.5161649944258639
+        },
+        "10": {
+            "accuracy": 0.5321441843180974
+        },
+        "11": {
+            "accuracy": 0.4983277591973244
+        },
+        "12": {
+            "accuracy": 0.5117056856187291
+        },
+        "13": {
+            "accuracy": 0.5195094760312151
+        },
+        "14": {
+            "accuracy": 0.5447788926049796
+        },
+        "15": {
+            "accuracy": 0.5180230397621702
+        },
+        "16": {
+            "accuracy": 0.5354886659234486
+        },
+        "17": {
+            "accuracy": 0.5291713117800074
+        },
+        "18": {
+            "accuracy": 0.5187662578966927
+        },
+        "19": {
+            "accuracy": 0.5250836120401338
+        },
+        "20": {
+            "accuracy": 0.5314009661835749
+        },
+        "21": {
+            "accuracy": 0.5172798216276477
+        },
+        "22": {
+            "accuracy": 0.5291713117800074
+        },
+        "23": {
+            "accuracy": 0.5314009661835749
+        },
+        "24": {
+            "accuracy": 0.5265700483091788
+        },
+        "25": {
+            "accuracy": 0.5235971757710888
+        },
+        "26": {
+            "accuracy": 0.5239687848383501
+        },
+        "27": {
+            "accuracy": 0.5340022296544036
+        },
+        "28": {
+            "accuracy": 0.5128205128205128
+        },
+        "29": {
+            "accuracy": 0.5050167224080268
+        },
+        "30": {
+            "accuracy": 0.5254552211073951
+        },
+        "31": {
+            "accuracy": 0.5258268301746563
+        },
+        "32": {
+            "accuracy": 0.5284280936454849
+        },
+        "33": {
+            "accuracy": 0.5369751021924934
+        },
+        "34": {
+            "accuracy": 0.5306577480490524
+        },
+        "35": {
+            "accuracy": 0.5206243032329989
+        },
+        "36": {
+            "accuracy": 0.5135637309550353
+        },
+        "37": {
+            "accuracy": 0.5202526941657376
+        },
+        "38": {
+            "accuracy": 0.5254552211073951
+        },
+        "39": {
+            "accuracy": 0.5306577480490524
+        },
+        "40": {
+            "accuracy": 0.5321441843180974
+        },
+        "41": {
+            "accuracy": 0.5280564845782237
+        },
+        "42": {
+            "accuracy": 0.5217391304347826
+        },
+        "43": {
+            "accuracy": 0.5273132664437012
+        },
+        "44": {
+            "accuracy": 0.5280564845782237
+        },
+        "45": {
+            "accuracy": 0.5399479747305834
+        },
+        "46": {
+            "accuracy": 0.5358602749907098
+        },
+        "47": {
+            "accuracy": 0.5317725752508361
+        },
+        "48": {
+            "accuracy": 0.5302861389817911
+        },
+        "49": {
+            "accuracy": 0.5306577480490524
+        }
+    },
+    "script_type": "confusion-matrix-competencies"
+}
