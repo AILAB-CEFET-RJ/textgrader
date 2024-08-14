@@ -30,8 +30,8 @@ class Configs:
         self.num_epochs = 8
         self.lr = 3e-4
         self.padding_side = "left" #"right"
-        self.lora_r = 8
-        self.lora_alpha = 16
+        self.lora_r = 16
+        self.lora_alpha = 32
         self.lora_dropout = 0.1
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
