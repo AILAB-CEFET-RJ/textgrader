@@ -117,6 +117,7 @@ def train_model(configs):
         num_training_steps=(len(train_dataloader) * configs.num_epochs),
     )
 
+    torch.cuda.empty_cache()
     model.to(configs.device)
 
     labels_exception = None
@@ -134,6 +135,7 @@ def train_model(configs):
                 optimizer.zero_grad()
 
             model.eval()
+            torch.cuda.empty_cache()
 
             print("-" * 100)
             for step, batch in enumerate(tqdm(test_dataloader)):
