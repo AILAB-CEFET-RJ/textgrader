@@ -182,7 +182,8 @@ def train_model(configs):
                 predictions=predictions,
                 references=references,
             )
-            cohen = cohen.append(pd.DataFrame(predictions, references, cohen_kappa_score(predictions, references)))
+            c_pred = pd.DataFrame(predictions, references, cohen_kappa_score(predictions, references))
+            cohen = cohen._append(c_pred, ignore_index=True)
 
         eval_metric = metric.compute()
         print(f"Validation metric: {eval_metric}")
