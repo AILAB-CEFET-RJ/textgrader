@@ -16,6 +16,7 @@ from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
 import pandas as pd
 from configs import Configs
+from sklearn.metrics import cohen_kappa_score
 
 
 def get_datasets(data_dir, suffix):
@@ -120,6 +121,7 @@ def train_model(configs):
     torch.cuda.empty_cache()
     model.to(configs.device)
 
+    cohen = pd.DataFrame(columns=["true", "pred", "cohen_kappa"])
     labels_exception = None
     try:
         for epoch in range(configs.num_epochs):
@@ -145,11 +147,12 @@ def train_model(configs):
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
-                #print(f"predictions: {predictions} references: {references}")
+                print(f"predictions: {predictions} references: {references} cohen: {cohen_kappa_score(predictions, references)}")
                 metric.add_batch(
                     predictions=predictions,
                     references=references,
                 )
+
 
             test_metric = metric.compute()
             print(f"epoch {epoch}:", test_metric)
@@ -179,10 +182,12 @@ def train_model(configs):
                 predictions=predictions,
                 references=references,
             )
+            cohen = cohen.append(pd.DataFrame(predictions, references, cohen_kappa_score(predictions, references)))
 
         eval_metric = metric.compute()
         print(f"Validation metric: {eval_metric}")
         configs.validation_metric = eval_metric
+        config.cohen = cohen
 
     except Exception as e:
         print(f"Exception: {e}")

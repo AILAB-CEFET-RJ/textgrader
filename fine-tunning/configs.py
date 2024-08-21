@@ -52,6 +52,7 @@ class Configs:
         self.validation_metric = None
         self.metrics = {}
         self.script_type = None
+        self.cohen = None
 
     def get_data_config(self):
         if len(sys.argv) < 1:
@@ -103,6 +104,9 @@ class Configs:
         print(f"Results saved to {folder_path}/results.json")
         with open(f"{folder_path}/results.json", 'w') as json_file:
             json.dump(self.to_dict(), json_file, indent=4)
+
+        if self.cohen:
+            self.cohen.to_csv(f"{folder_path}/cohen.csv", index=False)
 
     def get_competencies_from_set(self):
         if self.conjunto == 1:
