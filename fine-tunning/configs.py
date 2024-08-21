@@ -35,9 +35,10 @@ class Configs:
         self.lora_dropout = 0.1
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
-        self.data_dir = "preprocessing/data_competencias/conjunto_1"
 
         self.conjunto = 1
+        self.data_dir = f"preprocessing/data_competencias/conjunto_{self.conjunto}"
+
         self.n_labels = 11
         self.sufix = "dominio_da_modalidade_escrita_formal"
         #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
