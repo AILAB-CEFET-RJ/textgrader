@@ -91,9 +91,8 @@ class Configs:
         }
 
     def save_to_json(self, confusion_matrix=None):
-        os.makedirs(f"results/{self.script_type}", exist_ok=True)
         folder_path = (
-            f"results/{self.script_type}/{self.date}-conjunto{self.conjunto}-{self.num_epochs}-epochs-{self.competence}"
+            f"results/{self.script_type}/{self.conjunto}/{self.date}/{self.competence}"
         )
         os.makedirs(folder_path, exist_ok=True)
 
