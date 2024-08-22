@@ -169,6 +169,7 @@ def train_model(configs):
         line = tb.line
         error_message = f"An error occurred: {str(e)}\n"
         error_message += f"In file: {filename}, line {lineno}: {line}"
+        config.except_message = error_message
         raise Exception(error_message)
 
     ## using evaluation data_one_label
