@@ -150,7 +150,7 @@ def train_model(configs):
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
-                print(f"predictions: {predictions} references: {references} cohen: {cohen_kappa_score(predictions, references)}")
+                print(f"predictions: {predictions} references: {references} cohen: {cohen_kappa_score(tensor(predictions), tensor(references))}")
                 metric.add_batch(
                     predictions=predictions,
                     references=references,
