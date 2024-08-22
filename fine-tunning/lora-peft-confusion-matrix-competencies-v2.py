@@ -164,7 +164,7 @@ def train_model(configs):
                 "kappa": kappa
             }
 
-except Exception as e:
+    except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)[-1]
         filename = tb.filename
         lineno = tb.lineno
