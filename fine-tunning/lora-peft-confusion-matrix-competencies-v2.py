@@ -124,7 +124,10 @@ def train_model(configs):
     torch.cuda.empty_cache()
     model.to(configs.device)
 
-    cohen = pd.DataFrame(columns=["true", "pred", "cohen_kappa"])
+    ## using evaluation data_one_label
+    all_predictions = []
+    all_references = []
+
     labels_exception = None
     try:
         for epoch in range(configs.num_epochs):
@@ -174,9 +177,6 @@ def train_model(configs):
         config.except_message = error_message
         raise Exception(error_message)
 
-    ## using evaluation data_one_label
-    all_predictions = []
-    all_references = []
 
     try:
         for step, batch in enumerate(tqdm(eval_dataloader)):
