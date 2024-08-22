@@ -53,6 +53,7 @@ class Configs:
         self.metrics = {}
         self.script_type = None
         self.cohen = None
+        self.except_message = None
 
     def get_data_config(self):
         if len(sys.argv) < 1:
@@ -90,6 +91,8 @@ class Configs:
             "validation_metric": self.validation_metric,
             "metrics": self.metrics,
             "script_type": self.script_type,
+            "cohen": self.cohen,
+            "except_message": self.except_message,
         }
 
     def save_to_json(self, confusion_matrix=None):

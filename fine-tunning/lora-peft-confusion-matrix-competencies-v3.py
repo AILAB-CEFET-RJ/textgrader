@@ -63,6 +63,7 @@ def train_model(configs):
         outputs = tokenizer(examples["texto"], truncation=True, max_length=512)
         return outputs
 
+    '''
     tokenize_datasets = datasets.map(
         tokenize,
         batched=True,
@@ -74,7 +75,7 @@ def train_model(configs):
         batched=True,
         remove_columns=["texto"],
     )
-
+    '''
     tokenize_datasets_eval = datasets_eval.map(
         tokenize,
         batched=True,
@@ -84,7 +85,7 @@ def train_model(configs):
     def collate_fn(examples):
         return tokenizer.pad(examples, padding="longest", return_tensors="pt")
 
-    train_dataloader = DataLoader(
+    '''train_dataloader = DataLoader(
         tokenize_datasets["train"],
         shuffle=True,
         collate_fn=collate_fn,
@@ -95,7 +96,7 @@ def train_model(configs):
         shuffle=False,
         collate_fn=collate_fn,
         batch_size=configs.batch_size,
-    )
+    )'''
     eval_dataloader = DataLoader(
         tokenize_datasets_eval["train"],
         shuffle=False,
@@ -123,45 +124,6 @@ def train_model(configs):
 
     cohen = pd.DataFrame(columns=["true", "pred", "cohen_kappa"])
     labels_exception = None
-    try:
-        for epoch in range(configs.num_epochs):
-            model.train()
-            for step, batch in enumerate(train_dataloader):
-                labels_exception = batch["labels"]
-                batch.to(configs.device)
-                outputs = model(**batch)
-                loss = outputs.loss
-                loss.backward()
-                optimizer.step()
-                lr_scheduler.step()
-                optimizer.zero_grad()
-
-            model.eval()
-            torch.cuda.empty_cache()
-
-            print("-" * 100)
-            for step, batch in enumerate(tqdm(test_dataloader)):
-                labels_exception = batch["labels"]
-                batch.to(configs.device)
-                with torch.no_grad():
-                    outputs = model(**batch)
-                predictions = outputs.logits.argmax(dim=-1)
-                predictions, references = predictions, batch["labels"]
-                print(f"predictions: {predictions} references: {references} cohen: {cohen_kappa_score(predictions, references)}")
-                metric.add_batch(
-                    predictions=predictions,
-                    references=references,
-                )
-
-
-            test_metric = metric.compute()
-            print(f"epoch {epoch}:", test_metric)
-            configs.metrics[epoch] = test_metric
-
-    except Exception as e:
-        print(f"Exception: {e}")
-        print(labels_exception)
-        print("-" * 100)
 
     ## using evaluation data_one_label
     all_predictions = []
@@ -182,7 +144,7 @@ def train_model(configs):
                 predictions=predictions,
                 references=references,
             )
-            c_pred = pd.DataFrame(predictions, references, cohen_kappa_score(tensor(predictions), tensor(references)))
+            c_pred = pd.DataFrame(predictions, references, cohen_kappa_score(predictions, references))
             cohen = cohen._append(c_pred, ignore_index=True)
 
         eval_metric = metric.compute()
@@ -191,7 +153,7 @@ def train_model(configs):
         config.cohen = cohen
 
     except Exception as e:
-        print(f"Exception: {e} {e.args}")
+        print(f"Exception: {e}")
         print(labels_exception)
         print("-" * 100)
 
