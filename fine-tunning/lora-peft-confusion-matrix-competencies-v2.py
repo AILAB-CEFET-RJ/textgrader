@@ -17,7 +17,10 @@ from sklearn.metrics import confusion_matrix
 import pandas as pd
 from configs import Configs
 from sklearn.metrics import cohen_kappa_score
+import os
+import traceback
 
+os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
 def get_datasets(data_dir, suffix):
     d = load_dataset(
@@ -158,10 +161,15 @@ def train_model(configs):
             print(f"epoch {epoch}:", test_metric)
             configs.metrics[epoch] = test_metric
 
+
     except Exception as e:
-        print(f"Exception: {e}")
-        print(labels_exception)
-        print("-" * 100)
+        tb = traceback.extract_tb(e.__traceback__)[-1]
+        filename = tb.filename
+        lineno = tb.lineno
+        line = tb.line
+        error_message = f"An error occurred: {str(e)}\n"
+        error_message += f"In file: {filename}, line {lineno}: {line}"
+        raise Exception(error_message)
 
     ## using evaluation data_one_label
     all_predictions = []
