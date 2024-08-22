@@ -150,7 +150,6 @@ def train_model(configs):
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
-                print(f"predictions: {predictions} references: {references} cohen: {cohen_kappa_score(predictions, references)}")
                 metric.add_batch(
                     predictions=predictions,
                     references=references,
@@ -158,11 +157,14 @@ def train_model(configs):
 
 
             test_metric = metric.compute()
-            print(f"epoch {epoch}:", test_metric)
-            configs.metrics[epoch] = test_metric
+            kappa = cohen_kappa_score(all_references, all_predictions)
+            print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
+            configs.metrics[epoch] = {
+                "test_metric": test_metric,
+                "kappa": kappa
+            }
 
-
-    except Exception as e:
+except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)[-1]
         filename = tb.filename
         lineno = tb.lineno
@@ -191,13 +193,11 @@ def train_model(configs):
                 predictions=predictions,
                 references=references,
             )
-            c_pred = pd.DataFrame(predictions, references, cohen_kappa_score(predictions, references))
-            cohen = cohen._append(c_pred, ignore_index=True)
-
         eval_metric = metric.compute()
-        print(f"Validation metric: {eval_metric}")
+        kappa = cohen_kappa_score(all_references, all_predictions)
+        print(f"Validation metric: {eval_metric}, Cohen's Kappa: {kappa}")
         configs.validation_metric = eval_metric
-        config.cohen = cohen
+        config.cohen = kappa
 
     except Exception as e:
         print(f"Exception: {e} {e.args}")
