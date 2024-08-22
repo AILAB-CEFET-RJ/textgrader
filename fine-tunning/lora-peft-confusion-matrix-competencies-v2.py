@@ -179,6 +179,9 @@ def train_model(configs):
 
 
     try:
+        all_predictions = []
+        all_references = []
+
         for step, batch in enumerate(tqdm(eval_dataloader)):
             labels_exception = batch["labels"]
             batch.to(configs.device)
