@@ -108,9 +108,6 @@ class Configs:
         with open(f"{folder_path}/results.json", 'w') as json_file:
             json.dump(self.to_dict(), json_file, indent=4)
 
-        if self.cohen:
-            self.cohen.to_csv(f"{folder_path}/cohen.csv", index=False)
-
     def get_competencies_from_set(self):
         if self.conjunto == 1:
             return [
