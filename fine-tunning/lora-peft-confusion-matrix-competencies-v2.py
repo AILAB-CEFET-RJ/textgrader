@@ -160,6 +160,7 @@ def train_model(configs):
                 )
 
             test_metric = metric.compute()
+            print(all_references, all_predictions)
             kappa = cohen_kappa_score(all_references, all_predictions)
             print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
             configs.metrics[epoch] = {
