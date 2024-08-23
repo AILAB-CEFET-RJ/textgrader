@@ -162,7 +162,6 @@ def train_model(configs):
                 )
 
             test_metric = metric.compute()
-            print(all_references, all_predictions)
             kappa = cohen_kappa_score(all_references, all_predictions)
             print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
             configs.metrics[epoch] = {
@@ -191,8 +190,8 @@ def train_model(configs):
                 outputs = model(**batch)
             predictions = outputs.logits.argmax(dim=-1)
             predictions, references = predictions, batch["labels"]
-            all_predictions.extend(predictions)
-            all_references.extend(references)
+            all_predictions.extend(predictions.cpu())
+            all_references.extend(references.cpu())
             #print(f"predictions: {predictions} references: {references}")
             metric.add_batch(
                 predictions=predictions,
