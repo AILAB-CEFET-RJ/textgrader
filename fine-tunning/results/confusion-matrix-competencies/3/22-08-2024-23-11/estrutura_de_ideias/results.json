@@ -1,0 +1,77 @@
+{
+    "obs": "kappa",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_3",
+    "conjunto": 3,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "estrutura_de_ideias",
+    "date": "22-08-2024-23-11",
+    "processing_time": 10.707120446364085,
+    "validation_metric": {
+        "accuracy": 0.490272373540856
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.4033722438391699
+            },
+            "kappa": 0.023980802148750313
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.5006485084306096
+            },
+            "kappa": 0.13900515014993187
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.4889753566796368
+            },
+            "kappa": 0.18021378809645183
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.5460440985732814
+            },
+            "kappa": 0.21681303914787298
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.556420233463035
+            },
+            "kappa": 0.24979138490191066
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.5538261997405967
+            },
+            "kappa": 0.26757910366990245
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.5460440985732814
+            },
+            "kappa": 0.2810408641967854
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.5330739299610895
+            },
+            "kappa": 0.28914829437103207
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.27813632367760877,
+    "except_message": null
+}

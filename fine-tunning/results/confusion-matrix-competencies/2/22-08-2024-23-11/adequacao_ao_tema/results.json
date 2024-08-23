@@ -1,0 +1,77 @@
+{
+    "obs": "kappa",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_2",
+    "conjunto": 2,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "adequacao_ao_tema",
+    "date": "22-08-2024-23-11",
+    "processing_time": 28.681671659151714,
+    "validation_metric": {
+        "accuracy": 0.7205882352941176
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.6892156862745098
+            },
+            "kappa": 0.4722849210973419
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.7132352941176471
+            },
+            "kappa": 0.497738291345561
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.7235294117647059
+            },
+            "kappa": 0.5139397616282722
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.7377450980392157
+            },
+            "kappa": 0.5301233228538038
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.7323529411764705
+            },
+            "kappa": 0.5369568075685169
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.7377450980392157
+            },
+            "kappa": 0.5427978676876826
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.7333333333333333
+            },
+            "kappa": 0.5462091802528455
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.7313725490196078
+            },
+            "kappa": 0.5479969662014056
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.5475857818677143,
+    "except_message": null
+}

@@ -1,0 +1,77 @@
+{
+    "obs": "kappa",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_2",
+    "conjunto": 2,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "adequacao_a_modalidade_padrao_da_lingua",
+    "date": "22-08-2024-23-11",
+    "processing_time": 29.48698050181071,
+    "validation_metric": {
+        "accuracy": 0.6485294117647059
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.5941176470588235
+            },
+            "kappa": 0.28708267860602277
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.6475490196078432
+            },
+            "kappa": 0.3340136950223861
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.6568627450980392
+            },
+            "kappa": 0.36657308727425286
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.6656862745098039
+            },
+            "kappa": 0.3831154283500787
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.5985294117647059
+            },
+            "kappa": 0.37375277538703067
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.6529411764705882
+            },
+            "kappa": 0.3831969368292274
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.6323529411764706
+            },
+            "kappa": 0.3845990884043994
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.6465686274509804
+            },
+            "kappa": 0.38843792673382094
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.4192644683618484,
+    "except_message": null
+}

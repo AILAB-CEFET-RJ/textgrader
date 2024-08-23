@@ -1,0 +1,77 @@
+{
+    "obs": "kappa",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_2",
+    "conjunto": 2,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "adequacao_ao_genero_textual",
+    "date": "22-08-2024-23-11",
+    "processing_time": 29.114759798844656,
+    "validation_metric": {
+        "accuracy": 0.6235294117647059
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.3872549019607843
+            },
+            "kappa": 0.06833659719989471
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.6009803921568627
+            },
+            "kappa": 0.2492256998122423
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.6063725490196078
+            },
+            "kappa": 0.3072587478617892
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.5936274509803922
+            },
+            "kappa": 0.332233000009565
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.6161764705882353
+            },
+            "kappa": 0.3546255837986382
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.621078431372549
+            },
+            "kappa": 0.37057595571106106
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.6215686274509804
+            },
+            "kappa": 0.3816295214620139
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.6181372549019608
+            },
+            "kappa": 0.38918117976007427
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.44760006854227086,
+    "except_message": null
+}
