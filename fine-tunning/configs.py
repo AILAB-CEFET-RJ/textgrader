@@ -55,6 +55,10 @@ class Configs:
         self.cohen = None
         self.except_message = None
 
+    def set_conjunto(self, conjunto):
+        self.conjunto = conjunto
+        self.data_dir = f"preprocessing/data_competencias/conjunto_{conjunto}"
+
     def get_data_config(self):
         if len(sys.argv) < 1:
             print("Uso: python meu_script.py  <observacao>")
