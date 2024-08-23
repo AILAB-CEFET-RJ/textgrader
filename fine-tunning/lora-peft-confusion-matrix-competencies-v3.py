@@ -173,6 +173,7 @@ if __name__ == '__main__':
     sets = [1, 2, 3]
     for s in sets:
         config.conjunto = s
+        print(f"USANDO O CONJUNTO {config.conjunto}")
         for comp in config.get_competencies_from_set():
             print("> TRAINING:", comp)
             config.competence = comp
