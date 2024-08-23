@@ -113,11 +113,13 @@ def train_model(configs):
 
     optimizer = AdamW(model.parameters(), lr=configs.lr)
 
+    '''
     lr_scheduler = get_linear_schedule_with_warmup(
         optimizer=optimizer,
         num_warmup_steps=0.06 * (len(train_dataloader) * configs.num_epochs),
         num_training_steps=(len(train_dataloader) * configs.num_epochs),
     )
+    '''
 
     torch.cuda.empty_cache()
     model.to(configs.device)
