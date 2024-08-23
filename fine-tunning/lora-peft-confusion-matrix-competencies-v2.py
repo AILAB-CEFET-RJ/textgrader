@@ -22,6 +22,7 @@ import traceback
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
+
 def get_datasets(data_dir, suffix):
     d = load_dataset(
         "parquet",
@@ -158,7 +159,6 @@ def train_model(configs):
                     references=references,
                 )
 
-
             test_metric = metric.compute()
             kappa = cohen_kappa_score(all_references, all_predictions)
             print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
@@ -177,7 +177,6 @@ def train_model(configs):
         config.except_message = error_message
         raise Exception(error_message)
 
-
     try:
         all_predictions = []
         all_references = []
@@ -189,8 +188,8 @@ def train_model(configs):
                 outputs = model(**batch)
             predictions = outputs.logits.argmax(dim=-1)
             predictions, references = predictions, batch["labels"]
-            all_predictions.extend(predictions.cpu().numpy())
-            all_references.extend(references.cpu().numpy())
+            all_predictions.extend(predictions)
+            all_references.extend(references)
             #print(f"predictions: {predictions} references: {references}")
             metric.add_batch(
                 predictions=predictions,
