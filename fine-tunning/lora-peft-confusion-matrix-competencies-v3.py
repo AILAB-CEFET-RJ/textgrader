@@ -170,7 +170,10 @@ if __name__ == '__main__':
     config = Configs()
     config.get_data_config()
 
-    for comp in config.get_competencies_from_set():
-        print("> TRAINING:", comp)
-        config.competence = comp
-        train_model(config)
+    sets = ["1", "2", "3"]
+    for s in sets:
+        config.conjunto = s
+        for comp in config.get_competencies_from_set():
+            print("> TRAINING:", comp)
+            config.competence = comp
+            train_model(config)

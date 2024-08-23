@@ -36,7 +36,7 @@ class Configs:
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
 
-        self.conjunto = 1
+        self.conjunto = 2
         self.data_dir = f"preprocessing/data_competencias/conjunto_{self.conjunto}"
 
         self.n_labels = 11
