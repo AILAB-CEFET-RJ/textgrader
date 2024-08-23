@@ -154,6 +154,8 @@ def train_model(configs):
                     outputs = model(**batch)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
+                all_predictions.extend(predictions)
+                all_references.extend(references)
                 metric.add_batch(
                     predictions=predictions,
                     references=references,
