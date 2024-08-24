@@ -175,10 +175,11 @@ def train_model(configs):
             test_metric = metric.compute()
             kappa = cohen_kappa_score(all_references, all_predictions)
             valid_loss = np.mean([loss.cpu().numpy() for loss in valid_losses])
+            train_loss = np.mean([loss.cpu().numpy() for loss in train_losses])
             configs.metrics[epoch] = {
                 "test_metric": test_metric,
                 "kappa": kappa,
-                "train_loss": np.mean(train_losses),
+                "train_loss": train_loss,
                 "valid_loss": valid_loss
             }
 
