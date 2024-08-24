@@ -54,6 +54,7 @@ class Configs:
         self.script_type = None
         self.cohen = None
         self.except_message = None
+        self.lora_config = None
 
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto
@@ -97,6 +98,7 @@ class Configs:
             "script_type": self.script_type,
             "cohen": self.cohen,
             "except_message": self.except_message,
+            "lora_config": self.lora_config,
         }
 
     def save_to_json(self, confusion_matrix=None):
