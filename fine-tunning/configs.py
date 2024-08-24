@@ -55,6 +55,7 @@ class Configs:
         self.cohen = None
         self.except_message = None
         self.lora_config = None
+        self.patience = 5
 
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto

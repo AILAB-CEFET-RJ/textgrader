@@ -1,4 +1,6 @@
 import time
+
+import numpy as np
 import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
@@ -19,6 +21,7 @@ from configs import Configs
 from sklearn.metrics import cohen_kappa_score
 import os
 import traceback
+from early_stopping import EarlyStopping
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
@@ -130,17 +133,21 @@ def train_model(configs):
     ## using evaluation data_one_label
     all_predictions = []
     all_references = []
-
     labels_exception = None
+
     try:
+        early_stopping = EarlyStopping(patience=configs.patience, verbose=True)
         for epoch in range(configs.num_epochs):
             model.train()
+            train_losses = []
+            valid_losses = []
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
                 batch.to(configs.device)
                 outputs = model(**batch)
                 loss = outputs.loss
                 print(f"Epoch {epoch}/{configs.num_epochs} > Loss: {loss}")
+                train_losses.append(loss)
                 loss.backward()
                 optimizer.step()
                 lr_scheduler.step()
@@ -155,6 +162,8 @@ def train_model(configs):
                 batch.to(configs.device)
                 with torch.no_grad():
                     outputs = model(**batch)
+                loss = outputs.loss
+                valid_losses.append(loss)
                 predictions = outputs.logits.argmax(dim=-1)
                 predictions, references = predictions, batch["labels"]
                 all_predictions.extend(predictions.cpu())
@@ -169,8 +178,15 @@ def train_model(configs):
             print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
             configs.metrics[epoch] = {
                 "test_metric": test_metric,
-                "kappa": kappa
+                "kappa": kappa,
+                "train_loss": np.mean(train_losses),
+                "valid_loss": np.mean(valid_losses)
             }
+
+            early_stopping(np.mean(valid_losses), model)
+            if early_stopping.early_stop:
+                print("Early stopping")
+                break
 
     except Exception as e:
         tb = traceback.extract_tb(e.__traceback__)[-1]
