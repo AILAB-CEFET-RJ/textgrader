@@ -178,8 +178,8 @@ def train_model(configs):
             configs.metrics[epoch] = {
                 "test_metric": test_metric,
                 "kappa": kappa,
-                "train_loss": train_loss,
-                "valid_loss": valid_loss
+                "train_loss": str(train_loss),
+                "valid_loss": str(valid_loss)
             }
 
             print(f"Epoch [{epoch}/{configs.num_epochs}]  Loss: {valid_loss} | Cohen's Kappa: {kappa}")
