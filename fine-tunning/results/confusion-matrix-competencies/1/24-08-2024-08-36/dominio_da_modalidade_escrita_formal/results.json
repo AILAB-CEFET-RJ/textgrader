@@ -1,0 +1,30 @@
+{
+    "obs": "printing_loss",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_1",
+    "conjunto": 1,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "dominio_da_modalidade_escrita_formal",
+    "date": "24-08-2024-08-36",
+    "processing_time": 39.1559811035792,
+    "validation_metric": {
+        "accuracy": 0.6811594202898551
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.6276477146042363
+            },
+            "kappa": 0.4703384403598361,
+            "train_loss": 
