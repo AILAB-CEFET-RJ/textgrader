@@ -174,7 +174,7 @@ def train_model(configs):
 
             test_metric = metric.compute()
             kappa = cohen_kappa_score(all_references, all_predictions)
-            valid_loss = np.mean(valid_losses)
+            valid_loss = np.mean(valid_losses.cpu())
             configs.metrics[epoch] = {
                 "test_metric": test_metric,
                 "kappa": kappa,
