@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 class EarlyStopping:
     """Early stops the training if validation loss doesn't improve after a given patience."""
 
-    def __init__(self, patience=7, verbose=False, delta=0):
+    def __init__(self, patience=7, verbose=False, delta=0, configs=None):
         """
         Args:
             patience (int): How long to wait after last time validation loss improved.
@@ -23,6 +23,7 @@ class EarlyStopping:
         self.early_stop = False
         self.val_loss_min = np.Inf
         self.delta = delta
+        self.configs = configs
 
     def __call__(self, val_loss, model):
 
@@ -45,5 +46,5 @@ class EarlyStopping:
         '''Saves model when validation loss decrease.'''
         if self.verbose:
             print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
-        torch.save(model.state_dict(), 'checkpoint.pt')
+        torch.save(model.state_dict(), f'{self.configs.checkpoints_dir}/checkpoint-{self.configs.date}.pt')
         self.val_loss_min = val_loss
