@@ -146,7 +146,6 @@ def train_model(configs):
                 batch.to(configs.device)
                 outputs = model(**batch)
                 loss = outputs.loss
-                print(f"Epoch {epoch}/{configs.num_epochs} > Loss: {loss}")
                 train_losses.append(loss)
                 loss.backward()
                 optimizer.step()
@@ -175,15 +174,17 @@ def train_model(configs):
 
             test_metric = metric.compute()
             kappa = cohen_kappa_score(all_references, all_predictions)
-            print(f"epoch {epoch}: {test_metric}, Cohen's Kappa: {kappa}")
+            valid_loss = np.mean(valid_losses)
             configs.metrics[epoch] = {
                 "test_metric": test_metric,
                 "kappa": kappa,
                 "train_loss": np.mean(train_losses),
-                "valid_loss": np.mean(valid_losses)
+                "valid_loss": valid_loss
             }
 
-            early_stopping(np.mean(valid_losses), model)
+            print(f"Epoch [{epoch}/{configs.num_epochs}]  Loss: {valid_loss} | Cohen's Kappa: {kappa}")
+
+            early_stopping(valid_loss, model)
             if early_stopping.early_stop:
                 print("Early stopping")
                 break
