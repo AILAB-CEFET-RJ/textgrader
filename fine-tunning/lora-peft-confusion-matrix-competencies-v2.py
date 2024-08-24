@@ -55,8 +55,6 @@ def train_model(configs):
         use_dora=True,
     )
 
-    configs.lora_config = peft_config
-
     tokenizer = AutoTokenizer.from_pretrained(
         configs.model_name_or_path, padding=configs.padding_side
     )
