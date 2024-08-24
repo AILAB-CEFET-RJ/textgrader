@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
+import os
 
 
 class EarlyStopping:
@@ -46,5 +46,8 @@ class EarlyStopping:
         '''Saves model when validation loss decrease.'''
         if self.verbose:
             print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
-        torch.save(model.state_dict(), f'{self.configs.checkpoints_dir}/checkpoint-{self.configs.date}.pt')
+
+        path = f'{self.configs.checkpoints_dir}'
+        os.makedirs(path, exist_ok=True)
+        torch.save(model.state_dict(), f"{path}/checkpoint-{self.configs.date}.pt")
         self.val_loss_min = val_loss
