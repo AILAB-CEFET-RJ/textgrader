@@ -22,6 +22,7 @@ from sklearn.metrics import cohen_kappa_score
 import os
 import traceback
 from early_stopping import EarlyStopping
+from hugging_face import HuggingFaceModel
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
@@ -134,7 +135,7 @@ def train_model(configs):
     labels_exception = None
 
     try:
-        early_stopping = EarlyStopping(patience=configs.patience, verbose=True)
+        early_stopping = EarlyStopping(patience=configs.patience, verbose=True, configs=configs)
         for epoch in range(configs.num_epochs):
             model.train()
             train_losses = []
@@ -247,8 +248,11 @@ if __name__ == '__main__':
     for s in sets:
         config.set_conjunto(s)
 
-        print(f"USANDO O CONJUNTO {config.conjunto}")
+        print(f"> USANDO O CONJUNTO {config.conjunto}")
         for comp in config.get_competencies_from_set():
             print("> TRAINING:", comp)
             config.competence = comp
             train_model(config)
+
+    hf = HuggingFaceModel()
+    hf.upload_model()

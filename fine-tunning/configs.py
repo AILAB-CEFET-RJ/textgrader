@@ -38,6 +38,7 @@ class Configs:
 
         self.conjunto = 2
         self.data_dir = f"preprocessing/data_competencias/conjunto_{self.conjunto}"
+        self.checkpoints_dir = f"checkpoints/{self.conjunto}"
 
         self.n_labels = 11
         self.sufix = "dominio_da_modalidade_escrita_formal"
