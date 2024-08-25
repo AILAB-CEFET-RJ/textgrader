@@ -1,9 +1,10 @@
 from huggingface_hub import login, upload_folder
-
+import os
 
 class HuggingFaceModel:
     def __init__(self):
-        login(token="seu_token_aqui")
+        token = os.getenv("HF_TOKEN")
+        login(token=token)
 
     def upload_model(self, path):
         upload_folder(
