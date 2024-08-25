@@ -1,0 +1,93 @@
+{
+    "obs": "token_as_env",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_3",
+    "conjunto": 3,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "gramatica_e_ortografia",
+    "date": "24-08-2024-22-10",
+    "processing_time": 11.981222780545552,
+    "validation_metric": {
+        "accuracy": 0.5914396887159533
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.33722438391699094
+            },
+            "kappa": 0.004298906697802751,
+            "train_loss": "1.506612",
+            "valid_loss": "1.3210044"
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.496757457846952
+            },
+            "kappa": 0.1249785388220086,
+            "train_loss": "1.2000481",
+            "valid_loss": "1.080094"
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.5123216601815823
+            },
+            "kappa": 0.15863985566290306,
+            "train_loss": "1.031121",
+            "valid_loss": "1.1598941"
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.5849546044098574
+            },
+            "kappa": 0.21640749652089242,
+            "train_loss": "0.9299239",
+            "valid_loss": "0.9396467"
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.6199740596627756
+            },
+            "kappa": 0.2640808897876642,
+            "train_loss": "0.85510707",
+            "valid_loss": "0.9230614"
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.5875486381322957
+            },
+            "kappa": 0.28770463311570016,
+            "train_loss": "0.7786293",
+            "valid_loss": "0.9333221"
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.5927367055771725
+            },
+            "kappa": 0.30335821698255283,
+            "train_loss": "0.69319165",
+            "valid_loss": "0.9668531"
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.582360570687419
+            },
+            "kappa": 0.3142089363891639,
+            "train_loss": "0.6379742",
+            "valid_loss": "0.9915825"
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.39799219185722245,
+    "except_message": null
+}

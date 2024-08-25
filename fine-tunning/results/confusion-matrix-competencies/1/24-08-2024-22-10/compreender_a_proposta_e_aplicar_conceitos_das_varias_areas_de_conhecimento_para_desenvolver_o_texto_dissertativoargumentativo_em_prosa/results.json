@@ -1,0 +1,93 @@
+{
+    "obs": "token_as_env",
+    "batch_size": 4,
+    "model_name_or_path": "xlm-roberta-base",
+    "task": "mrpc",
+    "peft_type": "PeftType.LORA",
+    "device": "cuda",
+    "num_epochs": 8,
+    "lr": 0.0003,
+    "padding_side": "left",
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "data_dir": "preprocessing/data_competencias/conjunto_1",
+    "conjunto": 1,
+    "n_labels": 11,
+    "sufix": "dominio_da_modalidade_escrita_formal",
+    "competence": "compreender_a_proposta_e_aplicar_conceitos_das_varias_areas_de_conhecimento_para_desenvolver_o_texto_dissertativoargumentativo_em_prosa",
+    "date": "24-08-2024-22-10",
+    "processing_time": 40.906530511379245,
+    "validation_metric": {
+        "accuracy": 0.6098104793756968
+    },
+    "metrics": {
+        "0": {
+            "test_metric": {
+                "accuracy": 0.5143069490895578
+            },
+            "kappa": 0.3811629249918448,
+            "train_loss": "1.7427135",
+            "valid_loss": "1.3135598"
+        },
+        "1": {
+            "test_metric": {
+                "accuracy": 0.5890003716090673
+            },
+            "kappa": 0.4344576073332752,
+            "train_loss": "1.2246706",
+            "valid_loss": "1.0722775"
+        },
+        "2": {
+            "test_metric": {
+                "accuracy": 0.5819397993311036
+            },
+            "kappa": 0.4466635743512487,
+            "train_loss": "1.0286757",
+            "valid_loss": "1.1042508"
+        },
+        "3": {
+            "test_metric": {
+                "accuracy": 0.6138981791155704
+            },
+            "kappa": 0.46508849614980063,
+            "train_loss": "0.95606196",
+            "valid_loss": "1.0045552"
+        },
+        "4": {
+            "test_metric": {
+                "accuracy": 0.5756224451876626
+            },
+            "kappa": 0.46667453321807273,
+            "train_loss": "0.89133894",
+            "valid_loss": "1.0774401"
+        },
+        "5": {
+            "test_metric": {
+                "accuracy": 0.6038647342995169
+            },
+            "kappa": 0.47348070447053203,
+            "train_loss": "0.83710796",
+            "valid_loss": "1.0200206"
+        },
+        "6": {
+            "test_metric": {
+                "accuracy": 0.6079524340393906
+            },
+            "kappa": 0.4796061516931355,
+            "train_loss": "0.7779835",
+            "valid_loss": "1.0383408"
+        },
+        "7": {
+            "test_metric": {
+                "accuracy": 0.6057227796358231
+            },
+            "kappa": 0.4837273928042487,
+            "train_loss": "0.7375981",
+            "valid_loss": "1.0684724"
+        }
+    },
+    "script_type": "confusion-matrix-competencies",
+    "cohen": 0.5219547550998345,
+    "except_message": null
+}
