@@ -36,18 +36,20 @@ class Configs:
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
 
+        self.date = datetime.now().strftime("%d-%m-%Y-%H-%M")
+
         self.conjunto = 2
         self.data_dir = f"preprocessing/data_competencias/conjunto_{self.conjunto}"
-        self.checkpoints_dir = "checkpoints"
+        self.checkpoints_dir = f"checkpoints/{self.conjunto}/{self.date}"
 
         self.n_labels = 11
         self.sufix = "dominio_da_modalidade_escrita_formal"
+
         #with open(f"{data_dir}/total_label_count_interval.json", "r") as arquivo:
         #    conjuntos_labels = json.load(arquivo)
         #n_labels = conjuntos_labels[f"conjunto_{conjunto}"]
         #print(f"CONJUNTO {conjunto} TEM {n_labels} LABELS! ")
 
-        self.date = datetime.now().strftime("%d-%m-%Y-%H-%M")
         self.competence = "dominio_da_modalidade_escrita_formal"
         self.processing_time = None
         self.validation_metric = None
@@ -60,6 +62,7 @@ class Configs:
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto
         self.data_dir = f"preprocessing/data_competencias/conjunto_{conjunto}"
+        self.checkpoints_dir = f"checkpoints/{conjunto}/{self.date}"
 
     def get_data_config(self):
         if len(sys.argv) < 1:

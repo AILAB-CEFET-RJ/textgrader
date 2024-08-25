@@ -258,6 +258,6 @@ if __name__ == '__main__':
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
 
-    hf = HuggingFaceModel()
-    hf.upload_model(config.checkpoints_dir)
-    print("> Models uploaded!")
+        hf = HuggingFaceModel()
+        hf.upload_model(config.checkpoints_dir)
+        print("> Models uploaded!")

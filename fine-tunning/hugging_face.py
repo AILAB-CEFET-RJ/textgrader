@@ -13,3 +13,8 @@ class HuggingFaceModel:
             path_in_repo="."
         )
         print("> Models saved!")
+
+if __name__ == "__main__":
+    path = os.getenv("HF_MODELS_PATH")
+    model = HuggingFaceModel()
+    model.upload_model(path)
