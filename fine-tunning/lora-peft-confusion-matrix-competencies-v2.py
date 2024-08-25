@@ -254,8 +254,10 @@ if __name__ == '__main__':
             config.competence = comp
             train_model(config)
 
-        hf = HuggingFaceModel()
-        hf.upload_model(config.checkpoints_dir)
         print("="*50)
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
+
+    hf = HuggingFaceModel()
+    hf.upload_model(config.checkpoints_dir)
+    print("> Models uploaded!")

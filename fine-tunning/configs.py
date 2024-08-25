@@ -27,7 +27,7 @@ class Configs:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"> USING DEVICE {self.device}")
 
-        self.num_epochs = 8
+        self.num_epochs = 50
         self.lr = 3e-4
         self.padding_side = "left" #"right"
         self.lora_r = 8
@@ -38,7 +38,7 @@ class Configs:
 
         self.conjunto = 2
         self.data_dir = f"preprocessing/data_competencias/conjunto_{self.conjunto}"
-        self.checkpoints_dir = f"checkpoints/{self.conjunto}"
+        self.checkpoints_dir = "checkpoints"
 
         self.n_labels = 11
         self.sufix = "dominio_da_modalidade_escrita_formal"
@@ -60,7 +60,6 @@ class Configs:
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto
         self.data_dir = f"preprocessing/data_competencias/conjunto_{conjunto}"
-        self.checkpoints_dir = f"checkpoints/{self.conjunto}"
 
     def get_data_config(self):
         if len(sys.argv) < 1:

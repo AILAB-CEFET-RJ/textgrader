@@ -49,5 +49,5 @@ class EarlyStopping:
 
         path = f'{self.configs.checkpoints_dir}'
         os.makedirs(path, exist_ok=True)
-        torch.save(model.state_dict(), f"{path}/checkpoint-{self.configs.date}.pt")
+        torch.save(model.state_dict(), f"{path}/checkpoint-{self.configs.date}-{self.configs.competence}.pt")
         self.val_loss_min = val_loss
