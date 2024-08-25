@@ -259,5 +259,5 @@ if __name__ == '__main__':
         print("=" * 50)
 
         hf = HuggingFaceModel()
-        hf.upload_model(config.checkpoints_dir)
-        print("> Models uploaded!")
+        hf.upload_model(config.get_results_folder_path())
+        print("> Results uploaded!")
