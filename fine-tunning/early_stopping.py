@@ -47,7 +47,7 @@ class EarlyStopping:
         if self.verbose:
             print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
 
-        path = f'{self.configs.checkpoints_dir}'
+        path = self.configs.get_results_folder_path()
         os.makedirs(path, exist_ok=True)
         torch.save(model.state_dict(), f"{path}/checkpoint-{self.configs.date}-{self.configs.competence}.pt")
         self.val_loss_min = val_loss

@@ -104,10 +104,11 @@ class Configs:
             "except_message": self.except_message,
         }
 
+    def get_results_folder_path(self):
+        return f"results/{self.script_type}/{self.conjunto}/{self.date}/{self.competence}"
+
     def save_to_json(self, confusion_matrix=None):
-        folder_path = (
-            f"results/{self.script_type}/{self.conjunto}/{self.date}/{self.competence}"
-        )
+        folder_path = self.get_results_folder_path()
         os.makedirs(folder_path, exist_ok=True)
 
         if confusion_matrix is not None:
