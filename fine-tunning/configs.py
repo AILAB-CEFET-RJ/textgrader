@@ -60,6 +60,7 @@ class Configs:
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto
         self.data_dir = f"preprocessing/data_competencias/conjunto_{conjunto}"
+        self.checkpoints_dir = f"checkpoints/{self.conjunto}"
 
     def get_data_config(self):
         if len(sys.argv) < 1:
