@@ -244,7 +244,7 @@ if __name__ == '__main__':
     config = Configs()
     config.get_data_config()
 
-    sets = [1, 2, 3]
+    sets = [1]
     for s in sets:
         config.set_conjunto(s)
 

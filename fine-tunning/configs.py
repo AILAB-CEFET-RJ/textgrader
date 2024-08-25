@@ -58,6 +58,7 @@ class Configs:
         self.cohen = None
         self.except_message = None
         self.patience = 5
+        self.early_stopping_iter = 0
 
     def set_conjunto(self, conjunto):
         self.conjunto = conjunto
@@ -102,6 +103,7 @@ class Configs:
             "script_type": self.script_type,
             "cohen": self.cohen,
             "except_message": self.except_message,
+            "early_stopping_iter": self.early_stopping_iter,
         }
 
     def get_results_folder_path(self):
