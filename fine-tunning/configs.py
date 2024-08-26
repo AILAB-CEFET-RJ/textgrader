@@ -27,8 +27,8 @@ class Configs:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"> USING DEVICE {self.device}")
 
-        self.num_epochs = 50
-        self.lr = 3e-4
+        self.num_epochs = 30
+        self.lr = 9e-5  #3e-4
         self.padding_side = "left" #"right"
         self.lora_r = 8
         self.lora_alpha = 16

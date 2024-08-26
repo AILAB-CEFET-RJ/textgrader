@@ -254,6 +254,11 @@ if __name__ == '__main__':
             config.competence = comp
             train_model(config)
 
+
+        hf = HuggingFaceModel()
+        hf.upload_model(config.get_results_folder_path())
+        print("> Results uploaded!")
+
         print("="*50)
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
