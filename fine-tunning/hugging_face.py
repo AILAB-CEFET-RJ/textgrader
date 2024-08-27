@@ -10,7 +10,7 @@ class HuggingFaceModel:
         upload_folder(
             repo_id="vansoares1/textgrader",
             folder_path=path,
-            path_in_repo="."
+            path_in_repo=path
         )
         print("> Models saved!")
 
