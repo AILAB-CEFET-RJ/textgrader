@@ -28,10 +28,10 @@ class Configs:
         print(f"> USING DEVICE {self.device}")
 
         self.num_epochs = 30
-        self.lr = 9e-5  #3e-4
+        self.lr = 6e-5 #9e-5  #3e-4
         self.padding_side = "left" #"right"
-        self.lora_r = 8
-        self.lora_alpha = 16
+        self.lora_r = 16 ##dimensao de rank
+        self.lora_alpha = 2 * self.lora_r
         self.lora_dropout = 0.1
         # n_labels = 33
         #data_dir = "preprocessing/data_one_label"
