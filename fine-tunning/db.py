@@ -1,11 +1,11 @@
 from pymongo import MongoClient
-import json
+import os
 
 
 class MongoDB:
     def __init__(self):
-        # Conectando ao MongoDB (substitua pela string de conexão adequada, se necessário)
-        self.client = MongoClient('mongodb://localhost:27017/')
+        conn_string = os.getenv("MONGO_STR")
+        self.client = MongoClient(conn_string)
 
     def save(self, content):
         db = self.client['textgrader']
