@@ -23,6 +23,7 @@ import os
 import traceback
 from early_stopping import EarlyStopping
 from hugging_face import HuggingFaceModel
+from db import MongoDB
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
@@ -244,6 +245,7 @@ if __name__ == '__main__':
     config = Configs()
     config.get_data_config()
     hf = HuggingFaceModel()
+    db = MongoDB()
 
     sets = [1]
     for s in sets:
@@ -255,9 +257,24 @@ if __name__ == '__main__':
             config.competence = comp
             train_model(config)
 
-            hf.upload_model(config.get_results_folder_path())
-            print("> Results uploaded!")
+            config_json = config.get_results_folder_path()
+            hf.upload_model(config_json)
+            print("> Results uploaded to HF!")
+
+            db.save(config_json)
+            print("> Results uploaded to MongoDB!")
+
 
         print("="*50)
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
+
+        import shutil
+
+        # Caminho do diretório que você quer apagar
+        path = f"results/confusion-matrix-competencies/{config.conjunto}/"
+
+        if os.path.exists(path):
+            shutil.rmtree(path)
+        else:
+            print("O diretório não existe.")
