@@ -24,7 +24,6 @@ import traceback
 from early_stopping import EarlyStopping
 from hugging_face import HuggingFaceModel
 from db import MongoDB
-from transformers import BitsAndBytesConfig
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
@@ -58,19 +57,8 @@ def train_model(configs):
         use_dora=True,
     )
 
-    # Get the type
-    compute_dtype = getattr(torch, "float16")
-
-    # BitsAndBytesConfig int-4 config
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_use_double_quant=False,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=compute_dtype
-    )
-
     tokenizer = AutoTokenizer.from_pretrained(
-        configs.model_name_or_path, padding=configs.padding_side,
+        configs.model_name_or_path, padding=configs.padding_side
     )
 
     if getattr(tokenizer, "pad_token_id") is None:
@@ -125,7 +113,7 @@ def train_model(configs):
     )
 
     model = AutoModelForSequenceClassification.from_pretrained(
-        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels, quantization_config=bnb_config
+        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
     )
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()

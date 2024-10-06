@@ -14,7 +14,8 @@ class Configs:
         print("Definindo configs...")
         self.obs = None
         self.batch_size = 4
-        self.model_name_or_path = "xlm-roberta-base"
+        self.model_name_or_path = "google/gemma-7b-it"
+        #"xlm-roberta-base"
         # "neuralmind/bert-large-portuguese-cased"
         # "FacebookAI/xlm-roberta-base"
         # "google-bert/bert-base-multilingual-cased"
