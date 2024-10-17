@@ -25,7 +25,7 @@ class Configs:
         self.task = "mrpc"
         self.peft_type = PeftType.LORA
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = 'cuda:0' #torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"> USING DEVICE {self.device}")
 
         self.num_epochs = 30

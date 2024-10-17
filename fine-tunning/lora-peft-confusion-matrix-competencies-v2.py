@@ -143,7 +143,7 @@ def train_model(configs):
         print(f"Utilizando {torch.cuda.device_count()} GPUs!")
         model = torch.nn.DataParallel(model)
     '''
-    model.to('cuda:0') #configs.device)
+    model.to(configs.device)
 
     ## using evaluation data_one_label
     all_predictions = []
