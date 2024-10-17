@@ -269,9 +269,12 @@ if __name__ == '__main__':
             hf.upload_model(config_json)
             print("> Results uploaded to HF!")
 
-            db.save(config_json)
-            print("> Results uploaded to MongoDB!")
+            try:
+                db.save(config_json)
+                print("> Results uploaded to MongoDB!")
 
+            except Exception as e:
+                print("Error saving mongo: ", e)
 
         print("="*50)
         print(f"> CONJUNTO {s} DONE!!")
