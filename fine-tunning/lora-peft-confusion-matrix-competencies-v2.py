@@ -138,10 +138,11 @@ def train_model(configs):
 
     torch.cuda.empty_cache()
 
+    '''
     if torch.cuda.device_count() > 1:
         print(f"Utilizando {torch.cuda.device_count()} GPUs!")
         model = torch.nn.DataParallel(model)
-
+    '''
     model.to(configs.device)
 
     ## using evaluation data_one_label
