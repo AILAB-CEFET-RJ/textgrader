@@ -114,7 +114,6 @@ def train_model(configs):
 
     model = AutoModelForSequenceClassification.from_pretrained(
         configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
-        load_in_4bit=True,
         device_map='auto',
         #max_memory=max_memory,
         torch_dtype=torch.bfloat16,
