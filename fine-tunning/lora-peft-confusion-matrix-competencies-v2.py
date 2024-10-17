@@ -114,7 +114,7 @@ def train_model(configs):
 
     model = AutoModelForSequenceClassification.from_pretrained(
         configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
-        device_map='auto',
+        #device_map='auto',
         #max_memory=max_memory,
         torch_dtype=torch.float32,
         quantization_config=BitsAndBytesConfig(
@@ -158,10 +158,7 @@ def train_model(configs):
             valid_losses = []
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
-                #batch.to(configs.device)
-
-                # Mova a batch para o mesmo dispositivo do modelo
-                batch = {k: v.to(configs.device) for k, v in batch.items()}
+                batch.to(configs.device)
 
                 outputs = model(**batch)
                 loss = outputs.loss
@@ -177,10 +174,7 @@ def train_model(configs):
             print("-" * 100)
             for step, batch in enumerate(tqdm(test_dataloader)):
                 labels_exception = batch["labels"]
-                #batch.to(configs.device)
-
-                # Mova a batch para o mesmo dispositivo do modelo
-                batch = {k: v.to(configs.device) for k, v in batch.items()}
+                batch.to(configs.device)
 
                 with torch.no_grad():
                     outputs = model(**batch)
