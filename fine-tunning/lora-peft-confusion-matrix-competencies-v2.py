@@ -116,7 +116,7 @@ def train_model(configs):
         configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
         device_map='auto',
         #max_memory=max_memory,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=torch.float32,
         quantization_config=BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_compute_dtype=torch.float32,
