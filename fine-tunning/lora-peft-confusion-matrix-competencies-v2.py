@@ -12,7 +12,7 @@ import evaluate
 from datasets import load_dataset
 from transformers import (
     AutoTokenizer,
-    get_linear_schedule_with_warmup, AutoModelForSequenceClassification,
+    get_linear_schedule_with_warmup, AutoModelForSequenceClassification, BitsAndBytesConfig,
 )
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
@@ -113,7 +113,17 @@ def train_model(configs):
     )
 
     model = AutoModelForSequenceClassification.from_pretrained(
-        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
+        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
+        load_in_4bit=True,
+        device_map='auto',
+        #max_memory=max_memory,
+        torch_dtype=torch.bfloat16,
+        quantization_config=BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_quant_type='nf4'
+        ),
     )
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
