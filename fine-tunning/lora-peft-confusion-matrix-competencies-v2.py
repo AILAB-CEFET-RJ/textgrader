@@ -158,7 +158,11 @@ def train_model(configs):
             valid_losses = []
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
-                batch.to(configs.device)
+                #batch.to(configs.device)
+
+                # Mova a batch para o mesmo dispositivo do modelo
+                batch = {k: v.to(configs.device) for k, v in batch.items()}
+
                 outputs = model(**batch)
                 loss = outputs.loss
                 train_losses.append(loss)
@@ -173,7 +177,11 @@ def train_model(configs):
             print("-" * 100)
             for step, batch in enumerate(tqdm(test_dataloader)):
                 labels_exception = batch["labels"]
-                batch.to(configs.device)
+                #batch.to(configs.device)
+
+                # Mova a batch para o mesmo dispositivo do modelo
+                batch = {k: v.to(configs.device) for k, v in batch.items()}
+
                 with torch.no_grad():
                     outputs = model(**batch)
                 loss = outputs.loss
