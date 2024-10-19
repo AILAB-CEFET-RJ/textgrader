@@ -29,6 +29,7 @@ os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 
 
 def get_datasets(data_dir, suffix):
+    print(f">FILE: {data_dir}/train_{suffix}.parquet}")
     d = load_dataset(
         "parquet",
         data_files=f"{data_dir}/train_{suffix}.parquet",
