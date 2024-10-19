@@ -11,6 +11,6 @@ class MongoDB:
         db = self.client['textgrader']
         collection = db['results']
 
-        collection.insert_one(dict(content))
+        collection.insert_one(content)
 
         print("Documento salvo com sucesso!")
