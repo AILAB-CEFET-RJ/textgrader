@@ -1,5 +1,4 @@
 import time
-
 import numpy as np
 import torch
 from torch.optim import AdamW
@@ -12,7 +11,7 @@ import evaluate
 from datasets import load_dataset
 from transformers import (
     AutoTokenizer,
-    get_linear_schedule_with_warmup, AutoModelForSequenceClassification,
+    get_linear_schedule_with_warmup, AutoModel,
 )
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
@@ -42,6 +41,32 @@ def get_datasets(data_dir, suffix):
         data_files=f"{data_dir}/eval_{suffix}.parquet",
     )
     return d, d_test, d_eval
+
+
+class MultiOutputModel(torch.nn.Module):
+    def __init__(self, base_model):
+        super(MultiOutputModel, self).__init__()
+        self.base_model = base_model
+
+        # Adicionando 5 classificadores para as 5 saídas
+        self.classifier_1 = torch.nn.Linear(base_model.config.hidden_size, config.n_labels)  # Exemplo de 3 classes
+        self.classifier_2 = torch.nn.Linear(base_model.config.hidden_size, config.n_labels)  # Exemplo de 4 classes
+        self.classifier_3 = torch.nn.Linear(base_model.config.hidden_size, config.n_labels)  # Exemplo de 2 classes
+        self.classifier_4 = torch.nn.Linear(base_model.config.hidden_size, config.n_labels)  # Exemplo de 5 classes
+        self.classifier_5 = torch.nn.Linear(base_model.config.hidden_size, config.n_labels)  # Exemplo de 3 classes
+
+    def forward(self, input_ids, attention_mask=None):
+        outputs = self.base_model(input_ids, attention_mask=attention_mask)
+        pooled_output = outputs[1]  # pooled_output vem da base do modelo (ex: BERT)
+
+        # Previsões para cada uma das saídas
+        output_1 = self.classifier_1(pooled_output)
+        output_2 = self.classifier_2(pooled_output)
+        output_3 = self.classifier_3(pooled_output)
+        output_4 = self.classifier_4(pooled_output)
+        output_5 = self.classifier_5(pooled_output)
+
+        return output_1, output_2, output_3, output_4, output_5
 
 
 def train_model(configs):
@@ -112,12 +137,10 @@ def train_model(configs):
         batch_size=configs.batch_size,
     )
 
-    model = AutoModelForSequenceClassification.from_pretrained(
-        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels
-    )
+    base_model = AutoModel.from_pretrained(configs.model_name_or_path, return_dict=True)
+    model = MultiOutputModel(base_model)
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
-    print(model)
 
     optimizer = AdamW(model.parameters(), lr=configs.lr)
 
@@ -130,9 +153,8 @@ def train_model(configs):
     torch.cuda.empty_cache()
     model.to(configs.device)
 
-    ## using evaluation data_one_label
-    all_predictions = []
-    all_references = []
+    all_predictions = [[] for _ in range(5)]  # Para armazenar previsões de todas as saídas
+    all_references = [[] for _ in range(5)]
     labels_exception = None
 
     try:
@@ -144,8 +166,10 @@ def train_model(configs):
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
                 batch.to(configs.device)
-                outputs = model(**batch)
-                loss = outputs.loss
+                outputs = model(batch["input_ids"], attention_mask=batch["attention_mask"])
+                loss = 0
+                for i in range(5):
+                    loss += torch.nn.CrossEntropyLoss()(outputs[i], batch[f"labels_{i+1}"])  # 5 saídas
                 train_losses.append(loss)
                 loss.backward()
                 optimizer.step()
@@ -160,20 +184,21 @@ def train_model(configs):
                 labels_exception = batch["labels"]
                 batch.to(configs.device)
                 with torch.no_grad():
-                    outputs = model(**batch)
-                loss = outputs.loss
+                    outputs = model(batch["input_ids"], attention_mask=batch["attention_mask"])
+                loss = 0
+                for i in range(5):
+                    loss += torch.nn.CrossEntropyLoss()(outputs[i], batch[f"labels_{i+1}"])
+                    predictions = outputs[i].argmax(dim=-1)
+                    all_predictions[i].extend(predictions.cpu())
+                    all_references[i].extend(batch[f"labels_{i+1}"].cpu())
                 valid_losses.append(loss)
-                predictions = outputs.logits.argmax(dim=-1)
-                predictions, references = predictions, batch["labels"]
-                all_predictions.extend(predictions.cpu())
-                all_references.extend(references.cpu())
                 metric.add_batch(
                     predictions=predictions,
-                    references=references,
+                    references=batch[f"labels_{i+1}"],
                 )
 
             test_metric = metric.compute()
-            kappa = cohen_kappa_score(all_references, all_predictions)
+            kappa = cohen_kappa_score(all_references[0], all_predictions[0])  # Usar uma das saídas
             valid_loss = np.mean([loss.detach().cpu().numpy() for loss in valid_losses])
             train_loss = np.mean([loss.detach().cpu().numpy() for loss in train_losses])
             configs.metrics[epoch] = {
@@ -199,46 +224,6 @@ def train_model(configs):
         error_message += f"In file: {filename}, line {lineno}: {line}"
         config.except_message = error_message
         raise Exception(error_message)
-
-    try:
-        all_predictions = []
-        all_references = []
-
-        for step, batch in enumerate(tqdm(eval_dataloader)):
-            labels_exception = batch["labels"]
-            batch.to(configs.device)
-            with torch.no_grad():
-                outputs = model(**batch)
-            predictions = outputs.logits.argmax(dim=-1)
-            predictions, references = predictions, batch["labels"]
-            all_predictions.extend(predictions.cpu())
-            all_references.extend(references.cpu())
-            #print(f"predictions: {predictions} references: {references}")
-            metric.add_batch(
-                predictions=predictions,
-                references=references,
-            )
-        eval_metric = metric.compute()
-        kappa = cohen_kappa_score(all_references, all_predictions)
-        print(f"Validation metric: {eval_metric}, Cohen's Kappa: {kappa}")
-        configs.validation_metric = eval_metric
-        config.cohen = kappa
-
-    except Exception as e:
-        print(f"Exception: {e} {e.args}")
-        print(labels_exception)
-        print("-" * 100)
-
-    ## Calcular a matriz de confusão
-    cm = confusion_matrix(all_references, all_predictions)
-    cm_df = pd.DataFrame(cm)
-
-    ## Saving log file
-    elapsed_time = time.time() - start_time
-
-    configs.processing_time = elapsed_time / 60
-    configs.save_to_json(cm_df)
-    print("finish!!")
 
 
 if __name__ == '__main__':
