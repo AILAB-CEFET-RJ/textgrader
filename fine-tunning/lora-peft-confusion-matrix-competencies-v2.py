@@ -44,7 +44,7 @@ def get_datasets(data_dir, suffix):
     return d, d_test, d_eval
 
 
-def train_model(configs, datasets, datasets_test, datasets_eval):
+def train_model(configs):
     start_time = time.time()
     configs.script_type = "confusion-matrix-competencies"
 
@@ -64,7 +64,7 @@ def train_model(configs, datasets, datasets_test, datasets_eval):
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    #datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
+    datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
 
     metric = evaluate.load("accuracy")
 
@@ -263,8 +263,7 @@ if __name__ == '__main__':
         for comp in config.get_competencies_from_set():
             print("> TRAINING:", comp)
             config.competence = comp
-            datasets, datasets_test, datasets_eval = hf.get_datasets(config.competence)
-            train_model(config, datasets, datasets_test, datasets_eval)
+            train_model(config)
 
             config_json = config.get_results_folder_path()
             hf.upload_model(config_json)
