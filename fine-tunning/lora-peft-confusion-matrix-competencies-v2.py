@@ -63,6 +63,7 @@ def train_model(configs):
 
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
+        tokenizer.pad_token = tokenizer.eos_token
 
     datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
 
