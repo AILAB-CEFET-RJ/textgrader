@@ -65,7 +65,6 @@ def train_model(configs):
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
     datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
-    print(datasets["train"]["labels"])
 
     metric = evaluate.load("accuracy")
 
@@ -113,9 +112,22 @@ def train_model(configs):
         batch_size=configs.batch_size,
     )
 
-    model = AutoModelForSequenceClassification.from_pretrained(
-        configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
+    from transformers import BitsAndBytesConfig
+
+    bnb_config = BitsAndBytesConfig(
+        load_in_8bit=True,  # ou `load_in_4bit=True` se suportado
+        bnb_8bit_quant_type="nf4"  # Opções: "fp4", "nf4" (dependendo da necessidade)
     )
+
+    model = AutoModelForSequenceClassification.from_pretrained(
+        configs.model_name_or_path,
+        quantization_config=bnb_config,
+        num_labels=configs.n_labels
+    )
+
+    #model = AutoModelForSequenceClassification.from_pretrained(
+    #    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
+    #)
     model = get_peft_model(model, peft_config)
     model.print_trainable_parameters()
     print(model)
