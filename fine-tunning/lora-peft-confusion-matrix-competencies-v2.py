@@ -62,8 +62,10 @@ def train_model(configs):
     )
 
     if getattr(tokenizer, "pad_token_id") is None:
-        tokenizer.pad_token_id = tokenizer.eos_token_id
-        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+        tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('[PAD]')
+
+
 
     datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
 
@@ -130,6 +132,7 @@ def train_model(configs):
     #    configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
     #)
     model = get_peft_model(model, peft_config)
+    model.resize_token_embeddings(len(tokenizer))
     model.print_trainable_parameters()
     print(model)
 
