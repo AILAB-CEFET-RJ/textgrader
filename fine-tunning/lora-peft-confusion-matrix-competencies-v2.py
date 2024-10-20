@@ -114,7 +114,7 @@ def train_model(configs):
     )
 
     torch.cuda.empty_cache()
-    model.to(device)
+    model.to(configs.device)
     '''
     if torch.cuda.device_count() > 1:
         print(f"Utilizando {torch.cuda.device_count()} GPUs!")
