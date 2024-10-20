@@ -1,6 +1,7 @@
 from huggingface_hub import login, upload_folder
 import os
 
+
 class HuggingFaceModel:
     def __init__(self):
         token = os.getenv("HF_TOKEN")
@@ -13,6 +14,7 @@ class HuggingFaceModel:
             path_in_repo=path
         )
         print("> Models saved!")
+
 
 if __name__ == "__main__":
     path = os.getenv("HF_MODELS_PATH")

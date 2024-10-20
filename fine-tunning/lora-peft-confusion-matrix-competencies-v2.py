@@ -24,24 +24,9 @@ import traceback
 from early_stopping import EarlyStopping
 from hugging_face import HuggingFaceModel
 from db import MongoDB
+import data_utils
 
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
-
-
-def get_datasets(data_dir, suffix):
-    d = load_dataset(
-        "parquet",
-        data_files=f"{data_dir}/train_{suffix}.parquet",
-    )
-    d_test = load_dataset(
-        "parquet",
-        data_files=f"{data_dir}/test_{suffix}.parquet",
-    )
-    d_eval = load_dataset(
-        "parquet",
-        data_files=f"{data_dir}/eval_{suffix}.parquet",
-    )
-    return d, d_test, d_eval
 
 
 def train_model(configs):
@@ -64,7 +49,7 @@ def train_model(configs):
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
+    datasets, datasets_test, datasets_eval = data_utils.get_datasets(data_dir=configs.data_dir, suffix=configs.competence)
 
     metric = evaluate.load("accuracy")
 
