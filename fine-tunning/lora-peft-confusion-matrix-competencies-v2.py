@@ -61,11 +61,9 @@ def train_model(configs):
         configs.model_name_or_path, padding=configs.padding_side
     )
 
-    if getattr(tokenizer, "pad_token_id") is None:
-        tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-        tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids('[PAD]')
-
-
+    if tokenizer.pad_token is None:
+        tokenizer.add_special_tokens({'pad_token': tokenizer.eos_token})
+        tokenizer.pad_token_id = tokenizer.eos_token_id
 
     datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
 
