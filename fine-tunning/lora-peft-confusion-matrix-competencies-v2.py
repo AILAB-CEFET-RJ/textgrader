@@ -135,7 +135,7 @@ def train_model(configs):
             for step, batch in enumerate(train_dataloader):
                 labels_exception = batch["labels"]
                 batch.to(configs.device)
-
+                print(configs.device)
                 outputs = model(**batch)
                 loss = outputs.loss
                 train_losses.append(loss)
