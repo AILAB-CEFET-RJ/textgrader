@@ -49,7 +49,8 @@ def train_model(configs):
     if getattr(tokenizer, "pad_token_id") is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    datasets, datasets_test, datasets_eval = data_utils.get_datasets(data_dir=configs.data_dir, suffix=configs.competence)
+    datasets, datasets_test, datasets_eval = data_utils.get_datasets(data_dir=configs.data_dir,
+                                                                     suffix=configs.competence)
 
     metric = evaluate.load("accuracy")
 
@@ -114,11 +115,9 @@ def train_model(configs):
 
     torch.cuda.empty_cache()
 
-    '''
     if torch.cuda.device_count() > 1:
         print(f"Utilizando {torch.cuda.device_count()} GPUs!")
         model = torch.nn.DataParallel(model)
-    '''
 
     ## using evaluation data_one_label
     all_predictions = []
@@ -260,7 +259,7 @@ if __name__ == '__main__':
             except Exception as e:
                 print("Error saving mongo: ", e)
 
-        print("="*50)
+        print("=" * 50)
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
 
