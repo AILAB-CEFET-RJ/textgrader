@@ -13,8 +13,8 @@ class Configs:
     def __init__(self):
         print("Definindo configs...")
         self.obs = None
-        self.batch_size = 4
-        self.model_name_or_path = "FacebookAI/xlm-roberta-base"
+        self.batch_size = 2
+        self.model_name_or_path = "maritaca-ai/sabia-7b"
         #"maritaca-ai/sabia-7b"
         #"xlm-roberta-base"
         # "neuralmind/bert-large-portuguese-cased"

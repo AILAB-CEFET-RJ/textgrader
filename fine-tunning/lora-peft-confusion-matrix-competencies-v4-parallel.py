@@ -129,11 +129,11 @@ def train_model(configs):
 
     torch.cuda.empty_cache()
 
-    '''
     if torch.cuda.device_count() > 1:
         print(f"Utilizando {torch.cuda.device_count()} GPUs!")
         model = torch.nn.DataParallel(model)
-    '''
+
+    model.to(configs.device)
 
     ## using evaluation data_one_label
     all_predictions = []
@@ -275,7 +275,7 @@ if __name__ == '__main__':
             except Exception as e:
                 print("Error saving mongo: ", e)
 
-        print("="*50)
+        print("=" * 50)
         print(f"> CONJUNTO {s} DONE!!")
         print("=" * 50)
 
