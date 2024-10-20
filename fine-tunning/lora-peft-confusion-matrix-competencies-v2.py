@@ -65,6 +65,7 @@ def train_model(configs):
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
     datasets, datasets_test, datasets_eval = get_datasets(configs.data_dir, configs.competence)
+    print(datasets["train"]["labels"])
 
     metric = evaluate.load("accuracy")
 
