@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 from peft import (
     get_peft_model,
     LoraConfig,
+    LoraModel,
 )
 import evaluate
 from datasets import load_dataset
@@ -40,6 +41,7 @@ def train_model(configs):
         lora_alpha=configs.lora_alpha,
         lora_dropout=configs.lora_dropout,
         use_dora=True,
+        init_lora_weights = "pissa"
     )
 
     tokenizer = AutoTokenizer.from_pretrained(
@@ -101,7 +103,8 @@ def train_model(configs):
     model = AutoModelForSequenceClassification.from_pretrained(
         configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
     )
-    model = get_peft_model(model, peft_config)
+    #model = get_peft_model(model, peft_config)
+    model = LoraModel(model, peft_config, "default")
     model.print_trainable_parameters()
     print(model)
 
