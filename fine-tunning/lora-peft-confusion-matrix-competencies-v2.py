@@ -7,10 +7,8 @@ from torch.utils.data import DataLoader
 from peft import (
     get_peft_model,
     LoraConfig,
-    LoraModel,
 )
 import evaluate
-from datasets import load_dataset
 from transformers import (
     AutoTokenizer,
     get_linear_schedule_with_warmup, AutoModelForSequenceClassification, BitsAndBytesConfig,
@@ -103,9 +101,8 @@ def train_model(configs):
     model = AutoModelForSequenceClassification.from_pretrained(
         configs.model_name_or_path, return_dict=True, num_labels=configs.n_labels,
     )
-    #model = get_peft_model(model, peft_config)
-    model = LoraModel(model, peft_config, "default")
-    #model.print_trainable_parameters()
+    model = get_peft_model(model, peft_config)
+    model.print_trainable_parameters()
     print(model)
 
     optimizer = AdamW(model.parameters(), lr=configs.lr)

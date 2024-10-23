@@ -14,7 +14,7 @@ class Configs:
         print("Definindo configs...")
         self.obs = None
         self.batch_size = 2
-        self.model_name_or_path = "neuralmind/bert-base-portuguese-cased"
+        self.model_name_or_path = "FacebookAI/xlm-roberta-base"
         #"maritaca-ai/sabia-7b"
         #"xlm-roberta-base"
         # "neuralmind/bert-large-portuguese-cased"
