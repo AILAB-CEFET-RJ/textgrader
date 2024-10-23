@@ -105,7 +105,7 @@ def train_model(configs):
     )
     #model = get_peft_model(model, peft_config)
     model = LoraModel(model, peft_config, "default")
-    model.print_trainable_parameters()
+    #model.print_trainable_parameters()
     print(model)
 
     optimizer = AdamW(model.parameters(), lr=configs.lr)
