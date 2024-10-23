@@ -14,7 +14,7 @@ class Configs:
         print("Definindo configs...")
         self.obs = None
         self.batch_size = 2
-        self.model_name_or_path = "FacebookAI/xlm-roberta-base"
+        self.model_name_or_path = "neuralmind/bert-base-portuguese-cased"
         #"maritaca-ai/sabia-7b"
         #"xlm-roberta-base"
         # "neuralmind/bert-large-portuguese-cased"
@@ -109,7 +109,7 @@ class Configs:
         }
 
     def get_results_folder_path(self):
-        return f"results/{self.script_type}/{self.conjunto}/{self.date}/{self.competence}"
+        return f"results/{self.script_type}/{self.model_name_or_path}/{self.conjunto}/{self.date}/{self.competence}"
 
     def save_to_json(self, confusion_matrix=None):
         folder_path = self.get_results_folder_path()
